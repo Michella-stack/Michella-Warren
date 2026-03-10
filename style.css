@@ -70,10 +70,10 @@ nav ul li a:hover { color: var(--lavender); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8rem 4rem 4rem;
+  padding: 8rem 5rem 5rem 4rem;
   position: relative;
   overflow: hidden;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .hero::before {
@@ -98,11 +98,11 @@ nav ul li a:hover { color: var(--lavender); }
 }
 
 .hero-right {
-  position: absolute;
-  top: 9rem;
-  right: 3rem;
-  z-index: 1;
+  position: relative;
+  align-self: center;
   flex-shrink: 0;
+  z-index: 1;
+  margin-top: 4rem;
 }
 
 /* Profile photo */
@@ -159,8 +159,8 @@ nav ul li a:hover { color: var(--lavender); }
   display: block;
   line-height: 1;
   letter-spacing: -0.01em;
-  margin-top: -0.75em;
-  margin-bottom: -0.35em;
+  margin-top: -0.35em;
+  margin-bottom: 0em;
   user-select: none;
   pointer-events: none;
 }
