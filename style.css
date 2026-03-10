@@ -149,7 +149,7 @@ nav ul li a:hover { color: var(--lavender); }
   letter-spacing: -0.01em;
 }
 
-/* Voughn — same size, ghosted, sits exactly on top of Warren */
+/* Voughn — same size, ghosted, floats in the middle between Michella and Warren */
 .name-voughn {
   font-family: var(--font-display);
   font-size: clamp(4rem, 8vw, 8.5rem);
@@ -159,8 +159,8 @@ nav ul li a:hover { color: var(--lavender); }
   display: block;
   line-height: 1;
   letter-spacing: -0.01em;
-  margin-top: -0.08em;
-  margin-bottom: -1.08em;
+  margin-top: -0.55em;
+  margin-bottom: -0.55em;
   user-select: none;
   pointer-events: none;
 }
@@ -218,14 +218,16 @@ nav ul li a:hover { color: var(--lavender); }
 .btn:hover { background: var(--lavender); color: var(--ink); transform: translateY(-2px); }
 
 .scroll-hint {
-  position: absolute; bottom: 1.5rem; right: 3rem;
-  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--ink-soft); opacity: 0.5; writing-mode: vertical-rl;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1.2rem;
+  font-size: 0.70rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-soft); opacity: 0.55; writing-mode: horizontal-tb;
 }
 .scroll-hint::before {
-  content: ''; display: block; width: 1px; height: 50px;
-  background: var(--ink-soft); margin: 0 auto 8px;
-  animation: scrollLine 2s infinite;
+  content: ''; display: inline-block; width: 28px; height: 1px;
+  background: var(--ink-soft); vertical-align: middle;
 }
 
 /* ─── Vine — corner bundle, organic, pulsing ─────────── */
