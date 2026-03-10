@@ -99,8 +99,8 @@ nav ul li a:hover { color: var(--lavender); }
 
 .hero-right {
   position: absolute;
-  top: 6rem;
-  right: 5rem;
+  top: 9rem;
+  right: 3rem;
   z-index: 1;
   flex-shrink: 0;
 }
@@ -149,19 +149,18 @@ nav ul li a:hover { color: var(--lavender); }
   letter-spacing: -0.01em;
 }
 
-/* Ghost middle name — smaller, faded, indented between the two main names */
+/* Voughn — same size as Michella/Warren, ghosted, overlaid near Warren */
 .name-voughn {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.4vw, 2.4rem);
+  font-size: clamp(4rem, 8vw, 8.5rem);
   font-weight: 300;
   font-style: italic;
-  color: rgba(100, 92, 88, 0.20);
+  color: rgba(100, 92, 88, 0.13);
   display: block;
-  line-height: 1;
-  letter-spacing: 0.1em;
-  margin-left: 0.6em;
-  margin-top: 0.1em;
-  margin-bottom: 0.1em;
+  line-height: 0.55;
+  letter-spacing: -0.01em;
+  margin-top: 0;
+  margin-bottom: -0.45em;
   user-select: none;
   pointer-events: none;
 }
@@ -219,7 +218,7 @@ nav ul li a:hover { color: var(--lavender); }
 .btn:hover { background: var(--lavender); color: var(--ink); transform: translateY(-2px); }
 
 .scroll-hint {
-  position: absolute; bottom: 2.5rem; left: 4rem;
+  position: absolute; bottom: 1.5rem; left: 50%;
   font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
   color: var(--ink-soft); opacity: 0.5; writing-mode: vertical-rl;
 }
@@ -546,3 +545,6 @@ footer {
   footer { flex-direction: column; gap: 1rem; padding: 1.5rem; }
   .vine-container { display: none; }
 }
+
+/* Connect page — sage em */
+body.page-connect .page-hero h1 em { color: var(--sage); }

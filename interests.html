@@ -6,23 +6,129 @@
   <title>Interests — Michella Voughn Warren</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── Interests page overrides — canyon palette ── */
+    body.page-interests {
+      background: #F7F2EC;
+    }
+    body.page-interests nav {
+      background: rgba(247,242,236,0.9);
+    }
+    body.page-interests .page-hero {
+      background: transparent;
+      position: relative;
+      z-index: 2;
+    }
+    body.page-interests .page-hero .tag {
+      color: #B85C38;
+    }
+    body.page-interests .page-hero h1 em {
+      color: #C47A5A;
+    }
+    body.page-interests .section-content {
+      position: relative;
+      z-index: 2;
+    }
+    body.page-interests .interest-num {
+      color: rgba(196,122,90,0.25);
+    }
+    body.page-interests .interest-item {
+      border-bottom-color: rgba(196,122,90,0.18);
+    }
+    body.page-interests .open-invite {
+      background: rgba(196,122,90,0.10);
+      border-left-color: #C47A5A;
+    }
+    body.page-interests footer {
+      background: transparent;
+      border-top-color: rgba(196,122,90,0.2);
+    }
+
+    /* ── Orbital sun — fixed right side ── */
+    .canyon-sun {
+      position: fixed;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 420px;
+      height: 420px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      animation: sunRise 2s ease-out 0.3s forwards;
+    }
+
+    @keyframes sunRise {
+      from { opacity: 0; transform: translateY(-45%) scale(0.92); }
+      to   { opacity: 1; transform: translateY(-50%) scale(1); }
+    }
+
+    /* ── Mountain silhouette — fixed bottom ── */
+    .canyon-mountains {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      width: 100%;
+      height: 180px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      animation: mountainsFade 1.5s ease-out 0.8s forwards;
+    }
+
+    @keyframes mountainsFade {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Orbital rings animation ── */
+    .orbit-ring {
+      transform-origin: center;
+      animation: orbitSpin 28s linear infinite;
+    }
+    .orbit-ring-2 {
+      transform-origin: center;
+      animation: orbitSpin 42s linear infinite reverse;
+    }
+    .orbit-ring-3 {
+      transform-origin: center;
+      animation: orbitSpin 18s linear infinite;
+    }
+    @keyframes orbitSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Sun core pulse */
+    .sun-core {
+      transform-origin: 210px 210px;
+      animation: sunPulse 5s ease-in-out infinite;
+    }
+    @keyframes sunPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.04); opacity: 0.92; }
+    }
+
+    /* Sun rays rotate slowly */
+    .sun-rays {
+      transform-origin: 210px 210px;
+      animation: raysRotate 60s linear infinite;
+    }
+    @keyframes raysRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+  </style>
 </head>
-<body>
+<body class="page-interests">
 
   <nav>
     <div class="nav-name">
-      <svg class="nav-feather" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- Sage sprig: central stem + paired oval leaves -->
-        <line x1="11" y1="20" x2="11" y2="4" stroke="#8FAF8A" stroke-width="1.3" stroke-linecap="round"/>
-        <ellipse cx="8"  cy="15" rx="3.5" ry="2" fill="#8FAF8A" opacity="0.7" transform="rotate(-30 8 15)"/>
-        <ellipse cx="14" cy="13" rx="3.5" ry="2" fill="#8FAF8A" opacity="0.7" transform="rotate(30 14 13)"/>
-        <ellipse cx="8"  cy="9"  rx="3"   ry="1.8" fill="#8FAF8A" opacity="0.55" transform="rotate(-25 8 9)"/>
-        <ellipse cx="14" cy="7"  rx="3"   ry="1.8" fill="#8FAF8A" opacity="0.55" transform="rotate(25 14 7)"/>
-        <ellipse cx="11" cy="4"  rx="2"   ry="1.4" fill="#8FAF8A" opacity="0.4"/>
+      <svg class="nav-feather" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M20.24 3.76a6 6 0 0 0-8.49 0L3 12.51V21h8.49l8.75-8.75a6 6 0 0 0 0-8.49z" stroke="#8FAF8A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M12 8l4 4" stroke="#8FAF8A" stroke-width="1.0" stroke-linecap="round" opacity="0.6"/>
+        <path d="M3 12.51l9-3 3 9" stroke="#8FAF8A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
       </svg>
-      <span class="nav-initials">
-        <span class="nav-m">M</span> <span class="nav-v" style="color:var(--terracotta)">V</span> <span class="nav-w">W</span>
-      </span>
+      <span class="nav-initials"><span class="nav-m">M</span> <span class="nav-v">V</span> <span class="nav-w">W</span></span>
     </div>
     <ul>
       <li><a href="index.html">Home</a></li>
@@ -32,6 +138,103 @@
       <li><a href="contact.html">Let's Connect</a></li>
     </ul>
   </nav>
+
+  <!-- Orbital Sun — right side -->
+  <svg class="canyon-sun" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#F5C27A" stop-opacity="0.95"/>
+        <stop offset="35%"  stop-color="#E8925A" stop-opacity="0.88"/>
+        <stop offset="65%"  stop-color="#C47A5A" stop-opacity="0.72"/>
+        <stop offset="100%" stop-color="#8B4513" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#F5C27A" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#C47A5A" stop-opacity="0"/>
+      </radialGradient>
+      <!-- Orbit dot gradient -->
+      <radialGradient id="orbitDot" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#E8925A" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#C47A5A" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Outer atmospheric glow -->
+    <circle cx="210" cy="210" r="200" fill="url(#glowGrad)"/>
+    <circle cx="210" cy="210" r="165" fill="url(#glowGrad)" opacity="0.6"/>
+
+    <!-- Orbital rings -->
+    <g class="orbit-ring">
+      <!-- Ring 1 — elliptical -->
+      <ellipse cx="210" cy="210" rx="178" ry="52" stroke="#C47A5A" stroke-width="0.6" stroke-dasharray="6 5" opacity="0.22" fill="none"/>
+      <!-- Orbit body on ring 1 -->
+      <circle cx="388" cy="210" r="5" fill="#E8925A" opacity="0.55"/>
+      <circle cx="32"  cy="210" r="3" fill="#C47A5A" opacity="0.40"/>
+    </g>
+
+    <g class="orbit-ring-2">
+      <!-- Ring 2 — tilted ellipse -->
+      <ellipse cx="210" cy="210" rx="155" ry="40" stroke="#D4895E" stroke-width="0.5" stroke-dasharray="4 6" opacity="0.18" fill="none" transform="rotate(30 210 210)"/>
+      <circle cx="365" cy="210" r="4" fill="#F5C27A" opacity="0.50" transform="rotate(30 210 210)"/>
+      <circle cx="55"  cy="210" r="2.5" fill="#C47A5A" opacity="0.35" transform="rotate(30 210 210)"/>
+    </g>
+
+    <g class="orbit-ring-3">
+      <!-- Ring 3 — inner tight -->
+      <ellipse cx="210" cy="210" rx="130" ry="28" stroke="#E8925A" stroke-width="0.5" stroke-dasharray="3 7" opacity="0.15" fill="none" transform="rotate(-20 210 210)"/>
+      <circle cx="340" cy="210" r="3" fill="#F5C27A" opacity="0.45" transform="rotate(-20 210 210)"/>
+    </g>
+
+    <!-- Sun rays — slowly rotating -->
+    <g class="sun-rays">
+      <!-- 16 rays of varying length and opacity -->
+      <line x1="210" y1="100" x2="210" y2="72"  stroke="#F5C27A" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/>
+      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(22.5 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="72"  stroke="#F5C27A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(45 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(67.5 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="72"  stroke="#E8925A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(90 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(112.5 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="72"  stroke="#E8925A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(135 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(157.5 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="72"  stroke="#F5C27A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(180 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(202.5 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="72"  stroke="#E8925A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(225 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(247.5 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="72"  stroke="#E8925A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(270 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(292.5 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="72"  stroke="#F5C27A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(315 210 210)"/>
+      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(337.5 210 210)"/>
+    </g>
+
+    <!-- Sun core — pulsing -->
+    <g class="sun-core">
+      <circle cx="210" cy="210" r="82" fill="url(#sunGrad)"/>
+      <!-- Inner ring detail -->
+      <circle cx="210" cy="210" r="70" stroke="#F5C27A" stroke-width="0.5" fill="none" opacity="0.3"/>
+      <circle cx="210" cy="210" r="58" stroke="#E8925A" stroke-width="0.4" fill="none" opacity="0.25"/>
+    </g>
+  </svg>
+
+  <!-- Mountain silhouette — bottom -->
+  <svg class="canyon-mountains" viewBox="0 0 1440 180" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Back range — lightest, most distant -->
+    <path d="M0 180 L0 130 C60 118 120 108 200 98 C280 88 340 92 420 82 C500 72 560 78 640 68 C720 58 790 64 870 55 C950 46 1010 52 1090 44 C1170 36 1230 42 1310 36 C1380 30 1420 34 1440 32 L1440 180 Z"
+      fill="#C47A5A" opacity="0.08"/>
+    <!-- Mid range -->
+    <path d="M0 180 L0 148 C50 135 110 128 190 118 C270 108 330 115 410 105 C490 95 560 102 640 92 C720 82 790 90 880 80 C960 70 1020 78 1110 70 C1190 62 1260 70 1350 65 C1400 62 1430 64 1440 63 L1440 180 Z"
+      fill="#C47A5A" opacity="0.11"/>
+    <!-- Closer canyon walls — left -->
+    <path d="M0 180 L0 162 C30 148 65 140 100 125 C118 118 130 110 145 100 C160 90 170 85 185 88 C200 91 210 98 230 105 C250 112 270 115 300 120 C330 125 360 128 400 130 C440 132 480 134 520 136 L520 180 Z"
+      fill="#B85C38" opacity="0.14"/>
+    <!-- Closer canyon walls — right -->
+    <path d="M1440 180 L1440 158 C1410 144 1375 136 1340 122 C1322 115 1310 108 1295 98 C1280 88 1270 83 1255 86 C1240 89 1230 96 1210 103 C1190 110 1170 113 1140 118 C1110 123 1080 126 1040 128 C1000 130 960 132 920 134 L920 180 Z"
+      fill="#B85C38" opacity="0.14"/>
+    <!-- Foreground rock layer -->
+    <path d="M0 180 L0 172 C80 165 160 162 240 158 C320 154 400 155 500 160 C580 164 660 168 740 166 C820 164 900 160 980 158 C1060 156 1140 158 1220 162 C1300 166 1380 170 1440 172 L1440 180 Z"
+      fill="#8B4513" opacity="0.12"/>
+    <!-- Subtle ground line -->
+    <line x1="0" y1="179" x2="1440" y2="179" stroke="#C47A5A" stroke-width="0.8" opacity="0.2"/>
+  </svg>
 
   <div class="page-hero">
     <span class="tag">Interests & Open Discussion</span>
@@ -85,7 +288,8 @@
       <a href="contact.html" class="btn" style="opacity:1; animation:none;">Let's Connect →</a>
     </div>
   </div>
-<footer>
+
+  <footer>
     <p>© 2025 Michella Voughn Warren · Built with intention</p>
     <div class="footer-links">
       <a href="https://github.com/Michella-stack" target="_blank">GitHub</a>
@@ -93,150 +297,8 @@
       <a href="mailto:warrenmichella@gmail.com">Email</a>
     </div>
   </footer>
-  <!-- Celestial dot cluster — physics-based, unique per tab -->
-  <canvas id="celestial-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.55;"></canvas>
-  <script>
-  (function() {
-    const canvas = document.getElementById('celestial-canvas');
-    const ctx = canvas.getContext('2d');
 
-    const CONFIG = {
-      primaryColor: '#C47A5A',
-      accentColor:  '#C9B8D8',
-      clusterBias:  'scattered',
-      count:        95,
-      baseSpeed:    0.3,
-    };
-
-    let W, H, dots = [], mouse = { x: -999, y: -999 };
-
-    function hexToRgb(hex) {
-      const r = parseInt(hex.slice(1,3),16);
-      const g = parseInt(hex.slice(3,5),16);
-      const b = parseInt(hex.slice(5,7),16);
-      return `${r},${g},${b}`;
-    }
-
-    function clusterOrigin() {
-      switch(CONFIG.clusterBias) {
-        case 'center':       return { x: W*0.5,  y: H*0.5 };
-        case 'bottom-right': return { x: W*0.75, y: H*0.72 };
-        case 'top-left':     return { x: W*0.25, y: H*0.3 };
-        case 'bottom':       return { x: W*0.5,  y: H*0.8 };
-        default:             return { x: W * (0.2 + Math.random()*0.6), y: H * (0.2 + Math.random()*0.6) };
-      }
-    }
-
-    function makeDot(origin) {
-      const angle  = Math.random() * Math.PI * 2;
-      const spread = Math.random() * Math.min(W, H) * 0.38;
-      const isAccent = Math.random() < 0.28;
-      const size = 0.8 + Math.random() * 2.8;
-      return {
-        x:  origin.x + Math.cos(angle) * spread,
-        y:  origin.y + Math.sin(angle) * spread,
-        ox: origin.x + Math.cos(angle) * spread,
-        oy: origin.y + Math.sin(angle) * spread,
-        vx: (Math.random() - 0.5) * CONFIG.baseSpeed,
-        vy: (Math.random() - 0.5) * CONFIG.baseSpeed,
-        r:  size,
-        color: isAccent ? CONFIG.accentColor : CONFIG.primaryColor,
-        alpha: 0.18 + Math.random() * 0.55,
-        phase: Math.random() * Math.PI * 2,
-        // physics
-        mass: 0.5 + Math.random() * 1.5,
-        connected: [],
-      };
-    }
-
-    function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-      const origin = clusterOrigin();
-      dots = [];
-      for (let i = 0; i < CONFIG.count; i++) dots.push(makeDot(origin));
-      // Pre-calculate connections (static constellation lines between nearby dots)
-      dots.forEach((d, i) => {
-        d.connected = [];
-        dots.forEach((d2, j) => {
-          if (i === j) return;
-          const dist = Math.hypot(d.x - d2.x, d.y - d2.y);
-          if (dist < 90 && d.connected.length < 3) d.connected.push(j);
-        });
-      });
-    }
-
-    function tick(t) {
-      ctx.clearRect(0, 0, W, H);
-
-      dots.forEach((d, i) => {
-        // Gentle orbital drift
-        d.phase += 0.004;
-        const drift = Math.sin(d.phase) * 0.18;
-
-        // Physics: slight gravitational pull back to origin
-        const dx = d.ox - d.x;
-        const dy = d.oy - d.y;
-        d.vx += dx * 0.00015 / d.mass;
-        d.vy += dy * 0.00015 / d.mass;
-
-        // Mouse repulsion — gentle push
-        const mdx = d.x - mouse.x;
-        const mdy = d.y - mouse.y;
-        const mdist = Math.hypot(mdx, mdy);
-        if (mdist < 140) {
-          const force = (140 - mdist) / 140 * 0.6;
-          d.vx += (mdx / mdist) * force;
-          d.vy += (mdy / mdist) * force;
-        }
-
-        // Damping
-        d.vx *= 0.97;
-        d.vy *= 0.97;
-
-        d.x += d.vx + drift * 0.3;
-        d.y += d.vy + drift * 0.2;
-
-        // Draw constellation lines
-        d.connected.forEach(j => {
-          const d2 = dots[j];
-          const lineDist = Math.hypot(d.x - d2.x, d.y - d2.y);
-          const lineAlpha = Math.max(0, (1 - lineDist / 100) * 0.12);
-          ctx.beginPath();
-          ctx.moveTo(d.x, d.y);
-          ctx.lineTo(d2.x, d2.y);
-          ctx.strokeStyle = `rgba(${hexToRgb(d.color)},${lineAlpha})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        });
-
-        // Draw dot with subtle twinkle
-        const twinkle = 0.85 + Math.sin(d.phase * 2.3) * 0.15;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r * twinkle, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${hexToRgb(d.color)},${d.alpha * twinkle})`;
-        ctx.fill();
-
-        // Soft glow halo on larger dots
-        if (d.r > 2.0) {
-          ctx.beginPath();
-          ctx.arc(d.x, d.y, d.r * 3 * twinkle, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${hexToRgb(d.color)},${d.alpha * 0.06 * twinkle})`;
-          ctx.fill();
-        }
-      });
-
-      requestAnimationFrame(tick);
-    }
-
-    window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-    window.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
-
-    resize();
-    requestAnimationFrame(tick);
-  })();
-  </script>
+  <!-- No celestial canvas on this page -->
 
 </body>
 </html>
