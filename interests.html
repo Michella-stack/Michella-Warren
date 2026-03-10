@@ -10,7 +10,20 @@
 <body>
 
   <nav>
-    <div class="nav-name"><svg class="nav-feather" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.24 3.76a6 6 0 0 0-8.49 0L3 12.51V21h8.49l8.75-8.75a6 6 0 0 0 0-8.49z" stroke="#8FAF8A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M12 8l4 4" stroke="#8FAF8A" stroke-width="1.0" stroke-linecap="round" opacity="0.6"/><path d="M3 12.51l9-3 3 9" stroke="#8FAF8A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/></svg><span class="nav-initials"><span class="nav-m">M</span> <span class="nav-v">V</span> <span class="nav-w">W</span></span></div>
+    <div class="nav-name">
+      <svg class="nav-feather" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Sage sprig: central stem + paired oval leaves -->
+        <line x1="11" y1="20" x2="11" y2="4" stroke="#8FAF8A" stroke-width="1.3" stroke-linecap="round"/>
+        <ellipse cx="8"  cy="15" rx="3.5" ry="2" fill="#8FAF8A" opacity="0.7" transform="rotate(-30 8 15)"/>
+        <ellipse cx="14" cy="13" rx="3.5" ry="2" fill="#8FAF8A" opacity="0.7" transform="rotate(30 14 13)"/>
+        <ellipse cx="8"  cy="9"  rx="3"   ry="1.8" fill="#8FAF8A" opacity="0.55" transform="rotate(-25 8 9)"/>
+        <ellipse cx="14" cy="7"  rx="3"   ry="1.8" fill="#8FAF8A" opacity="0.55" transform="rotate(25 14 7)"/>
+        <ellipse cx="11" cy="4"  rx="2"   ry="1.4" fill="#8FAF8A" opacity="0.4"/>
+      </svg>
+      <span class="nav-initials">
+        <span class="nav-m">M</span> <span class="nav-v">V</span> <span class="nav-w">W</span>
+      </span>
+    </div>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="work.html">Work</a></li>
@@ -93,47 +106,150 @@
       <a href="mailto:warrenmichella@gmail.com">Email</a>
     </div>
   </footer>
+  <!-- Celestial dot cluster — physics-based, unique per tab -->
+  <canvas id="celestial-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.55;"></canvas>
+  <script>
+  (function() {
+    const canvas = document.getElementById('celestial-canvas');
+    const ctx = canvas.getContext('2d');
 
-  <!-- Bottom vine — entangled with terracotta dirt speckles -->
-  <div class="vine-bottom" aria-hidden="true">
-    <svg class="vine-bottom-svg" viewBox="0 0 1440 140" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path class="vine-stem-1" d="M0 140 C40 120 80 125 130 110 C180 95 220 105 280 90 C340 75 390 88 450 72 C510 56 560 68 620 55 C680 42 720 52 780 40" stroke="#8FAF8A" stroke-width="1.8" stroke-linecap="round" opacity="0.65"/>
-      <path class="vine-stem-2" d="M0 130 C50 115 90 120 150 102 C210 84 250 96 310 80 C370 64 415 76 475 62 C535 48 580 60 640 48 C700 36 745 46 800 35" stroke="#A8C4A2" stroke-width="1.3" stroke-linecap="round" opacity="0.5"/>
-      <path class="vine-stem-3" d="M0 138 C60 125 100 130 165 115 C230 100 270 112 335 97 C400 82 440 94 505 80 C570 66 610 78 670 65" stroke="#8FAF8A" stroke-width="1.0" stroke-linecap="round" opacity="0.4"/>
-      <path class="vine-stem-4" d="M1440 140 C1400 118 1360 124 1305 108 C1250 92 1210 103 1155 88 C1100 73 1058 84 1000 70 C942 56 900 67 840 54" stroke="#8FAF8A" stroke-width="1.8" stroke-linecap="round" opacity="0.65"/>
-      <path class="vine-stem-5" d="M1440 130 C1395 112 1352 118 1292 100 C1232 82 1195 94 1135 78 C1075 62 1035 74 972 60 C909 46 868 57 808 44" stroke="#A8C4A2" stroke-width="1.3" stroke-linecap="round" opacity="0.5"/>
-      <path class="vine-stem-6" d="M1440 136 C1388 122 1345 128 1280 112 C1215 96 1178 108 1112 93 C1046 78 1008 90 940 76 C872 62 832 72 768 60" stroke="#8FAF8A" stroke-width="1.0" stroke-linecap="round" opacity="0.38"/>
-      <path class="vine-stem-1" d="M200 105 C198 90 202 75 196 58 C193 50 190 42 188 30" stroke="#8FAF8A" stroke-width="1.0" stroke-linecap="round" opacity="0.4"/>
-      <path class="vine-stem-2" d="M480 68 C478 52 482 38 477 22 C475 14 472 8 470 0" stroke="#A8C4A2" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
-      <path class="vine-stem-3" d="M750 40 C748 26 752 14 747 2" stroke="#8FAF8A" stroke-width="0.8" stroke-linecap="round" opacity="0.3"/>
-      <path class="vine-stem-4" d="M1000 72 C998 56 1002 42 997 26 C995 18 992 10 990 2" stroke="#8FAF8A" stroke-width="1.0" stroke-linecap="round" opacity="0.4"/>
-      <path class="vine-stem-5" d="M1260 100 C1258 82 1262 66 1256 48 C1253 38 1250 28 1248 15" stroke="#A8C4A2" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
-      <ellipse class="vine-leaf-shape vl1" cx="130" cy="108" rx="12" ry="5" fill="#8FAF8A" opacity="0.5" transform="rotate(-20 130 108)"/>
-      <ellipse class="vine-leaf-shape vl2" cx="310" cy="80" rx="11" ry="4" fill="#A8C4A2" opacity="0.45" transform="rotate(15 310 80)"/>
-      <ellipse class="vine-leaf-shape vl3" cx="500" cy="63" rx="12" ry="5" fill="#8FAF8A" opacity="0.5" transform="rotate(-18 500 63)"/>
-      <ellipse class="vine-leaf-shape vl4" cx="700" cy="48" rx="10" ry="4" fill="#A8C4A2" opacity="0.42" transform="rotate(12 700 48)"/>
-      <ellipse class="vine-leaf-shape vl1" cx="900" cy="68" rx="12" ry="5" fill="#8FAF8A" opacity="0.5" transform="rotate(-22 900 68)"/>
-      <ellipse class="vine-leaf-shape vl2" cx="1100" cy="90" rx="11" ry="4" fill="#A8C4A2" opacity="0.45" transform="rotate(16 1100 90)"/>
-      <ellipse class="vine-leaf-shape vl3" cx="1300" cy="108" rx="12" ry="5" fill="#8FAF8A" opacity="0.5" transform="rotate(-14 1300 108)"/>
-      <circle class="dirt-speck ds1"  cx="85"   cy="132" r="2.2" fill="#C47A5A" opacity="0.55"/>
-      <circle class="dirt-speck ds2"  cx="142"  cy="126" r="1.5" fill="#C47A5A" opacity="0.45"/>
-      <circle class="dirt-speck ds3"  cx="230"  cy="138" r="2.8" fill="#C47A5A" opacity="0.5"/>
-      <circle class="dirt-speck ds4"  cx="318"  cy="130" r="1.8" fill="#C47A5A" opacity="0.4"/>
-      <circle class="dirt-speck ds5"  cx="410"  cy="125" r="2.0" fill="#D4895E" opacity="0.5"/>
-      <circle class="dirt-speck ds6"  cx="495"  cy="135" r="1.4" fill="#C47A5A" opacity="0.42"/>
-      <circle class="dirt-speck ds7"  cx="600"  cy="128" r="2.5" fill="#C47A5A" opacity="0.48"/>
-      <circle class="dirt-speck ds8"  cx="720"  cy="133" r="1.6" fill="#D4895E" opacity="0.44"/>
-      <circle class="dirt-speck ds9"  cx="850"  cy="126" r="2.2" fill="#C47A5A" opacity="0.5"/>
-      <circle class="dirt-speck ds10" cx="980"  cy="134" r="1.8" fill="#C47A5A" opacity="0.42"/>
-      <circle class="dirt-speck ds11" cx="1100" cy="128" r="2.4" fill="#D4895E" opacity="0.48"/>
-      <circle class="dirt-speck ds12" cx="1240" cy="132" r="1.6" fill="#C47A5A" opacity="0.45"/>
-      <circle class="dirt-speck ds3"  cx="170"  cy="140" r="1.0" fill="#C47A5A" opacity="0.35"/>
-      <circle class="dirt-speck ds5"  cx="375"  cy="138" r="1.2" fill="#C47A5A" opacity="0.3"/>
-      <circle class="dirt-speck ds7"  cx="560"  cy="140" r="0.9" fill="#D4895E" opacity="0.38"/>
-      <circle class="dirt-speck ds9"  cx="780"  cy="139" r="1.1" fill="#C47A5A" opacity="0.32"/>
-      <circle class="dirt-speck ds11" cx="1020" cy="138" r="1.3" fill="#C47A5A" opacity="0.36"/>
-      <circle class="dirt-speck ds12" cx="1380" cy="136" r="1.8" fill="#D4895E" opacity="0.42"/>
-    </svg>
-  </div>
+    const CONFIG = {
+      primaryColor: '#C47A5A',
+      accentColor:  '#C9B8D8',
+      clusterBias:  'scattered',
+      count:        95,
+      baseSpeed:    0.3,
+    };
+
+    let W, H, dots = [], mouse = { x: -999, y: -999 };
+
+    function hexToRgb(hex) {
+      const r = parseInt(hex.slice(1,3),16);
+      const g = parseInt(hex.slice(3,5),16);
+      const b = parseInt(hex.slice(5,7),16);
+      return `${r},${g},${b}`;
+    }
+
+    function clusterOrigin() {
+      switch(CONFIG.clusterBias) {
+        case 'center':       return { x: W*0.5,  y: H*0.5 };
+        case 'bottom-right': return { x: W*0.75, y: H*0.72 };
+        case 'top-left':     return { x: W*0.25, y: H*0.3 };
+        case 'bottom':       return { x: W*0.5,  y: H*0.8 };
+        default:             return { x: W * (0.2 + Math.random()*0.6), y: H * (0.2 + Math.random()*0.6) };
+      }
+    }
+
+    function makeDot(origin) {
+      const angle  = Math.random() * Math.PI * 2;
+      const spread = Math.random() * Math.min(W, H) * 0.38;
+      const isAccent = Math.random() < 0.28;
+      const size = 0.8 + Math.random() * 2.8;
+      return {
+        x:  origin.x + Math.cos(angle) * spread,
+        y:  origin.y + Math.sin(angle) * spread,
+        ox: origin.x + Math.cos(angle) * spread,
+        oy: origin.y + Math.sin(angle) * spread,
+        vx: (Math.random() - 0.5) * CONFIG.baseSpeed,
+        vy: (Math.random() - 0.5) * CONFIG.baseSpeed,
+        r:  size,
+        color: isAccent ? CONFIG.accentColor : CONFIG.primaryColor,
+        alpha: 0.18 + Math.random() * 0.55,
+        phase: Math.random() * Math.PI * 2,
+        // physics
+        mass: 0.5 + Math.random() * 1.5,
+        connected: [],
+      };
+    }
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      const origin = clusterOrigin();
+      dots = [];
+      for (let i = 0; i < CONFIG.count; i++) dots.push(makeDot(origin));
+      // Pre-calculate connections (static constellation lines between nearby dots)
+      dots.forEach((d, i) => {
+        d.connected = [];
+        dots.forEach((d2, j) => {
+          if (i === j) return;
+          const dist = Math.hypot(d.x - d2.x, d.y - d2.y);
+          if (dist < 90 && d.connected.length < 3) d.connected.push(j);
+        });
+      });
+    }
+
+    function tick(t) {
+      ctx.clearRect(0, 0, W, H);
+
+      dots.forEach((d, i) => {
+        // Gentle orbital drift
+        d.phase += 0.004;
+        const drift = Math.sin(d.phase) * 0.18;
+
+        // Physics: slight gravitational pull back to origin
+        const dx = d.ox - d.x;
+        const dy = d.oy - d.y;
+        d.vx += dx * 0.00015 / d.mass;
+        d.vy += dy * 0.00015 / d.mass;
+
+        // Mouse repulsion — gentle push
+        const mdx = d.x - mouse.x;
+        const mdy = d.y - mouse.y;
+        const mdist = Math.hypot(mdx, mdy);
+        if (mdist < 140) {
+          const force = (140 - mdist) / 140 * 0.6;
+          d.vx += (mdx / mdist) * force;
+          d.vy += (mdy / mdist) * force;
+        }
+
+        // Damping
+        d.vx *= 0.97;
+        d.vy *= 0.97;
+
+        d.x += d.vx + drift * 0.3;
+        d.y += d.vy + drift * 0.2;
+
+        // Draw constellation lines
+        d.connected.forEach(j => {
+          const d2 = dots[j];
+          const lineDist = Math.hypot(d.x - d2.x, d.y - d2.y);
+          const lineAlpha = Math.max(0, (1 - lineDist / 100) * 0.12);
+          ctx.beginPath();
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(d2.x, d2.y);
+          ctx.strokeStyle = `rgba(${hexToRgb(d.color)},${lineAlpha})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        });
+
+        // Draw dot with subtle twinkle
+        const twinkle = 0.85 + Math.sin(d.phase * 2.3) * 0.15;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r * twinkle, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${hexToRgb(d.color)},${d.alpha * twinkle})`;
+        ctx.fill();
+
+        // Soft glow halo on larger dots
+        if (d.r > 2.0) {
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.r * 3 * twinkle, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${hexToRgb(d.color)},${d.alpha * 0.06 * twinkle})`;
+          ctx.fill();
+        }
+      });
+
+      requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
+
+    resize();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+
 </body>
 </html>
