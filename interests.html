@@ -139,101 +139,62 @@
     </ul>
   </nav>
 
-  <!-- Orbital Sun — right side -->
+  <!-- Minimal organic sun — right side -->
   <svg class="canyon-sun" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%"   stop-color="#F5C27A" stop-opacity="0.95"/>
-        <stop offset="35%"  stop-color="#E8925A" stop-opacity="0.88"/>
-        <stop offset="65%"  stop-color="#C47A5A" stop-opacity="0.72"/>
-        <stop offset="100%" stop-color="#8B4513" stop-opacity="0"/>
-      </radialGradient>
-      <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%"   stop-color="#F5C27A" stop-opacity="0.18"/>
+        <stop offset="0%"   stop-color="#F5C27A" stop-opacity="0.90"/>
+        <stop offset="45%"  stop-color="#E8925A" stop-opacity="0.65"/>
         <stop offset="100%" stop-color="#C47A5A" stop-opacity="0"/>
       </radialGradient>
-      <!-- Orbit dot gradient -->
-      <radialGradient id="orbitDot" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#E8925A" stop-opacity="0.8"/>
-        <stop offset="100%" stop-color="#C47A5A" stop-opacity="0"/>
+      <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#F5D9A0" stop-opacity="0.20"/>
+        <stop offset="100%" stop-color="#E8925A" stop-opacity="0"/>
       </radialGradient>
     </defs>
 
-    <!-- Outer atmospheric glow -->
-    <circle cx="210" cy="210" r="200" fill="url(#glowGrad)"/>
-    <circle cx="210" cy="210" r="165" fill="url(#glowGrad)" opacity="0.6"/>
+    <!-- Soft outer halo -->
+    <circle cx="210" cy="210" r="195" fill="url(#haloGrad)"/>
 
-    <!-- Orbital rings -->
-    <g class="orbit-ring">
-      <!-- Ring 1 — elliptical -->
-      <ellipse cx="210" cy="210" rx="178" ry="52" stroke="#C47A5A" stroke-width="0.6" stroke-dasharray="6 5" opacity="0.22" fill="none"/>
-      <!-- Orbit body on ring 1 -->
-      <circle cx="388" cy="210" r="5" fill="#E8925A" opacity="0.55"/>
-      <circle cx="32"  cy="210" r="3" fill="#C47A5A" opacity="0.40"/>
-    </g>
+    <!-- Thin concentric rings — organic, slightly imperfect -->
+    <circle cx="210" cy="210" r="155" stroke="#D4895E" stroke-width="0.6" fill="none" opacity="0.14"/>
+    <circle cx="210" cy="210" r="135" stroke="#C47A5A" stroke-width="0.5" fill="none" opacity="0.12"/>
+    <circle cx="210" cy="210" r="115" stroke="#D4895E" stroke-width="0.5" fill="none" opacity="0.12"/>
+    <circle cx="210" cy="210" r="96"  stroke="#E8925A" stroke-width="0.5" fill="none" opacity="0.15"/>
 
-    <g class="orbit-ring-2">
-      <!-- Ring 2 — tilted ellipse -->
-      <ellipse cx="210" cy="210" rx="155" ry="40" stroke="#D4895E" stroke-width="0.5" stroke-dasharray="4 6" opacity="0.18" fill="none" transform="rotate(30 210 210)"/>
-      <circle cx="365" cy="210" r="4" fill="#F5C27A" opacity="0.50" transform="rotate(30 210 210)"/>
-      <circle cx="55"  cy="210" r="2.5" fill="#C47A5A" opacity="0.35" transform="rotate(30 210 210)"/>
-    </g>
-
-    <g class="orbit-ring-3">
-      <!-- Ring 3 — inner tight -->
-      <ellipse cx="210" cy="210" rx="130" ry="28" stroke="#E8925A" stroke-width="0.5" stroke-dasharray="3 7" opacity="0.15" fill="none" transform="rotate(-20 210 210)"/>
-      <circle cx="340" cy="210" r="3" fill="#F5C27A" opacity="0.45" transform="rotate(-20 210 210)"/>
-    </g>
-
-    <!-- Sun rays — slowly rotating -->
+    <!-- Minimal spokes — 8 fine lines, varying length -->
     <g class="sun-rays">
-      <!-- 16 rays of varying length and opacity -->
-      <line x1="210" y1="100" x2="210" y2="72"  stroke="#F5C27A" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/>
-      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(22.5 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="72"  stroke="#F5C27A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(45 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(67.5 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="72"  stroke="#E8925A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(90 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(112.5 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="72"  stroke="#E8925A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(135 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(157.5 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="72"  stroke="#F5C27A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(180 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(202.5 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="72"  stroke="#E8925A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(225 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(247.5 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="72"  stroke="#E8925A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(270 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(292.5 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="72"  stroke="#F5C27A" stroke-width="1.2" stroke-linecap="round" opacity="0.35" transform="rotate(315 210 210)"/>
-      <line x1="210" y1="100" x2="210" y2="82"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.2" transform="rotate(337.5 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="1.0" stroke-linecap="round" opacity="0.30"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.6" stroke-linecap="round" opacity="0.18" transform="rotate(45 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#E8925A" stroke-width="1.0" stroke-linecap="round" opacity="0.28" transform="rotate(90 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.6" stroke-linecap="round" opacity="0.18" transform="rotate(135 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="1.0" stroke-linecap="round" opacity="0.28" transform="rotate(180 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#E8925A" stroke-width="0.6" stroke-linecap="round" opacity="0.16" transform="rotate(225 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="1.0" stroke-linecap="round" opacity="0.28" transform="rotate(270 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#E8925A" stroke-width="0.6" stroke-linecap="round" opacity="0.16" transform="rotate(315 210 210)"/>
     </g>
 
-    <!-- Sun core — pulsing -->
+    <!-- Core — soft pulsing disc -->
     <g class="sun-core">
-      <circle cx="210" cy="210" r="82" fill="url(#sunGrad)"/>
-      <!-- Inner ring detail -->
-      <circle cx="210" cy="210" r="70" stroke="#F5C27A" stroke-width="0.5" fill="none" opacity="0.3"/>
-      <circle cx="210" cy="210" r="58" stroke="#E8925A" stroke-width="0.4" fill="none" opacity="0.25"/>
+      <circle cx="210" cy="210" r="78" fill="url(#sunGrad)"/>
+      <circle cx="210" cy="210" r="52" stroke="#F5C27A" stroke-width="0.6" fill="none" opacity="0.28"/>
     </g>
   </svg>
 
-  <!-- Mountain silhouette — bottom -->
+  <!-- Mountain silhouette — bottom, fully connected -->
   <svg class="canyon-mountains" viewBox="0 0 1440 180" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Back range — lightest, most distant -->
-    <path d="M0 180 L0 130 C60 118 120 108 200 98 C280 88 340 92 420 82 C500 72 560 78 640 68 C720 58 790 64 870 55 C950 46 1010 52 1090 44 C1170 36 1230 42 1310 36 C1380 30 1420 34 1440 32 L1440 180 Z"
-      fill="#C47A5A" opacity="0.08"/>
-    <!-- Mid range -->
-    <path d="M0 180 L0 148 C50 135 110 128 190 118 C270 108 330 115 410 105 C490 95 560 102 640 92 C720 82 790 90 880 80 C960 70 1020 78 1110 70 C1190 62 1260 70 1350 65 C1400 62 1430 64 1440 63 L1440 180 Z"
-      fill="#C47A5A" opacity="0.11"/>
-    <!-- Closer canyon walls — left -->
-    <path d="M0 180 L0 162 C30 148 65 140 100 125 C118 118 130 110 145 100 C160 90 170 85 185 88 C200 91 210 98 230 105 C250 112 270 115 300 120 C330 125 360 128 400 130 C440 132 480 134 520 136 L520 180 Z"
-      fill="#B85C38" opacity="0.14"/>
-    <!-- Closer canyon walls — right -->
-    <path d="M1440 180 L1440 158 C1410 144 1375 136 1340 122 C1322 115 1310 108 1295 98 C1280 88 1270 83 1255 86 C1240 89 1230 96 1210 103 C1190 110 1170 113 1140 118 C1110 123 1080 126 1040 128 C1000 130 960 132 920 134 L920 180 Z"
-      fill="#B85C38" opacity="0.14"/>
-    <!-- Foreground rock layer -->
-    <path d="M0 180 L0 172 C80 165 160 162 240 158 C320 154 400 155 500 160 C580 164 660 168 740 166 C820 164 900 160 980 158 C1060 156 1140 158 1220 162 C1300 166 1380 170 1440 172 L1440 180 Z"
-      fill="#8B4513" opacity="0.12"/>
-    <!-- Subtle ground line -->
-    <line x1="0" y1="179" x2="1440" y2="179" stroke="#C47A5A" stroke-width="0.8" opacity="0.2"/>
+    <!-- Layer 1 — distant haze, full width connected -->
+    <path d="M0 180 L0 125 C80 112 160 100 260 88 C360 76 440 82 540 70 C640 58 720 65 820 54 C920 43 1000 50 1100 42 C1200 34 1300 40 1380 36 L1440 34 L1440 180 Z"
+      fill="#C47A5A" opacity="0.07"/>
+    <!-- Layer 2 — mid range, full width -->
+    <path d="M0 180 L0 145 C70 132 150 124 240 114 C330 104 410 112 500 102 C590 92 670 100 760 90 C850 80 930 88 1020 78 C1110 68 1190 76 1280 70 C1360 65 1410 68 1440 67 L1440 180 Z"
+      fill="#C47A5A" opacity="0.10"/>
+    <!-- Layer 3 — closer ridges, full width -->
+    <path d="M0 180 L0 162 C50 150 100 142 160 130 C200 122 230 114 265 108 C300 102 330 106 370 112 C420 120 470 128 540 132 C610 136 680 134 760 128 C840 122 910 116 970 110 C1030 104 1080 108 1140 114 C1200 120 1250 128 1310 134 C1370 140 1415 145 1440 148 L1440 180 Z"
+      fill="#B85C38" opacity="0.13"/>
+    <!-- Layer 4 — foreground, full width -->
+    <path d="M0 180 L0 170 C60 163 130 160 210 157 C290 154 370 156 460 162 C540 167 620 170 700 168 C780 166 860 162 940 159 C1020 156 1100 158 1180 163 C1260 168 1350 173 1440 175 L1440 180 Z"
+      fill="#8B4513" opacity="0.11"/>
   </svg>
 
   <div class="page-hero">

@@ -54,7 +54,7 @@ nav {
   letter-spacing: 0.2em;
 }
 .nav-m { color: var(--terracotta); }
-.nav-v { color: var(--sage); }
+.nav-v { color: var(--terracotta); }
 .nav-w { color: var(--terracotta); }
 nav ul { list-style: none; display: flex; gap: 2.5rem; }
 nav ul li a {
@@ -149,7 +149,7 @@ nav ul li a:hover { color: var(--lavender); }
   letter-spacing: -0.01em;
 }
 
-/* Voughn — same size as Michella/Warren, ghosted, overlaid near Warren */
+/* Voughn — same size, ghosted, overlaid almost on top of Warren */
 .name-voughn {
   font-family: var(--font-display);
   font-size: clamp(4rem, 8vw, 8.5rem);
@@ -157,10 +157,10 @@ nav ul li a:hover { color: var(--lavender); }
   font-style: italic;
   color: rgba(100, 92, 88, 0.13);
   display: block;
-  line-height: 0.55;
+  line-height: 1;
   letter-spacing: -0.01em;
-  margin-top: 0;
-  margin-bottom: -0.45em;
+  margin-top: 0.05em;
+  margin-bottom: -1.02em;
   user-select: none;
   pointer-events: none;
 }
@@ -218,7 +218,7 @@ nav ul li a:hover { color: var(--lavender); }
 .btn:hover { background: var(--lavender); color: var(--ink); transform: translateY(-2px); }
 
 .scroll-hint {
-  position: absolute; bottom: 1.5rem; left: 50%;
+  position: absolute; bottom: 1.5rem; left: 65px;
   font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
   color: var(--ink-soft); opacity: 0.5; writing-mode: vertical-rl;
 }
