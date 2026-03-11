@@ -18,14 +18,34 @@
     }
     .contact-icon-links a:hover { color: var(--terracotta); }
     .contact-icon-links svg { width: 19px; height: 19px; flex-shrink: 0; }
-    body.page-connect .page-hero { padding-bottom: 1.5rem; }
-    body.page-connect .section-content { padding-top: 0.5rem; }
 
-    /* Willow — fixed right, z-index behind everything */
+    /* Centre the hero + section content */
+    body.page-connect .page-hero {
+      padding-bottom: 1.5rem;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      position: relative; z-index: 2;
+    }
+    body.page-connect .section-content {
+      padding-top: 0.5rem;
+      display: flex;
+      justify-content: center;
+      position: relative; z-index: 2;
+    }
+    body.page-connect .contact-wrap {
+      width: 100%;
+      max-width: 580px;
+    }
+    body.page-connect footer { position: relative; z-index: 2; }
+    body.page-connect nav    { position: relative; z-index: 10; }
+
+    /* Willow canvas — fixed right, behind everything */
     #willow-canvas {
       position: fixed;
       right: 0; top: 0;
-      width: 420px; height: 100vh;
+      width: 460px; height: 100vh;
       pointer-events: none;
       z-index: 0;
     }
@@ -96,319 +116,408 @@
     </div>
   </footer>
 
-  <!-- Willow tree drawn entirely on canvas — no inline SVG that can break layout -->
   <canvas id="willow-canvas"></canvas>
 
   <script>
   (function() {
     const canvas = document.getElementById('willow-canvas');
-    const ctx    = canvas.getContext('2d');
-    let H, W = 420, TX = 260;
+    const ctx = canvas.getContext('2d');
+    const W = 460, TX = 270;
+    let H = window.innerHeight;
 
-    function resize() {
-      canvas.width  = W;
-      H = canvas.height = window.innerHeight;
-      // Reinit strands on resize so they use new H
-      initStrands();
-    }
+    // Mouse position for cursor sway
+    let mouseX = W * 0.5, mouseY = H * 0.5;
+    document.addEventListener('mousemove', e => {
+      // translate to canvas coords (canvas is fixed right:0)
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY;
+    });
 
-    // ── Pre-compute strand data once so random values don't flicker each frame ──
-    let strandData = [];
+    // Pre-computed strand data — stable, never re-randomised mid-animation
+    let strands = [];
     function initStrands() {
-      strandData = [];
-      for(let x = -310; x <= 340; x += 14) {
-        const sx   = TX + x;
-        if(sx < 2 || sx > W - 2) continue;
-        const norm = x / 340;
-        // branch height at this x — outer branches are lower (less height)
-        const branchY = H - 820 - (1 - Math.abs(norm)) * 120;
-        // organic imperfection: each strand has slightly different control points
-        const jitter1 = (Math.random() - 0.5) * 18;
-        const jitter2 = (Math.random() - 0.5) * 24;
-        const len     = (H - branchY) * (0.72 + Math.random() * 0.22);
-        strandData.push({
-          sx, sy: branchY,
-          cp1x: sx + jitter1,       cp1y: branchY + len * 0.35,
-          cp2x: sx + jitter2,       cp2y: branchY + len * 0.68,
-          ex:   sx + (Math.random()-0.5)*12,
-          ey:   branchY + len,
-          lw:   0.7 + Math.random() * 0.75,
-          alpha:0.32 + Math.random() * 0.24,
-          col:  Math.random() < 0.55 ? '#8FAF8A' : '#A8C4A2',
+      strands = [];
+      // 120 strands spreading wide — matches new crown at H-880
+      for (let i = 0; i < 120; i++) {
+        const norm   = (i / 119) * 2 - 1; // -1 to 1
+        // Spread wider — real willows drape over a huge area
+        const spread = 340;
+        const sx     = TX + norm * spread;
+        if (sx < -20 || sx > W + 30) continue;
+        // Crown arch — centre highest, edges lower, matching branch endpoints
+        const crownY = H - 880 - (1 - norm * norm) * 130;
+        // Strands hang nearly to ground — very long
+        const len    = (H - crownY) * (0.82 + (i % 7) * 0.025);
+        const j1     = ((i * 17) % 19 - 9) * 2.2;
+        const j2     = ((i * 13) % 23 - 11) * 2.6;
+        strands.push({
+          sx, sy: crownY,
+          cp1x: sx + j1, cp1y: crownY + len * 0.30,
+          cp2x: sx + j2, cp2y: crownY + len * 0.62,
+          ex:   sx + ((i * 7) % 15 - 7),
+          ey:   crownY + len,
+          lw:   0.60 + (i % 6) * 0.13,
+          baseAlpha: 0.30 + (i % 5) * 0.05,
+          col:  i % 4 === 0 ? '#8FAF8A' : i % 4 === 1 ? '#A8C4A2' : i % 4 === 2 ? '#7A9E76' : '#B8D4B0',
+          windPhase: (i / 120) * Math.PI * 2,
+          windAmp:   2.8 + (i % 6) * 1.0,
         });
       }
     }
 
-    resize();
-    window.addEventListener('resize', resize);
+    function resizeCanvas() {
+      H = window.innerHeight;
+      canvas.width  = W;
+      canvas.height = H;
+      initStrands();
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-    // ── Organic branch helper: draws a branch with slight wobble ──
-    function drawBranch(x0,y0, cp1x,cp1y, cp2x,cp2y, x1,y1, lw, alpha) {
-      // Add slight imperfection to control points
-      const wobble = lw * 2.5;
+    // ─── Helpers ───
+    function stroke(pts, lw, col, alpha) {
       ctx.save();
-      ctx.strokeStyle = '#6A3A14';
-      ctx.lineWidth   = lw;
-      ctx.lineCap     = 'round';
-      ctx.lineJoin    = 'round';
+      ctx.strokeStyle = col; ctx.lineWidth = lw;
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
       ctx.globalAlpha = alpha;
       ctx.beginPath();
-      ctx.moveTo(x0, y0);
-      ctx.bezierCurveTo(
-        cp1x + (Math.random()-0.5)*wobble, cp1y + (Math.random()-0.5)*wobble*0.5,
-        cp2x + (Math.random()-0.5)*wobble, cp2y + (Math.random()-0.5)*wobble*0.5,
-        x1, y1
-      );
+      ctx.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i < pts.length - 1; i++) {
+        const mx = (pts[i][0] + pts[i+1][0]) / 2;
+        const my = (pts[i][1] + pts[i+1][1]) / 2;
+        ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
+      }
+      const l = pts.length - 1;
+      ctx.lineTo(pts[l][0], pts[l][1]);
       ctx.stroke();
       ctx.restore();
     }
 
-    function drawStroke(pts, lw, colour, alpha) {
+    function branch(x0,y0, cx1,cy1, cx2,cy2, x1,y1, lw, alpha) {
       ctx.save();
-      ctx.strokeStyle = colour; ctx.lineWidth = lw;
-      ctx.lineCap = 'round'; ctx.globalAlpha = alpha;
+      ctx.strokeStyle = '#6A3A14';
+      ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      ctx.globalAlpha = alpha;
       ctx.beginPath();
-      ctx.moveTo(pts[0][0], pts[0][1]);
-      for(let i=1; i<pts.length-1; i++) {
-        const mx=(pts[i][0]+pts[i+1][0])/2, my=(pts[i][1]+pts[i+1][1])/2;
-        ctx.quadraticCurveTo(pts[i][0],pts[i][1],mx,my);
-      }
-      const l=pts.length-1; ctx.lineTo(pts[l][0],pts[l][1]);
-      ctx.stroke(); ctx.restore();
+      ctx.moveTo(x0, y0);
+      ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x1, y1);
+      ctx.stroke();
+      ctx.restore();
     }
 
-    // ── Draw the static parts of the tree (trunk, branches, strands, carving) ──
-    function drawTree(swayAngle) {
-      const crownY = H - 820;
+    // ─── DRAW TREE (trunk + branches) ───
+    function drawTrunk() {
+      // Crown is near the very top — trunk is tall, clean, no side branches
+      const cY = H - 880; // crown high up
 
-      // ROOT FLARES
-      drawStroke([[TX,H],[TX-28,H-75],[TX-55,H-170],[TX-82,H-230]], 20,'#3D1E08',0.52);
-      drawStroke([[TX,H],[TX+32,H-75],[TX+62,H-170],[TX+96,H-230]], 18,'#3D1E08',0.50);
-      drawStroke([[TX,H],[TX-12,H-60],[TX-18,H-130]],               10,'#4A2508',0.35);
-      drawStroke([[TX,H],[TX+14,H-60],[TX+20,H-130]],               10,'#4A2508',0.32);
+      // Root flares — wide at base
+      stroke([[TX,H],[TX-30,H-70],[TX-58,H-165],[TX-85,H-225]], 22,'#3D1E08',0.50);
+      stroke([[TX,H],[TX+34,H-70],[TX+64,H-165],[TX+98,H-225]], 20,'#3D1E08',0.48);
+      stroke([[TX,H],[TX-14,H-55],[TX-20,H-125]],               12,'#4A2508',0.33);
+      stroke([[TX,H],[TX+16,H-55],[TX+22,H-125]],               11,'#4A2508',0.30);
 
-      // TRUNK
-      const tp = [[TX,H],[TX-3,H-160],[TX-5,H-330],[TX-3,H-490],[TX,H-630],[TX+2,H-730],[TX+3,H-790],[TX+1,H-820],[TX,crownY]];
-      drawStroke(tp, 94, '#1C0A02', 0.48);
-      drawStroke(tp, 80, '#3D1E08', 0.92);
-      drawStroke(tp, 66, '#7A4418', 0.86);
-      drawStroke(tp, 46, '#A86828', 0.76);
-      drawStroke(tp, 20, '#C48840', 0.38);
-      drawStroke(tp, 92, '#0E0502', 0.16);
+      // TALL TRUNK — no branches until near the very top
+      const tp = [[TX,H],[TX-2,H-180],[TX-4,H-360],[TX-2,H-540],
+                  [TX,H-680],[TX+1,H-760],[TX+2,H-820],[TX+1,H-855],[TX,cY]];
+      stroke(tp, 96,'#1C0A02',0.46);
+      stroke(tp, 82,'#3D1E08',0.92);
+      stroke(tp, 68,'#7A4418',0.86);
+      stroke(tp, 48,'#A86828',0.76);
+      stroke(tp, 22,'#C48840',0.36);
+      stroke(tp, 94,'#0E0502',0.14);
 
-      // Bark texture
+      // Bark texture lines
       ctx.save(); ctx.lineCap='round';
-      ctx.globalAlpha=0.20; ctx.strokeStyle='#1C0A02'; ctx.lineWidth=2;
-      ctx.beginPath(); ctx.moveTo(TX-9,H-110); ctx.bezierCurveTo(TX-11,H-300,TX-9,H-500,TX-6,H-700); ctx.stroke();
-      ctx.globalAlpha=0.16; ctx.strokeStyle='#8B5020'; ctx.lineWidth=1.4;
-      ctx.beginPath(); ctx.moveTo(TX+6,H-90); ctx.bezierCurveTo(TX+7,H-280,TX+6,H-470,TX+4,H-680); ctx.stroke();
-      ctx.globalAlpha=0.18; ctx.strokeStyle='#1C0A02'; ctx.lineWidth=1.8;
-      ctx.beginPath(); ctx.moveTo(TX+15,H-100); ctx.bezierCurveTo(TX+16,H-290,TX+14,H-480,TX+11,H-690); ctx.stroke();
-      // Horizontal crack marks
-      [[H-740,22],[H-600,20],[H-460,18],[H-330,16],[H-220,14]].forEach(([y,w])=>{
-        ctx.globalAlpha=0.16; ctx.strokeStyle='#1C0A02'; ctx.lineWidth=1.2;
-        ctx.beginPath(); ctx.moveTo(TX-w,y); ctx.bezierCurveTo(TX-w/2,y-1,TX+w/2,y+1,TX+w,y); ctx.stroke();
+      const blines = [
+        {pts:[[TX-9,H-100],[TX-11,H-290],[TX-9,H-490],[TX-6,H-700],[TX-4,H-840]], lw:2,   col:'#1C0A02', a:0.18},
+        {pts:[[TX+6, H-90],[TX+7, H-280],[TX+6, H-475],[TX+4,H-685],[TX+2,H-820]], lw:1.4, col:'#8B5020', a:0.14},
+        {pts:[[TX+16,H-95],[TX+17,H-285],[TX+15,H-478],[TX+12,H-688],[TX+8,H-820]],lw:1.8, col:'#1C0A02', a:0.16},
+        {pts:[[TX-18,H-110],[TX-20,H-295],[TX-17,H-495],[TX-12,H-700]],             lw:1.2, col:'#4A2508', a:0.12},
+      ];
+      blines.forEach(b => stroke(b.pts, b.lw, b.col, b.a));
+      // Horizontal cracks up the full trunk
+      [[H-800,18],[H-680,20],[H-550,22],[H-420,22],[H-300,20],[H-190,17],[H-110,14]].forEach(([y,w]) => {
+        ctx.globalAlpha=0.14; ctx.strokeStyle='#1C0A02'; ctx.lineWidth=1.1;
+        ctx.beginPath(); ctx.moveTo(TX-w,y); ctx.bezierCurveTo(TX-w/3,y-1,TX+w/3,y+1,TX+w,y); ctx.stroke();
       });
       ctx.restore();
 
-      // CROWN BRANCHES — organic, imperfect
-      // Left side — arch up then sweep out and droop
-      drawBranch(TX,crownY,  TX-55,crownY-55,  TX-160,crownY-40,  TX-290,crownY+30,  13,0.80);
-      drawBranch(TX,crownY,  TX-42,crownY-70,  TX-120,crownY-62,  TX-210,crownY-18,  10,0.75);
-      drawBranch(TX,crownY,  TX-25,crownY-88,  TX-72, crownY-90,  TX-145,crownY-52,   8,0.70);
-      drawBranch(TX,crownY,  TX-12,crownY-100, TX-38, crownY-108, TX-78, crownY-88,   7,0.66);
-      // Centre branches — reach upward
-      drawBranch(TX,crownY,  TX-8, crownY-95,  TX-14, crownY-140, TX-8,  crownY-165,  9,0.72);
-      drawBranch(TX,crownY,  TX+6, crownY-90,  TX+10, crownY-138, TX+6,  crownY-162,  8,0.70);
-      // Right side
-      drawBranch(TX,crownY,  TX+12,crownY-100, TX+40, crownY-108, TX+80, crownY-88,   7,0.66);
-      drawBranch(TX,crownY,  TX+28,crownY-88,  TX+75, crownY-90,  TX+148,crownY-52,   8,0.70);
-      drawBranch(TX,crownY,  TX+45,crownY-70,  TX+124,crownY-62,  TX+215,crownY-18,  10,0.75);
-      drawBranch(TX,crownY,  TX+58,crownY-55,  TX+165,crownY-40,  TX+295,crownY+30,  12,0.78);
+      // CROWN BRANCHES — only at the very top, explode outward then droop
+      // All branches start at crown, arc UP first then sweep wide and droop down naturally
+      // Far left — long sweeping droop
+      branch(TX,cY,  TX-40,cY-80,  TX-180,cY-60,  TX-320,cY+60,  13,0.80);
+      branch(TX,cY,  TX-30,cY-95,  TX-150,cY-80,  TX-260,cY+10,  10,0.76);
+      branch(TX,cY,  TX-18,cY-110, TX-100,cY-100, TX-180,cY-40,   8,0.72);
+      // Left-centre
+      branch(TX,cY,  TX-10,cY-120, TX-55, cY-130, TX-100,cY-80,   7,0.68);
+      branch(TX,cY,  TX-5, cY-130, TX-28, cY-150, TX-52, cY-120,  6,0.65);
+      // Straight up — central leaders
+      branch(TX,cY,  TX-4, cY-100, TX-6,  cY-155, TX-4,  cY-185, 10,0.74);
+      branch(TX,cY,  TX+3, cY-98,  TX+5,  cY-152, TX+3,  cY-182,  9,0.72);
+      // Right-centre
+      branch(TX,cY,  TX+8, cY-130, TX+30, cY-150, TX+55, cY-120,  6,0.65);
+      branch(TX,cY,  TX+13,cY-120, TX+58, cY-130, TX+103,cY-80,   7,0.68);
+      // Right — long sweeping droop
+      branch(TX,cY,  TX+20,cY-110, TX+102,cY-100, TX+183,cY-40,   8,0.72);
+      branch(TX,cY,  TX+32,cY-95,  TX+152,cY-80,  TX+263,cY+10,  10,0.76);
+      branch(TX,cY,  TX+42,cY-80,  TX+182,cY-60,  TX+322,cY+60,  12,0.78);
+    }
 
-      // HANGING STRANDS — use pre-computed data, no random each frame
-      strandData.forEach(s => {
+    // ─── DRAW STRANDS with cursor sway ───
+    function drawStrands(t) {
+      // How much cursor pulls the strands — mouse in canvas coords
+      const cursorInfluence = (mouseX - W * 0.5) / W; // -0.5 to 0.5
+
+      strands.forEach(s => {
+        // Wind sway + subtle cursor push
+        const wind   = Math.sin(t * 0.7 + s.windPhase) * s.windAmp;
+        const cursor = cursorInfluence * 18;
+        const sway   = wind + cursor;
+
         ctx.save();
         ctx.strokeStyle = s.col;
         ctx.lineWidth   = s.lw;
         ctx.lineCap     = 'round';
-        ctx.globalAlpha = s.alpha;
+        ctx.globalAlpha = s.baseAlpha;
         ctx.beginPath();
         ctx.moveTo(s.sx, s.sy);
-        ctx.bezierCurveTo(s.cp1x, s.cp1y, s.cp2x, s.cp2y, s.ex, s.ey);
+        ctx.bezierCurveTo(
+          s.cp1x + sway * 0.4, s.cp1y,
+          s.cp2x + sway * 0.75, s.cp2y,
+          s.ex   + sway,        s.ey
+        );
         ctx.stroke();
         ctx.restore();
       });
-
-      // CELESTIAL DIRT — glowing ground at base
-      drawDirt();
-
-      // CARVING
-      drawCarving();
     }
 
-    function drawDirt() {
-      const groundY = H - 28;
-      // Soft glowing mound — layered radial gradients
-      const grd = ctx.createRadialGradient(TX, groundY, 0, TX, groundY, 140);
-      grd.addColorStop(0,   'rgba(180, 140, 80, 0.22)');
-      grd.addColorStop(0.3, 'rgba(140, 100, 50, 0.14)');
-      grd.addColorStop(0.6, 'rgba(90,  60,  20, 0.08)');
-      grd.addColorStop(1,   'rgba(0,   0,   0,  0)');
+    // ─── CARVING ─── visible, on trunk mid-height
+    function drawCarving() {
+      // Place carving in the middle of the trunk's visible area
+      const cx = TX + 4;
+      const cy = H * 0.44;
       ctx.save();
+      ctx.globalAlpha = 0.55; // much more visible
+      ctx.strokeStyle = '#3A1A06';
+      ctx.fillStyle   = '#3A1A06';
+      ctx.lineWidth   = 1.6;
+      ctx.lineCap     = 'round';
+
+      // Heart shape — carved notch style
+      ctx.beginPath();
+      ctx.moveTo(cx, cy + 5);
+      ctx.bezierCurveTo(cx,     cy+1,  cx-9, cy-4, cx-9, cy+3);
+      ctx.bezierCurveTo(cx-9,   cy+10, cx,   cy+17, cx,  cy+17);
+      ctx.bezierCurveTo(cx,     cy+17, cx+9, cy+10, cx+9,cy+3);
+      ctx.bezierCurveTo(cx+9,   cy-4,  cx,   cy+1,  cx,  cy+5);
+      ctx.stroke();
+
+      // "ironfeather" text
+      ctx.font = 'italic 9px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('ironfeather', cx, cy + 32);
+
+      // Bracket marks around carving
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(cx-16, cy-7); ctx.lineTo(cx-16, cy+35);
+      ctx.moveTo(cx+16, cy-7); ctx.lineTo(cx+16, cy+35);
+      ctx.stroke();
+
+      // Subtle carved-in shadow overlay to make it look etched
+      ctx.globalAlpha = 0.18;
+      ctx.fillStyle = '#FAF0E0';
+      ctx.font = 'italic 9px Georgia, serif';
+      ctx.fillText('ironfeather', cx + 0.5, cy + 32.5);
+      ctx.restore();
+    }
+
+    // ─── DIRT — celestial ground ───
+    function drawDirt(t) {
+      const gy = H - 22;
+      ctx.save();
+
+      // Main glow mound
+      const grd = ctx.createRadialGradient(TX, gy, 0, TX, gy, 160);
+      grd.addColorStop(0,   'rgba(190,150,85,0.26)');
+      grd.addColorStop(0.25,'rgba(155,110,55,0.18)');
+      grd.addColorStop(0.55,'rgba(100,68,25,0.10)');
+      grd.addColorStop(1,   'rgba(0,0,0,0)');
       ctx.fillStyle = grd;
       ctx.beginPath();
-      ctx.ellipse(TX, groundY, 140, 32, 0, 0, Math.PI*2);
+      ctx.ellipse(TX, gy, 165, 36, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      // Celestial shimmer dots in the dirt
-      const shimmerCols = [
-        'rgba(220,190,120,0.55)','rgba(180,150,90,0.45)',
-        'rgba(200,170,100,0.50)','rgba(240,210,140,0.40)',
-        'rgba(160,220,180,0.30)','rgba(200,180,240,0.25)',
+      // Dirt speckle particles — deterministic positions
+      const speckCols = [
+        [220,190,120],[180,150,90],[200,170,100],[240,210,140],
+        [160,220,180],[200,180,240],[255,220,160],[140,200,160],
       ];
-      // Use seeded positions so they don't flicker
-      for(let i=0; i<22; i++) {
-        const angle  = (i / 22) * Math.PI * 2;
-        const radius = 12 + (i % 5) * 18 + ((i*7)%11)*3;
-        const dx     = Math.cos(angle * 1.618 + i*0.4) * radius;
-        const dy     = Math.sin(angle * 0.8  + i*0.3) * 14 + 8;
-        const r      = 0.8 + (i%3)*0.5;
-        ctx.globalAlpha = 0.35 + (i%4)*0.1;
-        ctx.fillStyle   = shimmerCols[i%shimmerCols.length];
+      for (let i = 0; i < 38; i++) {
+        // Deterministic but varied positions
+        const angle  = (i * 137.5 * Math.PI / 180); // golden angle
+        const radius = 8 + (i % 8) * 16 + (i % 3) * 5;
+        const dx     = Math.cos(angle) * radius * 0.9;
+        const dy     = Math.sin(angle) * radius * 0.22 + 10;
+        const r      = 0.6 + (i % 4) * 0.45;
+        const [rc, gc, bc] = speckCols[i % speckCols.length];
+        // Gentle celestial twinkle
+        const twinkle = 0.30 + Math.sin(t * 1.2 + i * 0.8) * 0.12;
+        ctx.globalAlpha = twinkle;
+        ctx.fillStyle   = `rgb(${rc},${gc},${bc})`;
         ctx.beginPath();
-        ctx.arc(TX + dx, groundY - 12 + dy, r, 0, Math.PI*2);
+        ctx.arc(TX + dx, gy - 10 + dy, r, 0, Math.PI * 2);
         ctx.fill();
+
+        // Some speckles get a tiny glow halo
+        if (i % 5 === 0) {
+          const hgrd = ctx.createRadialGradient(TX+dx, gy-10+dy, 0, TX+dx, gy-10+dy, r*4);
+          hgrd.addColorStop(0, `rgba(${rc},${gc},${bc},0.25)`);
+          hgrd.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.globalAlpha = twinkle * 0.5;
+          ctx.fillStyle   = hgrd;
+          ctx.beginPath();
+          ctx.arc(TX+dx, gy-10+dy, r*4, 0, Math.PI*2);
+          ctx.fill();
+        }
       }
 
-      // Thin glowing ground line
-      const lineGrd = ctx.createLinearGradient(TX-140, groundY, TX+140, groundY);
-      lineGrd.addColorStop(0,    'rgba(160,120,60,0)');
-      lineGrd.addColorStop(0.25, 'rgba(200,160,80,0.30)');
-      lineGrd.addColorStop(0.5,  'rgba(220,185,100,0.45)');
-      lineGrd.addColorStop(0.75, 'rgba(200,160,80,0.30)');
-      lineGrd.addColorStop(1,    'rgba(160,120,60,0)');
+      // Ground arc glow
+      const lg = ctx.createLinearGradient(TX-160, gy, TX+160, gy);
+      lg.addColorStop(0,    'rgba(160,120,60,0)');
+      lg.addColorStop(0.2,  'rgba(200,160,80,0.28)');
+      lg.addColorStop(0.5,  'rgba(230,195,110,0.50)');
+      lg.addColorStop(0.8,  'rgba(200,160,80,0.28)');
+      lg.addColorStop(1,    'rgba(160,120,60,0)');
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = lineGrd;
-      ctx.lineWidth   = 1.2;
+      ctx.strokeStyle = lg;
+      ctx.lineWidth   = 1.4;
       ctx.beginPath();
-      ctx.moveTo(TX-140, groundY);
-      ctx.bezierCurveTo(TX-80, groundY-4, TX+80, groundY-4, TX+140, groundY);
+      ctx.moveTo(TX-160, gy);
+      ctx.bezierCurveTo(TX-80, gy-5, TX+80, gy-5, TX+160, gy);
       ctx.stroke();
       ctx.restore();
     }
 
-    function drawCarving() {
-      const cx = TX + 5, cy = H * 0.46;
-      ctx.save();
-      ctx.globalAlpha = 0.24;
-      ctx.strokeStyle = '#7A4A1E';
-      ctx.fillStyle   = '#7A4A1E';
-      ctx.lineWidth   = 1.1;
-      ctx.font        = 'italic 7.5px Georgia, serif';
-      ctx.textAlign   = 'center';
-      ctx.beginPath();
-      ctx.moveTo(cx, cy+4);
-      ctx.bezierCurveTo(cx,cy,   cx-7,cy-4, cx-7,cy+2);
-      ctx.bezierCurveTo(cx-7,cy+8, cx,cy+13, cx,cy+13);
-      ctx.bezierCurveTo(cx,cy+13, cx+7,cy+8, cx+7,cy+2);
-      ctx.bezierCurveTo(cx+7,cy-4, cx,cy,   cx,cy+4);
-      ctx.stroke();
-      ctx.fillText('ironfeather', cx, cy+25);
-      ctx.beginPath();
-      ctx.moveTo(cx-13,cy-5); ctx.lineTo(cx-13,cy+27);
-      ctx.moveTo(cx+13,cy-5); ctx.lineTo(cx+13,cy+27);
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    // ── Leaves — slow, smooth, never glitch ──
-    // Key fix: very slow vy, very low swingS, leaves drawn OUTSIDE drawTree 
-    // so they persist across frames without being cleared with the tree
+    // ─── LEAVES — dense on tree + slow falling ───
     const leaves = [];
 
-    function spawnLeaf(startY) {
-      const preplace = startY !== undefined;
-      leaves.push({
-        x:      30 + Math.random() * (W - 60),
-        y:      preplace ? startY : -8,
-        vy:     0.12 + Math.random() * 0.18,   // very slow fall
+    // Leaf colours: greens + a few yellowing ones for depth
+    const LEAF_COLS = [
+      [143,175,138],[120,158,115],[168,196,162],
+      [100,140,96], [180,210,174],[88,128,84],
+      [158,190,145],[195,215,180],[112,152,108],
+      [200,200,120],[180,190,100], // yellowing
+    ];
+
+    function mkLeaf(preX, preY) {
+      const [r,g,b] = LEAF_COLS[Math.floor(Math.random() * LEAF_COLS.length)];
+      const alpha   = 0.60 + Math.random() * 0.32;
+      return {
+        x:      preX !== undefined ? preX : 20 + Math.random() * (W - 40),
+        y:      preY !== undefined ? preY : -10 - Math.random() * 30,
+        vy:     0.10 + Math.random() * 0.16,   // very slow fall
+        vx:     0,
         rot:    Math.random() * Math.PI * 2,
-        rotV:   (Math.random()-0.5) * 0.008,   // slow rotation
-        w:      7 + Math.random() * 8,
-        h:      2.2 + Math.random() * 2.8,
-        col:    ['rgba(143,175,138,VAL)','rgba(120,158,115,VAL)','rgba(168,196,162,VAL)','rgba(100,140,96,VAL)'][Math.floor(Math.random()*4)].replace('VAL',(0.72+Math.random()*0.2).toFixed(2)),
-        alpha:  preplace ? 0.65 + Math.random()*0.25 : 0,
-        alphaT: 0.65 + Math.random() * 0.25,
+        rotV:   (Math.random() - 0.5) * 0.007,
+        w:      6 + Math.random() * 10,
+        h:      2.0 + Math.random() * 3.0,
+        col:    `rgba(${r},${g},${b},${alpha.toFixed(2)})`,
+        alpha:  preY !== undefined ? alpha * (0.5 + Math.random() * 0.5) : 0,
+        alphaT: alpha,
         swing:  Math.random() * Math.PI * 2,
-        swingS: 0.004 + Math.random() * 0.006,  // very slow sway period
-        swingA: 0.25 + Math.random() * 0.45,     // gentle sway amplitude
-        life:   preplace ? Math.floor(Math.random()*400) : 0,
-        maxLife:500 + Math.random() * 350,
-      });
+        swingS: 0.003 + Math.random() * 0.005,
+        swingA: 0.18 + Math.random() * 0.42,
+        life:   preY !== undefined ? Math.floor(Math.random() * 450) : 0,
+        maxLife:600 + Math.random() * 400,
+        // cursor response
+        cursorK: 0.015 + Math.random() * 0.020,
+      };
     }
 
-    // Pre-populate
-    for(let i=0; i<45; i++) spawnLeaf(Math.random() * H);
+    // Dense initial population — leaves clustered heavily on strands
+    for (let i = 0; i < 240; i++) {
+      const strand = strands[Math.floor(Math.random() * strands.length)];
+      // Bias toward upper 60% of strands where leaves are denser
+      const t0  = Math.random() < 0.65 ? Math.random() * 0.6 : Math.random();
+      const px  = strand ? strand.sx + (strand.ex - strand.sx) * t0 + (Math.random()-0.5)*22 : Math.random()*W;
+      const py  = strand ? strand.sy + (strand.ey - strand.sy) * t0 : Math.random()*H;
+      leaves.push(mkLeaf(px, py));
+    }
 
-    // Timed spawn — one leaf every 20 frames (~0.33s at 60fps)
     let spawnTimer = 0;
 
-    let t = 0, frame = 0;
+    // ─── MAIN ANIMATION LOOP ───
+    let t = 0;
     function animate() {
       requestAnimationFrame(animate);
-      t     += 0.006;
-      frame += 1;
+      t += 0.007;
 
-      // Clear and draw tree with very subtle sway
       ctx.clearRect(0, 0, W, H);
+
+      // Subtle whole-tree sway driven by time + cursor
+      const cursorLean = (mouseX - W * 0.5) / W * 0.012;
       ctx.save();
       ctx.translate(TX, H);
-      ctx.rotate(Math.sin(t * 0.7) * 0.006);
+      ctx.rotate(Math.sin(t * 0.65) * 0.007 + cursorLean);
       ctx.translate(-TX, -H);
-      drawTree(t);
+      drawTrunk();
       ctx.restore();
 
-      // Spawn new leaf on timer (not random per-frame)
-      spawnTimer++;
-      if(spawnTimer >= 22) { spawnLeaf(); spawnTimer = 0; }
+      // Strands sway independently
+      drawStrands(t);
 
-      // Update + draw each leaf
-      for(let i = leaves.length - 1; i >= 0; i--) {
+      // Carving on trunk
+      drawCarving();
+
+      // Celestial dirt
+      drawDirt(t);
+
+      // Spawn leaves steadily
+      spawnTimer++;
+      if (spawnTimer >= 18) { leaves.push(mkLeaf()); spawnTimer = 0; }
+      // Occasionally spawn a cluster of 2-3
+      if (spawnTimer === 9) { leaves.push(mkLeaf()); }
+
+      // Update & draw leaves
+      const cursorPull = (mouseX - W * 0.5) / W;
+      for (let i = leaves.length - 1; i >= 0; i--) {
         const l = leaves[i];
         l.life  += 1;
         l.swing += l.swingS;
-        // smooth sinusoidal horizontal drift — no sudden jumps
-        l.x    += Math.sin(l.swing) * l.swingA;
-        l.y    += l.vy;
-        l.rot  += l.rotV;
+
+        // Cursor gently deflects leaves
+        l.vx += cursorPull * l.cursorK;
+        l.vx *= 0.94; // damping
+        l.x  += l.vx + Math.sin(l.swing) * l.swingA;
+        l.y  += l.vy;
+        l.rot += l.rotV + Math.sin(l.swing * 1.3) * 0.003;
 
         // Fade in
-        if(l.alpha < l.alphaT) l.alpha = Math.min(l.alphaT, l.alpha + 0.015);
-        // Fade out in last 25% of life
-        const fadeStart = l.maxLife * 0.75;
-        if(l.life > fadeStart) {
-          l.alpha = l.alphaT * Math.max(0, 1 - (l.life - fadeStart) / (l.maxLife - fadeStart));
-        }
+        if (l.alpha < l.alphaT) l.alpha = Math.min(l.alphaT, l.alpha + 0.012);
+        // Fade out last 25%
+        const fs = l.maxLife * 0.75;
+        if (l.life > fs) l.alpha = l.alphaT * Math.max(0, 1 - (l.life-fs)/(l.maxLife-fs));
 
-        // Remove
-        if(l.life > l.maxLife || l.y > H + 20) { leaves.splice(i,1); continue; }
+        // Remove if dead or off canvas
+        if (l.life > l.maxLife || l.y > H + 20) { leaves.splice(i, 1); continue; }
 
-        // Draw
+        // Draw leaf
         ctx.save();
         ctx.translate(l.x, l.y);
         ctx.rotate(l.rot);
         ctx.globalAlpha = l.alpha;
         ctx.fillStyle   = l.col;
         ctx.beginPath();
-        ctx.ellipse(0, 0, l.w, l.h, 0, 0, Math.PI*2);
+        ctx.ellipse(0, 0, l.w, l.h, 0, 0, Math.PI * 2);
         ctx.fill();
-        // midrib
-        ctx.strokeStyle = 'rgba(55,95,50,0.28)';
+        // Midrib line
+        ctx.strokeStyle = 'rgba(50,90,45,0.25)';
         ctx.lineWidth   = 0.5;
         ctx.beginPath();
-        ctx.moveTo(-l.w * 0.82, 0);
-        ctx.lineTo( l.w * 0.82, 0);
+        ctx.moveTo(-l.w * 0.8, 0);
+        ctx.lineTo( l.w * 0.8, 0);
         ctx.stroke();
         ctx.restore();
       }
