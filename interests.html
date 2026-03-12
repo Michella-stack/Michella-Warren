@@ -44,23 +44,31 @@
       border-top-color: rgba(196,122,90,0.2);
     }
 
-    /* ── Layout: list aligns with hero, constrained from right ── */
+    /* ── Layout: left-aligned, wider, not centred ── */
     body.page-interests .page-hero {
-      max-width: 760px;
+      max-width: none;
+      margin-right: 340px; /* keep clear of sun */
     }
     body.page-interests .section-content {
-      max-width: 760px;
-      padding-right: 2rem;
+      max-width: none;
+      margin-right: 340px;
     }
-    body.page-interests .interest-list,
-    body.page-interests .open-invite {
-      max-width: 760px;
+    body.page-interests .interest-list {
       width: 100%;
+      max-width: none;
     }
-    body.page-interests .interest-item p,
+    body.page-interests .interest-item {
+      max-width: none;
+    }
+    body.page-interests .interest-item p {
+      max-width: 680px;
+      text-align: left;
+    }
+    body.page-interests .open-invite {
+      max-width: 680px;
+    }
     body.page-interests .open-invite p {
-      max-width: 640px;
-      text-align: justify;
+      text-align: left;
     }
 
     /* ── Orbital sun — fixed right side ── */
