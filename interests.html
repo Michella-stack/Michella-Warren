@@ -44,10 +44,10 @@
       border-top-color: rgba(196,122,90,0.2);
     }
 
-    /* ── Layout: left-aligned, wider, not centred ── */
+    /* ── Layout: left-aligned, wider text, open-invite indented ── */
     body.page-interests .page-hero {
       max-width: none;
-      margin-right: 340px; /* keep clear of sun */
+      margin-right: 340px;
     }
     body.page-interests .section-content {
       max-width: none;
@@ -61,11 +61,16 @@
       max-width: none;
     }
     body.page-interests .interest-item p {
-      max-width: 680px;
+      max-width: none;
       text-align: left;
     }
+    body.page-interests .interest-item h3 {
+      max-width: none;
+    }
+    /* open-invite: indent to align with item text (not the number) */
     body.page-interests .open-invite {
-      max-width: 680px;
+      margin-left: 5rem !important;
+      max-width: 700px;
     }
     body.page-interests .open-invite p {
       text-align: left;
