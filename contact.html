@@ -165,7 +165,7 @@
           ex:   sx + ((i * 7) % 15 - 7),
           ey:   crownY + len,
           lw:   0.60 + (i % 6) * 0.13,
-          baseAlpha: 0.30 + (i % 5) * 0.05,
+          baseAlpha: 0.16 + (i % 5) * 0.03,
           col:  i % 4 === 0 ? '#8FAF8A' : i % 4 === 1 ? '#A8C4A2' : i % 4 === 2 ? '#7A9E76' : '#B8D4B0',
           windPhase: (i / 120) * Math.PI * 2,
           windAmp:   2.8 + (i % 6) * 1.0,
@@ -217,34 +217,30 @@
 
     // ─── DRAW TREE (trunk only — no crown branches) ───
     function drawTrunk() {
-      // Root flares — wide at base
-      stroke([[TX,H],[TX-30,H-70],[TX-58,H-165],[TX-85,H-225]], 22,'#3D1E08',0.50);
-      stroke([[TX,H],[TX+34,H-70],[TX+64,H-165],[TX+98,H-225]], 20,'#3D1E08',0.48);
-      stroke([[TX,H],[TX-14,H-55],[TX-20,H-125]],               12,'#4A2508',0.33);
-      stroke([[TX,H],[TX+16,H-55],[TX+22,H-125]],               11,'#4A2508',0.30);
+      // Root — clean straight base, no flares
 
       // TRUNK — extends all the way to top of canvas (y=0)
       const tp = [[TX,H],[TX-2,H-180],[TX-4,H-360],[TX-2,H-540],
                   [TX,H-680],[TX+1,H-760],[TX+2,H-850],[TX+1,H-920],[TX,0]];
-      stroke(tp, 96,'#1C0A02',0.46);
-      stroke(tp, 82,'#3D1E08',0.92);
-      stroke(tp, 68,'#7A4418',0.86);
-      stroke(tp, 48,'#A86828',0.76);
-      stroke(tp, 22,'#C48840',0.36);
-      stroke(tp, 94,'#0E0502',0.14);
+      stroke(tp, 96,'#1C0A02',0.22);
+      stroke(tp, 82,'#3D1E08',0.45);
+      stroke(tp, 68,'#7A4418',0.38);
+      stroke(tp, 48,'#A86828',0.30);
+      stroke(tp, 22,'#C48840',0.16);
+      stroke(tp, 94,'#0E0502',0.07);
 
       // Bark texture lines — extended to top
       ctx.save(); ctx.lineCap='round';
       const blines = [
-        {pts:[[TX-9,H-100],[TX-11,H-290],[TX-9,H-490],[TX-6,H-700],[TX-4,H-900],[TX-2,0]], lw:2,   col:'#1C0A02', a:0.18},
-        {pts:[[TX+6, H-90],[TX+7, H-280],[TX+6, H-475],[TX+4,H-685],[TX+2,H-880],[TX+1,0]], lw:1.4, col:'#8B5020', a:0.14},
-        {pts:[[TX+16,H-95],[TX+17,H-285],[TX+15,H-478],[TX+12,H-688],[TX+8,H-880],[TX+4,0]],lw:1.8, col:'#1C0A02', a:0.16},
-        {pts:[[TX-18,H-110],[TX-20,H-295],[TX-17,H-495],[TX-12,H-700],[TX-8,H-880]],        lw:1.2, col:'#4A2508', a:0.12},
+        {pts:[[TX-9,H-100],[TX-11,H-290],[TX-9,H-490],[TX-6,H-700],[TX-4,H-900],[TX-2,0]], lw:2,   col:'#1C0A02', a:0.08},
+        {pts:[[TX+6, H-90],[TX+7, H-280],[TX+6, H-475],[TX+4,H-685],[TX+2,H-880],[TX+1,0]], lw:1.4, col:'#8B5020', a:0.06},
+        {pts:[[TX+16,H-95],[TX+17,H-285],[TX+15,H-478],[TX+12,H-688],[TX+8,H-880],[TX+4,0]],lw:1.8, col:'#1C0A02', a:0.07},
+        {pts:[[TX-18,H-110],[TX-20,H-295],[TX-17,H-495],[TX-12,H-700],[TX-8,H-880]],        lw:1.2, col:'#4A2508', a:0.05},
       ];
       blines.forEach(b => stroke(b.pts, b.lw, b.col, b.a));
       // Horizontal cracks
       [[H-800,18],[H-680,20],[H-550,22],[H-420,22],[H-300,20],[H-190,17],[H-110,14]].forEach(([y,w]) => {
-        ctx.globalAlpha=0.14; ctx.strokeStyle='#1C0A02'; ctx.lineWidth=1.1;
+        ctx.globalAlpha=0.06; ctx.strokeStyle='#1C0A02'; ctx.lineWidth=1.1;
         ctx.beginPath(); ctx.moveTo(TX-w,y); ctx.bezierCurveTo(TX-w/3,y-1,TX+w/3,y+1,TX+w,y); ctx.stroke();
       });
       ctx.restore();
@@ -276,47 +272,6 @@
         ctx.stroke();
         ctx.restore();
       });
-    }
-
-    // ─── CARVING ─── visible, on trunk mid-height
-    function drawCarving() {
-      // Place carving in the middle of the trunk's visible area
-      const cx = TX + 4;
-      const cy = H * 0.44;
-      ctx.save();
-      ctx.globalAlpha = 0.55; // much more visible
-      ctx.strokeStyle = '#3A1A06';
-      ctx.fillStyle   = '#3A1A06';
-      ctx.lineWidth   = 1.6;
-      ctx.lineCap     = 'round';
-
-      // Heart shape — carved notch style
-      ctx.beginPath();
-      ctx.moveTo(cx, cy + 5);
-      ctx.bezierCurveTo(cx,     cy+1,  cx-9, cy-4, cx-9, cy+3);
-      ctx.bezierCurveTo(cx-9,   cy+10, cx,   cy+17, cx,  cy+17);
-      ctx.bezierCurveTo(cx,     cy+17, cx+9, cy+10, cx+9,cy+3);
-      ctx.bezierCurveTo(cx+9,   cy-4,  cx,   cy+1,  cx,  cy+5);
-      ctx.stroke();
-
-      // "ironfeather" text
-      ctx.font = 'italic 9px Georgia, serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('ironfeather', cx, cy + 32);
-
-      // Bracket marks around carving
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.moveTo(cx-16, cy-7); ctx.lineTo(cx-16, cy+35);
-      ctx.moveTo(cx+16, cy-7); ctx.lineTo(cx+16, cy+35);
-      ctx.stroke();
-
-      // Subtle carved-in shadow overlay to make it look etched
-      ctx.globalAlpha = 0.18;
-      ctx.fillStyle = '#FAF0E0';
-      ctx.font = 'italic 9px Georgia, serif';
-      ctx.fillText('ironfeather', cx + 0.5, cy + 32.5);
-      ctx.restore();
     }
 
     // ─── DIRT — celestial ground ───
@@ -454,8 +409,6 @@
       // Strands sway independently
       drawStrands(t);
 
-      // Carving on trunk
-      drawCarving();
 
       // Celestial dirt
       drawDirt(t);
