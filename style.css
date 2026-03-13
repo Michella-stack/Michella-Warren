@@ -548,3 +548,36 @@ footer {
 
 /* Connect page — sage em */
 body.page-connect .page-hero h1 em { color: var(--sage); }
+
+/* ─── Research page — horizontal scroll cards ────────── */
+body.page-research .section-content {
+  max-width: 100%;
+  padding-left: 4rem;
+  padding-right: 0;
+}
+body.page-research .card-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1.8rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 1.5rem;
+  padding-right: 4rem;
+  cursor: grab;
+}
+body.page-research .card-grid:active { cursor: grabbing; }
+body.page-research .card-grid .card {
+  flex: 0 0 460px;
+  min-width: 460px;
+  scroll-snap-align: start;
+  align-self: flex-start;
+}
+body.page-research .card-grid::-webkit-scrollbar { height: 4px; }
+body.page-research .card-grid::-webkit-scrollbar-track { background: transparent; }
+body.page-research .card-grid::-webkit-scrollbar-thumb { background: var(--lavender); border-radius: 999px; }
+@media (max-width: 768px) {
+  body.page-research .section-content { padding-left: 1.5rem; }
+  body.page-research .card-grid .card { flex: 0 0 85vw; min-width: 85vw; }
+}

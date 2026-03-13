@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
+<body class="page-research">
 
   <nav>
     <div class="nav-name">
@@ -127,5 +127,14 @@
   })();
   </script>
 
+<script>
+  // Drag to scroll on card grid
+  const grid = document.querySelector(".card-grid");
+  let isDown = false, startX, scrollLeft;
+  grid.addEventListener("mousedown", e => { isDown = true; grid.classList.add("active"); startX = e.pageX - grid.offsetLeft; scrollLeft = grid.scrollLeft; });
+  grid.addEventListener("mouseleave", () => { isDown = false; });
+  grid.addEventListener("mouseup", () => { isDown = false; });
+  grid.addEventListener("mousemove", e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - grid.offsetLeft; grid.scrollLeft = scrollLeft - (x - startX) * 1.5; });
+</script>
 </body>
 </html>
