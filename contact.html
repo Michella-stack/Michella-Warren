@@ -19,47 +19,40 @@
     .contact-icon-links a:hover { color: var(--terracotta); }
     .contact-icon-links svg { width: 19px; height: 19px; flex-shrink: 0; }
 
-    /* Push content to the left — hero and green box share same left edge */
+    /* Full-page layout — content centred in left 60% of screen */
+    body.page-connect {
+      position: relative;
+      overflow-x: hidden;
+    }
+    body.page-connect nav {
+      position: relative; z-index: 10;
+    }
+    /* Override page-hero to centre content */
     body.page-connect .page-hero {
-      padding-bottom: 1.5rem;
-      max-width: 680px;
-      margin-left: 8vw;
-      margin-right: 0;
-      text-align: left;
+      padding: 7rem 4rem 2rem !important;
+      border-bottom: none !important;
+      max-width: 700px;
+      margin: 0;
       position: relative; z-index: 2;
     }
-    body.page-connect .page-hero p {
-      text-align: left;
-      max-width: 620px;
-    }
     body.page-connect .section-content {
-      padding-top: 0.5rem;
-      display: block;
-      padding-left: 0;
-      padding-right: 0;
+      padding: 2rem 4rem 5rem !important;
+      max-width: 700px !important;
+      margin: 0 !important;
       position: relative; z-index: 2;
     }
     body.page-connect .contact-wrap {
       width: 100%;
-      max-width: 680px;
-      margin-left: 8vw !important;
-      margin-right: 0 !important;
+      margin: 0;
     }
-    body.page-connect .contact-wrap .open-invite {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      box-sizing: border-box;
+    body.page-connect footer {
+      position: relative; z-index: 2;
     }
-    body.page-connect footer { position: relative; z-index: 2; }
-    body.page-connect nav    { position: relative; z-index: 10; }
 
-    /* Willow canvas — fixed right, behind everything */
+    /* Willow canvas — fixed right, JS controls pixel dimensions */
     #willow-canvas {
       position: fixed;
       right: 0; top: 0;
-      width: 480px; height: 100vh;
       pointer-events: none;
       z-index: 0;
     }
@@ -101,7 +94,7 @@
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
         GitHub
       </a>
-      <a href="/cdn-cgi/l/email-protection#4a3d2b38382f24272329222f26262b0a2d272b232664292527">
+      <a href="mailto:warrenmichella@gmail.com">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
         Email
       </a>
@@ -126,86 +119,72 @@
     <div class="footer-links">
       <a href="https://github.com/Michella-stack" target="_blank">GitHub</a>
       <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank">LinkedIn</a>
-      <a href="/cdn-cgi/l/email-protection#4d3a2c3f3f282320242e252821212c0d2a202c2421632e2220">Email</a>
+      <a href="mailto:warrenmichella@gmail.com">Email</a>
     </div>
   </footer>
 
   <canvas id="willow-canvas"></canvas>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script>
   (function() {
     const canvas = document.getElementById('willow-canvas');
     const ctx = canvas.getContext('2d');
-    const W = 480, TX = 280;
+    const W = 460, TX = 270;
     let H = window.innerHeight;
 
-    // Mouse position for cursor sway — smooth interpolation target
+    // Mouse position for cursor sway
     let mouseX = W * 0.5, mouseY = H * 0.5;
-    let smoothMouseX = W * 0.5; // smoothed version to avoid rigid jumps
     document.addEventListener('mousemove', e => {
+      // translate to canvas coords (canvas is fixed right:0)
       const rect = canvas.getBoundingClientRect();
       mouseX = e.clientX - rect.left;
       mouseY = e.clientY;
     });
 
-    // ─── STRAND DATA ───
+    // Pre-computed strand data — stable, never re-randomised mid-animation
     let strands = [];
-
     function initStrands() {
       strands = [];
-      const crownY = H - 880;
+      // 120 strands spreading wide — matches new crown at H-880
       for (let i = 0; i < 120; i++) {
         const norm   = (i / 119) * 2 - 1; // -1 to 1
+        // Spread wider — real willows drape over a huge area
         const spread = 340;
         const sx     = TX + norm * spread;
         if (sx < -20 || sx > W + 30) continue;
-
-        // Crown arch — centre highest, edges lower
-        const crownOffset = (1 - norm * norm) * 130;
-        const sy = crownY - crownOffset;
-
-        // Strand length — nearly to ground
-        const len = (H - sy) * (0.82 + (i % 7) * 0.025);
-
-        // Control points with gentle natural droop — NOT perfectly straight
-        // cp1 stays near vertical, cp2 drifts, end drifts further
-        const driftMid  = ((i * 17) % 19 - 9) * 1.8;   // subtle mid drift
-        const driftLow  = ((i * 13) % 23 - 11) * 2.2;  // more drift at lower cp
-        const driftEnd  = ((i * 7)  % 15 - 7)  * 2.8;  // most at tip
-
+        // Crown arch — centre highest, edges lower, matching branch endpoints
+        const crownY = H - 880 - (1 - norm * norm) * 130;
+        // Strands hang nearly to ground — very long
+        const len    = (H - crownY) * (0.82 + (i % 7) * 0.025);
+        const j1     = ((i * 17) % 19 - 9) * 2.2;
+        const j2     = ((i * 13) % 23 - 11) * 2.6;
         strands.push({
-          sx, sy,
-          // Control points stored as offsets from sx — animated at draw time
-          cp1xOff: driftMid * 0.3,
-          cp1yFrac: 0.28,
-          cp2xOff: driftLow,
-          cp2yFrac: 0.60,
-          exOff:   driftEnd,
-          len,
-          lw:   0.55 + (i % 6) * 0.12,
-          baseAlpha: 0.28 + (i % 5) * 0.05,
+          sx, sy: crownY,
+          cp1x: sx + j1, cp1y: crownY + len * 0.30,
+          cp2x: sx + j2, cp2y: crownY + len * 0.62,
+          ex:   sx + ((i * 7) % 15 - 7),
+          ey:   crownY + len,
+          lw:   0.60 + (i % 6) * 0.13,
+          baseAlpha: 0.30 + (i % 5) * 0.05,
           col:  i % 4 === 0 ? '#8FAF8A' : i % 4 === 1 ? '#A8C4A2' : i % 4 === 2 ? '#7A9E76' : '#B8D4B0',
-          // Each strand has its own wind personality
           windPhase: (i / 120) * Math.PI * 2,
-          windAmp:   3.5 + (i % 5) * 1.4,   // looser, bigger sway
-          windFreq:  0.40 + (i % 7) * 0.05, // slightly slower for languid feel
-          // Pendulum-like sway weight — lower strands respond more
-          swayWeight: 0.5 + (i % 8) * 0.07,
+          windAmp:   2.8 + (i % 6) * 1.0,
         });
       }
     }
 
     function resizeCanvas() {
-      H = window.innerHeight;
-      canvas.width  = W;
-      canvas.height = H;
+      H = Math.max(window.innerHeight, 960);
+      canvas.width        = W;
+      canvas.height       = H;
+      canvas.style.width  = W + 'px';
+      canvas.style.height = H + 'px';
       initStrands();
     }
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // ─── HELPERS ───
+    // ─── Helpers ───
     function stroke(pts, lw, col, alpha) {
       ctx.save();
       ctx.strokeStyle = col; ctx.lineWidth = lw;
@@ -224,230 +203,86 @@
       ctx.restore();
     }
 
-    // Quadratic branch — single control point guarantees NO S-curve / no Y-fork illusion
-    function qBranch(x0,y0, cpx,cpy, x1,y1, lw, alpha) {
+    function branch(x0,y0, cx1,cy1, cx2,cy2, x1,y1, lw, alpha) {
       ctx.save();
       ctx.strokeStyle = '#6A3A14';
       ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
       ctx.globalAlpha = alpha;
       ctx.beginPath();
       ctx.moveTo(x0, y0);
-      ctx.quadraticCurveTo(cpx, cpy, x1, y1);
+      ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x1, y1);
       ctx.stroke();
       ctx.restore();
     }
 
-    // ─── TRUNK + CROWN BRANCHES ───
+    // ─── DRAW TREE (trunk + branches) ───
     function drawTrunk() {
-      const cY = H - 880;
+      // Crown is near the very top — trunk is tall, clean, no side branches
+      const cY = H - 880; // crown high up
 
-      // ── REALISTIC WILLOW TRUNK ──
-      // A real willow trunk is fairly consistent in width — maybe 60-80px wide,
-      // slightly wider at the base where it meets the ground, slight organic wobble.
-      // Surface ROOTS spread horizontally along the ground from the trunk base.
+      // Root flares — wide at base
+      stroke([[TX,H],[TX-30,H-70],[TX-58,H-165],[TX-85,H-225]], 22,'#3D1E08',0.50);
+      stroke([[TX,H],[TX+34,H-70],[TX+64,H-165],[TX+98,H-225]], 20,'#3D1E08',0.48);
+      stroke([[TX,H],[TX-14,H-55],[TX-20,H-125]],               12,'#4A2508',0.33);
+      stroke([[TX,H],[TX+16,H-55],[TX+22,H-125]],               11,'#4A2508',0.30);
 
-      const tHalfW = 38;   // half-width of trunk body (consistent up the trunk)
-      const baseExtra = 22; // extra width at very base before roots spread
-      const groundY = H;
-
-      // ── SURFACE ROOTS — drawn FIRST (behind trunk) ──
-      // Roots spread outward along the ground, slightly above it, tapering to nothing
-      ctx.save();
-      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-
-      // Helper: draw one filled root lobe
-      function drawRoot(startX, startY, cpX, cpY, endX, endY, thickness) {
-        ctx.beginPath();
-        // Top of root (slightly above ground)
-        const offY = -thickness * 0.5;
-        ctx.moveTo(startX, startY + offY);
-        ctx.bezierCurveTo(startX + (cpX-startX)*0.3, startY + offY - thickness*0.3,
-                          cpX, cpY - thickness*0.4,
-                          endX, endY);
-        // Bottom of root (at/below ground)
-        ctx.bezierCurveTo(cpX, cpY + thickness*0.2,
-                          startX + (cpX-startX)*0.3, startY + thickness*0.3,
-                          startX, startY - offY);
-        ctx.closePath();
-        ctx.fill();
-      }
-
-      // Left roots
-      ctx.fillStyle = '#5A2E0A'; ctx.globalAlpha = 0.42;
-      drawRoot(TX - tHalfW, H - 20, TX - 95,  H - 35, TX - 170, H - 8, 22);
-      ctx.fillStyle = '#7A4418'; ctx.globalAlpha = 0.28;
-      drawRoot(TX - tHalfW, H - 20, TX - 95,  H - 35, TX - 170, H - 8, 12);
-
-      ctx.fillStyle = '#4A2008'; ctx.globalAlpha = 0.38;
-      drawRoot(TX - tHalfW + 6, H - 14, TX - 70, H - 28, TX - 115, H - 5, 16);
-      ctx.fillStyle = '#7A4418'; ctx.globalAlpha = 0.22;
-      drawRoot(TX - tHalfW + 6, H - 14, TX - 70, H - 28, TX - 115, H - 5, 8);
-
-      ctx.fillStyle = '#5A2E0A'; ctx.globalAlpha = 0.28;
-      drawRoot(TX - tHalfW + 10, H - 10, TX - 48, H - 18, TX - 75, H - 2, 10);
-
-      // Right roots
-      ctx.fillStyle = '#5A2E0A'; ctx.globalAlpha = 0.40;
-      drawRoot(TX + tHalfW, H - 20, TX + 100, H - 32, TX + 175, H - 6, 22);
-      ctx.fillStyle = '#7A4418'; ctx.globalAlpha = 0.26;
-      drawRoot(TX + tHalfW, H - 20, TX + 100, H - 32, TX + 175, H - 6, 12);
-
-      ctx.fillStyle = '#4A2008'; ctx.globalAlpha = 0.36;
-      drawRoot(TX + tHalfW - 6, H - 14, TX + 72, H - 26, TX + 118, H - 4, 16);
-      ctx.fillStyle = '#7A4418'; ctx.globalAlpha = 0.20;
-      drawRoot(TX + tHalfW - 6, H - 14, TX + 72, H - 26, TX + 118, H - 4, 8);
-
-      ctx.fillStyle = '#5A2E0A'; ctx.globalAlpha = 0.26;
-      drawRoot(TX + tHalfW - 10, H - 10, TX + 50, H - 16, TX + 78, H - 2, 10);
-
-      ctx.restore();
-
-      // ── TRUNK BODY — consistent width, gentle organic wobble ──
-      // Left edge slightly wobbly, right edge slightly wobbly — natural bark irregularity
-      // Trunk goes from ground to crown, ~76px wide overall, base flares just slightly
-
-      function trunkFill(extraW, col, alpha) {
-        ctx.save();
-        ctx.fillStyle = col;
-        ctx.globalAlpha = alpha;
-        ctx.beginPath();
-
-        const ew = extraW;
-        const lx = TX - tHalfW - ew;  // left x (base)
-        const rx = TX + tHalfW + ew;  // right x (base)
-
-        // Start bottom-left
-        ctx.moveTo(lx - baseExtra, groundY);
-
-        // Left edge — travels up with slight organic wobble
-        // Base flare
-        ctx.bezierCurveTo(
-          lx - baseExtra, H - 60,
-          lx + 4,         H - 130,
-          lx + 2,         H - 260
-        );
-        // Mid-trunk left — very slight lean
-        ctx.bezierCurveTo(
-          lx,             H - 420,
-          lx - 3,         H - 560,
-          lx + 1,         H - 700
-        );
-        // Upper trunk left
-        ctx.bezierCurveTo(
-          lx + 2,         H - 780,
-          lx - 1,         H - 840,
-          TX - tHalfW - ew - 4, cY    // crown left — slight extra flare
-        );
-
-        // Crown top — gently rounded
-        ctx.bezierCurveTo(
-          TX - tHalfW * 0.3 - ew, cY - 10,
-          TX + tHalfW * 0.3 + ew, cY - 10,
-          TX + tHalfW + ew + 4,   cY    // crown right
-        );
-
-        // Right edge — mirror wobble
-        ctx.bezierCurveTo(
-          rx + 1,         H - 840,
-          rx - 2,         H - 780,
-          rx - 1,         H - 700
-        );
-        ctx.bezierCurveTo(
-          rx + 3,         H - 560,
-          rx,             H - 420,
-          rx - 2,         H - 260
-        );
-        ctx.bezierCurveTo(
-          rx - 4,         H - 130,
-          rx + baseExtra, H - 60,
-          rx + baseExtra, groundY
-        );
-
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-      }
-
-      // Layered fills — shadow edge → main body → warm highlight
-      trunkFill( 6, '#0A0300', 0.20);
-      trunkFill( 3, '#1C0A02', 0.35);
-      trunkFill( 0, '#4A2008', 0.60);
-      trunkFill(-8, '#7A4418', 0.50);
-      trunkFill(-18,'#A86828', 0.38);
-      trunkFill(-26,'#C8943A', 0.18);
+      // TALL TRUNK — no branches until near the very top
+      const tp = [[TX,H],[TX-2,H-180],[TX-4,H-360],[TX-2,H-540],
+                  [TX,H-680],[TX+1,H-760],[TX+2,H-820],[TX+1,H-855],[TX,cY]];
+      stroke(tp, 96,'#1C0A02',0.46);
+      stroke(tp, 82,'#3D1E08',0.92);
+      stroke(tp, 68,'#7A4418',0.86);
+      stroke(tp, 48,'#A86828',0.76);
+      stroke(tp, 22,'#C48840',0.36);
+      stroke(tp, 94,'#0E0502',0.14);
 
       // Bark texture lines
-      ctx.save(); ctx.lineCap = 'round';
+      ctx.save(); ctx.lineCap='round';
       const blines = [
-        {pts:[[TX-22,H-80],[TX-24,H-280],[TX-22,H-480],[TX-18,H-680],[TX-12,H-840]], lw:1.8, col:'#1C0A02', a:0.13},
-        {pts:[[TX-8, H-70],[TX-9, H-270],[TX-8, H-465],[TX-5, H-660],[TX-2, H-820]], lw:1.3, col:'#5C2E10', a:0.10},
-        {pts:[[TX+6, H-72],[TX+7, H-272],[TX+6, H-468],[TX+4, H-665],[TX+2, H-822]], lw:1.4, col:'#1C0A02', a:0.11},
-        {pts:[[TX+18,H-80],[TX+20,H-280],[TX+18,H-478],[TX+14,H-678],[TX+9, H-838]], lw:1.7, col:'#3D1E08', a:0.11},
+        {pts:[[TX-9,H-100],[TX-11,H-290],[TX-9,H-490],[TX-6,H-700],[TX-4,H-840]], lw:2,   col:'#1C0A02', a:0.18},
+        {pts:[[TX+6, H-90],[TX+7, H-280],[TX+6, H-475],[TX+4,H-685],[TX+2,H-820]], lw:1.4, col:'#8B5020', a:0.14},
+        {pts:[[TX+16,H-95],[TX+17,H-285],[TX+15,H-478],[TX+12,H-688],[TX+8,H-820]],lw:1.8, col:'#1C0A02', a:0.16},
+        {pts:[[TX-18,H-110],[TX-20,H-295],[TX-17,H-495],[TX-12,H-700]],             lw:1.2, col:'#4A2508', a:0.12},
       ];
       blines.forEach(b => stroke(b.pts, b.lw, b.col, b.a));
-      [[H-820,16],[H-700,18],[H-570,18],[H-440,18],[H-320,18],[H-210,16],[H-110,15],[H-60,20]].forEach(([y,w]) => {
-        ctx.globalAlpha = 0.09; ctx.strokeStyle = '#1C0A02'; ctx.lineWidth = 1.0;
+      // Horizontal cracks up the full trunk
+      [[H-800,18],[H-680,20],[H-550,22],[H-420,22],[H-300,20],[H-190,17],[H-110,14]].forEach(([y,w]) => {
+        ctx.globalAlpha=0.14; ctx.strokeStyle='#1C0A02'; ctx.lineWidth=1.1;
         ctx.beginPath(); ctx.moveTo(TX-w,y); ctx.bezierCurveTo(TX-w/3,y-1,TX+w/3,y+1,TX+w,y); ctx.stroke();
       });
       ctx.restore();
 
-      // ─── CROWN BRANCHES — strictly top only, pure quadratic arcs ───
-      // Each branch: start=crown, control point above-and-outward, end=droop tip.
-      // Quadratic = single arc, ZERO possibility of S-curve or Y-fork illusion.
-
-      // Control point strategy: cp is ALWAYS above cY (negative offset) and
-      // partway toward the end horizontally. This creates a smooth arch then droop.
-
-      // Far left — wide sweeping drapes
-      qBranch(TX,cY,  TX-160,cY-90,   TX-310,cY+70,   13,0.80);
-      qBranch(TX,cY,  TX-130,cY-100,  TX-250,cY+20,   10,0.76);
-      qBranch(TX,cY,  TX-90, cY-110,  TX-170,cY-30,    8,0.72);
-
+      // CROWN BRANCHES — only at the very top, explode outward then droop
+      // All branches start at crown, arc UP first then sweep wide and droop down naturally
+      // Far left — long sweeping droop
+      branch(TX,cY,  TX-40,cY-80,  TX-180,cY-60,  TX-320,cY+60,  13,0.80);
+      branch(TX,cY,  TX-30,cY-95,  TX-150,cY-80,  TX-260,cY+10,  10,0.76);
+      branch(TX,cY,  TX-18,cY-110, TX-100,cY-100, TX-180,cY-40,   8,0.72);
       // Left-centre
-      qBranch(TX,cY,  TX-55, cY-130,  TX-90, cY-60,    7,0.68);
-      qBranch(TX,cY,  TX-28, cY-150,  TX-46, cY-108,   6,0.65);
-
-      // Central leaders — straight up
-      qBranch(TX,cY,  TX-4,  cY-160,  TX-3,  cY-190,  10,0.74);
-      qBranch(TX,cY,  TX+3,  cY-158,  TX+2,  cY-187,   9,0.72);
-
+      branch(TX,cY,  TX-10,cY-120, TX-55, cY-130, TX-100,cY-80,   7,0.68);
+      branch(TX,cY,  TX-5, cY-130, TX-28, cY-150, TX-52, cY-120,  6,0.65);
+      // Straight up — central leaders
+      branch(TX,cY,  TX-4, cY-100, TX-6,  cY-155, TX-4,  cY-185, 10,0.74);
+      branch(TX,cY,  TX+3, cY-98,  TX+5,  cY-152, TX+3,  cY-182,  9,0.72);
       // Right-centre
-      qBranch(TX,cY,  TX+27, cY-150,  TX+45, cY-108,   6,0.65);
-      qBranch(TX,cY,  TX+54, cY-130,  TX+92, cY-60,    7,0.68);
-
-      // Far right — wide sweeping drapes
-      qBranch(TX,cY,  TX+90, cY-110,  TX+172,cY-30,    8,0.72);
-      qBranch(TX,cY,  TX+132,cY-100,  TX+252,cY+20,   10,0.76);
-      qBranch(TX,cY,  TX+162,cY-90,   TX+312,cY+70,   12,0.78);
+      branch(TX,cY,  TX+8, cY-130, TX+30, cY-150, TX+55, cY-120,  6,0.65);
+      branch(TX,cY,  TX+13,cY-120, TX+58, cY-130, TX+103,cY-80,   7,0.68);
+      // Right — long sweeping droop
+      branch(TX,cY,  TX+20,cY-110, TX+102,cY-100, TX+183,cY-40,   8,0.72);
+      branch(TX,cY,  TX+32,cY-95,  TX+152,cY-80,  TX+263,cY+10,  10,0.76);
+      branch(TX,cY,  TX+42,cY-80,  TX+182,cY-60,  TX+322,cY+60,  12,0.78);
     }
 
-    // ─── DRAW STRANDS — fluid, physics-like sway ───
+    // ─── DRAW STRANDS with cursor sway ───
     function drawStrands(t) {
-      // Smooth cursor interpolation — avoids rigid jump responses
-      smoothMouseX += (mouseX - smoothMouseX) * 0.025; // slower = more fluid lag
-      const cursorInfluence = (smoothMouseX - W * 0.5) / W;
+      // How much cursor pulls the strands — mouse in canvas coords
+      const cursorInfluence = (mouseX - W * 0.5) / W; // -0.5 to 0.5
 
-      strands.forEach((s, idx) => {
-        // Each strand has layered motion:
-        // 1. Slow base wind oscillation (different freq per strand)
-        // 2. A higher-freq ripple for organic texture
-        // 3. Cursor push (smoothed, weighted by strand position on canvas)
-        const baseWind  = Math.sin(t * s.windFreq + s.windPhase) * s.windAmp;
-        const ripple    = Math.sin(t * 1.4 + s.windPhase * 1.7) * s.windAmp * 0.28;
-        const wind      = baseWind + ripple;
-
-        // Cursor influence fades with distance from centre — closer to cursor = more pull
-        // Strands nearer the top of the canvas sway less (anchored), lower more
-        const cursor    = cursorInfluence * 38 * s.swayWeight;
-        const totalSway = wind + cursor;
-
-        // Bezier with progressive sway — tip moves most, root stays anchored
-        const cp1x = s.sx + s.cp1xOff + totalSway * 0.15;
-        const cp1y = s.sy + s.len * s.cp1yFrac;
-        const cp2x = s.sx + s.cp2xOff + totalSway * 0.55;
-        const cp2y = s.sy + s.len * s.cp2yFrac;
-        const ex   = s.sx + s.exOff   + totalSway;
-        const ey   = s.sy + s.len;
+      strands.forEach(s => {
+        // Wind sway + subtle cursor push
+        const wind   = Math.sin(t * 0.7 + s.windPhase) * s.windAmp;
+        const cursor = cursorInfluence * 18;
+        const sway   = wind + cursor;
 
         ctx.save();
         ctx.strokeStyle = s.col;
@@ -456,45 +291,58 @@
         ctx.globalAlpha = s.baseAlpha;
         ctx.beginPath();
         ctx.moveTo(s.sx, s.sy);
-        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ex, ey);
+        ctx.bezierCurveTo(
+          s.cp1x + sway * 0.4, s.cp1y,
+          s.cp2x + sway * 0.75, s.cp2y,
+          s.ex   + sway,        s.ey
+        );
         ctx.stroke();
         ctx.restore();
       });
     }
 
-    // ─── CARVING — "ironfeather" text only, near bottom, slightly uneven ───
+    // ─── CARVING ─── visible, on trunk mid-height
     function drawCarving() {
-      const cx = TX + 6;
-      const cy = H - 180; // near bottom of trunk, above the dirt
+      // Place carving in the middle of the trunk's visible area
+      const cx = TX + 4;
+      const cy = H * 0.44;
       ctx.save();
+      ctx.globalAlpha = 0.55; // much more visible
+      ctx.strokeStyle = '#3A1A06';
+      ctx.fillStyle   = '#3A1A06';
+      ctx.lineWidth   = 1.6;
+      ctx.lineCap     = 'round';
 
-      // Slight rotation for that hand-carved unevenness
-      ctx.translate(cx, cy);
-      ctx.rotate(-0.04);
+      // Heart shape — carved notch style
+      ctx.beginPath();
+      ctx.moveTo(cx, cy + 5);
+      ctx.bezierCurveTo(cx,     cy+1,  cx-9, cy-4, cx-9, cy+3);
+      ctx.bezierCurveTo(cx-9,   cy+10, cx,   cy+17, cx,  cy+17);
+      ctx.bezierCurveTo(cx,     cy+17, cx+9, cy+10, cx+9,cy+3);
+      ctx.bezierCurveTo(cx+9,   cy-4,  cx,   cy+1,  cx,  cy+5);
+      ctx.stroke();
 
-      // Etched shadow (depth)
-      ctx.globalAlpha = 0.12;
-      ctx.fillStyle = '#FAF0E0';
+      // "ironfeather" text
       ctx.font = 'italic 9px Georgia, serif';
       ctx.textAlign = 'center';
-      ctx.fillText('ironfeather', 1.5, 1.5);
+      ctx.fillText('ironfeather', cx, cy + 32);
 
-      // Main carved text — slightly uneven letter spacing via manual offset
-      ctx.globalAlpha = 0.50;
-      ctx.fillStyle = '#2A1002';
-      ctx.font = 'italic 9px Georgia, serif';
-      ctx.fillText('ironfeather', 0, 0);
+      // Bracket marks around carving
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(cx-16, cy-7); ctx.lineTo(cx-16, cy+35);
+      ctx.moveTo(cx+16, cy-7); ctx.lineTo(cx+16, cy+35);
+      ctx.stroke();
 
-      // A second pass with tiny y-offset on second half — hand-carved feel
+      // Subtle carved-in shadow overlay to make it look etched
       ctx.globalAlpha = 0.18;
-      ctx.fillStyle = '#2A1002';
+      ctx.fillStyle = '#FAF0E0';
       ctx.font = 'italic 9px Georgia, serif';
-      ctx.fillText('ironfeather', 0.4, 0.8);
-
+      ctx.fillText('ironfeather', cx + 0.5, cy + 32.5);
       ctx.restore();
     }
 
-    // ─── CELESTIAL DIRT at base ───
+    // ─── DIRT — celestial ground ───
     function drawDirt(t) {
       const gy = H - 22;
       ctx.save();
@@ -510,18 +358,20 @@
       ctx.ellipse(TX, gy, 165, 36, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      // Celestial speckle particles
+      // Dirt speckle particles — deterministic positions
       const speckCols = [
         [220,190,120],[180,150,90],[200,170,100],[240,210,140],
         [160,220,180],[200,180,240],[255,220,160],[140,200,160],
       ];
       for (let i = 0; i < 38; i++) {
-        const angle  = (i * 137.5 * Math.PI / 180);
+        // Deterministic but varied positions
+        const angle  = (i * 137.5 * Math.PI / 180); // golden angle
         const radius = 8 + (i % 8) * 16 + (i % 3) * 5;
         const dx     = Math.cos(angle) * radius * 0.9;
         const dy     = Math.sin(angle) * radius * 0.22 + 10;
         const r      = 0.6 + (i % 4) * 0.45;
         const [rc, gc, bc] = speckCols[i % speckCols.length];
+        // Gentle celestial twinkle
         const twinkle = 0.30 + Math.sin(t * 1.2 + i * 0.8) * 0.12;
         ctx.globalAlpha = twinkle;
         ctx.fillStyle   = `rgb(${rc},${gc},${bc})`;
@@ -529,6 +379,7 @@
         ctx.arc(TX + dx, gy - 10 + dy, r, 0, Math.PI * 2);
         ctx.fill();
 
+        // Some speckles get a tiny glow halo
         if (i % 5 === 0) {
           const hgrd = ctx.createRadialGradient(TX+dx, gy-10+dy, 0, TX+dx, gy-10+dy, r*4);
           hgrd.addColorStop(0, `rgba(${rc},${gc},${bc},0.25)`);
@@ -558,14 +409,15 @@
       ctx.restore();
     }
 
-    // ─── LEAVES ───
+    // ─── LEAVES — dense on tree + slow falling ───
     const leaves = [];
 
+    // Leaf colours: greens + a few yellowing ones for depth
     const LEAF_COLS = [
       [143,175,138],[120,158,115],[168,196,162],
       [100,140,96], [180,210,174],[88,128,84],
       [158,190,145],[195,215,180],[112,152,108],
-      [200,200,120],[180,190,100],
+      [200,200,120],[180,190,100], // yellowing
     ];
 
     function mkLeaf(preX, preY) {
@@ -574,7 +426,7 @@
       return {
         x:      preX !== undefined ? preX : 20 + Math.random() * (W - 40),
         y:      preY !== undefined ? preY : -10 - Math.random() * 30,
-        vy:     0.10 + Math.random() * 0.16,
+        vy:     0.10 + Math.random() * 0.16,   // very slow fall
         vx:     0,
         rot:    Math.random() * Math.PI * 2,
         rotV:   (Math.random() - 0.5) * 0.007,
@@ -588,27 +440,24 @@
         swingA: 0.18 + Math.random() * 0.42,
         life:   preY !== undefined ? Math.floor(Math.random() * 450) : 0,
         maxLife:600 + Math.random() * 400,
+        // cursor response
         cursorK: 0.015 + Math.random() * 0.020,
       };
     }
 
-    // 240 leaves pre-populated on strands at startup
-    function populateLeaves() {
-      for (let i = 0; i < 240; i++) {
-        if (strands.length === 0) break;
-        const strand = strands[Math.floor(Math.random() * strands.length)];
-        // Bias toward upper 60% where leaves are denser on real willows
-        const t0  = Math.random() < 0.65 ? Math.random() * 0.6 : Math.random();
-        const px  = strand.sx + (strand.exOff) * t0 + (Math.random()-0.5) * 22;
-        const py  = strand.sy + strand.len * t0;
-        leaves.push(mkLeaf(px, py));
-      }
+    // Dense initial population — leaves clustered heavily on strands
+    for (let i = 0; i < 240; i++) {
+      const strand = strands[Math.floor(Math.random() * strands.length)];
+      // Bias toward upper 60% of strands where leaves are denser
+      const t0  = Math.random() < 0.65 ? Math.random() * 0.6 : Math.random();
+      const px  = strand ? strand.sx + (strand.ex - strand.sx) * t0 + (Math.random()-0.5)*22 : Math.random()*W;
+      const py  = strand ? strand.sy + (strand.ey - strand.sy) * t0 : Math.random()*H;
+      leaves.push(mkLeaf(px, py));
     }
-    populateLeaves();
 
     let spawnTimer = 0;
 
-    // ─── ANIMATION LOOP ───
+    // ─── MAIN ANIMATION LOOP ───
     let t = 0;
     function animate() {
       requestAnimationFrame(animate);
@@ -616,43 +465,54 @@
 
       ctx.clearRect(0, 0, W, H);
 
-      // Whole-tree subtle sway
-      const cursorLean = (smoothMouseX - W * 0.5) / W * 0.010;
+      // Subtle whole-tree sway driven by time + cursor
+      const cursorLean = (mouseX - W * 0.5) / W * 0.012;
       ctx.save();
       ctx.translate(TX, H);
-      ctx.rotate(Math.sin(t * 0.60) * 0.006 + cursorLean);
+      ctx.rotate(Math.sin(t * 0.65) * 0.007 + cursorLean);
       ctx.translate(-TX, -H);
       drawTrunk();
       ctx.restore();
 
+      // Strands sway independently
       drawStrands(t);
+
+      // Carving on trunk
       drawCarving();
+
+      // Celestial dirt
       drawDirt(t);
 
-      // Spawn falling leaves
+      // Spawn leaves steadily
       spawnTimer++;
       if (spawnTimer >= 18) { leaves.push(mkLeaf()); spawnTimer = 0; }
-      if (spawnTimer === 9)  { leaves.push(mkLeaf()); }
+      // Occasionally spawn a cluster of 2-3
+      if (spawnTimer === 9) { leaves.push(mkLeaf()); }
 
       // Update & draw leaves
-      const cursorPull = (smoothMouseX - W * 0.5) / W;
+      const cursorPull = (mouseX - W * 0.5) / W;
       for (let i = leaves.length - 1; i >= 0; i--) {
         const l = leaves[i];
         l.life  += 1;
         l.swing += l.swingS;
 
+        // Cursor gently deflects leaves
         l.vx += cursorPull * l.cursorK;
-        l.vx *= 0.94;
+        l.vx *= 0.94; // damping
         l.x  += l.vx + Math.sin(l.swing) * l.swingA;
         l.y  += l.vy;
         l.rot += l.rotV + Math.sin(l.swing * 1.3) * 0.003;
 
+        // Fade in
         if (l.alpha < l.alphaT) l.alpha = Math.min(l.alphaT, l.alpha + 0.012);
+        // Fade out last 25%
         const fs = l.maxLife * 0.75;
         if (l.life > fs) l.alpha = l.alphaT * Math.max(0, 1 - (l.life-fs)/(l.maxLife-fs));
 
+        // Remove if dead or off canvas
         if (l.life > l.maxLife || l.y > H + 20) { leaves.splice(i, 1); continue; }
 
+        // Draw leaf
         ctx.save();
         ctx.translate(l.x, l.y);
         ctx.rotate(l.rot);
@@ -661,12 +521,12 @@
         ctx.beginPath();
         ctx.ellipse(0, 0, l.w, l.h, 0, 0, Math.PI * 2);
         ctx.fill();
-        // Midrib
+        // Midrib line
         ctx.strokeStyle = 'rgba(50,90,45,0.25)';
         ctx.lineWidth   = 0.5;
         ctx.beginPath();
-        ctx.moveTo(-l.w * 0.7, 0);
-        ctx.lineTo(l.w * 0.7, 0);
+        ctx.moveTo(-l.w * 0.8, 0);
+        ctx.lineTo( l.w * 0.8, 0);
         ctx.stroke();
         ctx.restore();
       }
@@ -675,5 +535,6 @@
     animate();
   })();
   </script>
+
 </body>
 </html>
