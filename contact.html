@@ -153,7 +153,7 @@
         const sx     = TX + norm * spread;
         if (sx < -20 || sx > W + 30) continue;
         // Crown arch — centre highest, edges lower, matching branch endpoints
-        const crownY = H - 880 - (1 - norm * norm) * 130;
+        const crownY = 0 + (1 - norm * norm) * 60; // strands hang from near top of canvas
         // Strands hang nearly to ground — very long
         const len    = (H - crownY) * (0.82 + (i % 7) * 0.025);
         const j1     = ((i * 17) % 19 - 9) * 2.2;
@@ -215,20 +215,17 @@
       ctx.restore();
     }
 
-    // ─── DRAW TREE (trunk + branches) ───
+    // ─── DRAW TREE (trunk only — no crown branches) ───
     function drawTrunk() {
-      // Crown is near the very top — trunk is tall, clean, no side branches
-      const cY = H - 880; // crown high up
-
       // Root flares — wide at base
       stroke([[TX,H],[TX-30,H-70],[TX-58,H-165],[TX-85,H-225]], 22,'#3D1E08',0.50);
       stroke([[TX,H],[TX+34,H-70],[TX+64,H-165],[TX+98,H-225]], 20,'#3D1E08',0.48);
       stroke([[TX,H],[TX-14,H-55],[TX-20,H-125]],               12,'#4A2508',0.33);
       stroke([[TX,H],[TX+16,H-55],[TX+22,H-125]],               11,'#4A2508',0.30);
 
-      // TALL TRUNK — no branches until near the very top
+      // TRUNK — extends all the way to top of canvas (y=0)
       const tp = [[TX,H],[TX-2,H-180],[TX-4,H-360],[TX-2,H-540],
-                  [TX,H-680],[TX+1,H-760],[TX+2,H-820],[TX+1,H-855],[TX,cY]];
+                  [TX,H-680],[TX+1,H-760],[TX+2,H-850],[TX+1,H-920],[TX,0]];
       stroke(tp, 96,'#1C0A02',0.46);
       stroke(tp, 82,'#3D1E08',0.92);
       stroke(tp, 68,'#7A4418',0.86);
@@ -236,41 +233,21 @@
       stroke(tp, 22,'#C48840',0.36);
       stroke(tp, 94,'#0E0502',0.14);
 
-      // Bark texture lines
+      // Bark texture lines — extended to top
       ctx.save(); ctx.lineCap='round';
       const blines = [
-        {pts:[[TX-9,H-100],[TX-11,H-290],[TX-9,H-490],[TX-6,H-700],[TX-4,H-840]], lw:2,   col:'#1C0A02', a:0.18},
-        {pts:[[TX+6, H-90],[TX+7, H-280],[TX+6, H-475],[TX+4,H-685],[TX+2,H-820]], lw:1.4, col:'#8B5020', a:0.14},
-        {pts:[[TX+16,H-95],[TX+17,H-285],[TX+15,H-478],[TX+12,H-688],[TX+8,H-820]],lw:1.8, col:'#1C0A02', a:0.16},
-        {pts:[[TX-18,H-110],[TX-20,H-295],[TX-17,H-495],[TX-12,H-700]],             lw:1.2, col:'#4A2508', a:0.12},
+        {pts:[[TX-9,H-100],[TX-11,H-290],[TX-9,H-490],[TX-6,H-700],[TX-4,H-900],[TX-2,0]], lw:2,   col:'#1C0A02', a:0.18},
+        {pts:[[TX+6, H-90],[TX+7, H-280],[TX+6, H-475],[TX+4,H-685],[TX+2,H-880],[TX+1,0]], lw:1.4, col:'#8B5020', a:0.14},
+        {pts:[[TX+16,H-95],[TX+17,H-285],[TX+15,H-478],[TX+12,H-688],[TX+8,H-880],[TX+4,0]],lw:1.8, col:'#1C0A02', a:0.16},
+        {pts:[[TX-18,H-110],[TX-20,H-295],[TX-17,H-495],[TX-12,H-700],[TX-8,H-880]],        lw:1.2, col:'#4A2508', a:0.12},
       ];
       blines.forEach(b => stroke(b.pts, b.lw, b.col, b.a));
-      // Horizontal cracks up the full trunk
+      // Horizontal cracks
       [[H-800,18],[H-680,20],[H-550,22],[H-420,22],[H-300,20],[H-190,17],[H-110,14]].forEach(([y,w]) => {
         ctx.globalAlpha=0.14; ctx.strokeStyle='#1C0A02'; ctx.lineWidth=1.1;
         ctx.beginPath(); ctx.moveTo(TX-w,y); ctx.bezierCurveTo(TX-w/3,y-1,TX+w/3,y+1,TX+w,y); ctx.stroke();
       });
       ctx.restore();
-
-      // CROWN BRANCHES — only at the very top, explode outward then droop
-      // All branches start at crown, arc UP first then sweep wide and droop down naturally
-      // Far left — long sweeping droop
-      branch(TX,cY,  TX-40,cY-80,  TX-180,cY-60,  TX-320,cY+60,  13,0.80);
-      branch(TX,cY,  TX-30,cY-95,  TX-150,cY-80,  TX-260,cY+10,  10,0.76);
-      branch(TX,cY,  TX-18,cY-110, TX-100,cY-100, TX-180,cY-40,   8,0.72);
-      // Left-centre
-      branch(TX,cY,  TX-10,cY-120, TX-55, cY-130, TX-100,cY-80,   7,0.68);
-      branch(TX,cY,  TX-5, cY-130, TX-28, cY-150, TX-52, cY-120,  6,0.65);
-      // Straight up — central leaders
-      branch(TX,cY,  TX-4, cY-100, TX-6,  cY-155, TX-4,  cY-185, 10,0.74);
-      branch(TX,cY,  TX+3, cY-98,  TX+5,  cY-152, TX+3,  cY-182,  9,0.72);
-      // Right-centre
-      branch(TX,cY,  TX+8, cY-130, TX+30, cY-150, TX+55, cY-120,  6,0.65);
-      branch(TX,cY,  TX+13,cY-120, TX+58, cY-130, TX+103,cY-80,   7,0.68);
-      // Right — long sweeping droop
-      branch(TX,cY,  TX+20,cY-110, TX+102,cY-100, TX+183,cY-40,   8,0.72);
-      branch(TX,cY,  TX+32,cY-95,  TX+152,cY-80,  TX+263,cY+10,  10,0.76);
-      branch(TX,cY,  TX+42,cY-80,  TX+182,cY-60,  TX+322,cY+60,  12,0.78);
     }
 
     // ─── DRAW STRANDS with cursor sway ───
