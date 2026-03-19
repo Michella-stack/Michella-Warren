@@ -102,10 +102,10 @@
     const ctx = canvas.getContext('2d');
 
     const CONFIG = {
-      primaryColor: '#C9B8D8',
-      accentColor:  '#8FAF8A',
+      primaryColor: '#9E7B5E',
+      accentColor:  '#B8A8CC',
       clusterBias:  'center',
-      count:        90,
+      count:        110,
       baseSpeed:    0.28,
     };
 
@@ -142,7 +142,7 @@
         vy: (Math.random() - 0.5) * CONFIG.baseSpeed,
         r:  size,
         color: isAccent ? CONFIG.accentColor : CONFIG.primaryColor,
-        alpha: 0.18 + Math.random() * 0.55,
+        alpha: 0.28 + Math.random() * 0.60,
         phase: Math.random() * Math.PI * 2,
         // physics
         mass: 0.5 + Math.random() * 1.5,
@@ -222,7 +222,7 @@
         if (d.r > 2.0) {
           ctx.beginPath();
           ctx.arc(d.x, d.y, d.r * 3 * twinkle, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${hexToRgb(d.color)},${d.alpha * 0.06 * twinkle})`;
+          ctx.fillStyle = `rgba(${hexToRgb(d.color)},${d.alpha * 0.14 * twinkle})`;
           ctx.fill();
         }
       });

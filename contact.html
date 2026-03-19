@@ -49,13 +49,44 @@
       position: relative; z-index: 2;
     }
 
-    /* Willow canvas — fixed right, JS controls pixel dimensions */
-    #willow-canvas {
+    /* Aurora canvas — full background */
+    #aurora-canvas {
       position: fixed;
-      right: 0; top: 0;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
       pointer-events: none;
       z-index: 0;
     }
+    /* Dark evening sky background for connect page */
+    body.page-connect {
+      background: #1A1E2E !important;
+      color: #E8E0D5 !important;
+    }
+    body.page-connect nav {
+      background: rgba(20,24,40,0.88) !important;
+      border-bottom-color: rgba(255,255,255,0.08) !important;
+    }
+    body.page-connect nav ul li a { color: rgba(232,224,213,0.7); }
+    body.page-connect nav ul li a:hover { color: #A8D8B0; }
+    body.page-connect .nav-initials { color: rgba(232,224,213,0.9); }
+    body.page-connect .page-hero h1 { color: #E8E0D5; }
+    body.page-connect .page-hero h1 em { color: #A8D8B0 !important; }
+    body.page-connect .page-hero p { color: rgba(232,224,213,0.72); }
+    body.page-connect .contact-icon-links a { color: rgba(232,224,213,0.65); }
+    body.page-connect .contact-icon-links a:hover { color: #A8D8B0; }
+    body.page-connect .open-invite {
+      background: rgba(168,216,176,0.10);
+      border-left-color: #A8D8B0;
+      backdrop-filter: blur(8px);
+    }
+    body.page-connect .open-invite h3 { color: #E8E0D5; }
+    body.page-connect .open-invite p { color: rgba(232,224,213,0.70); }
+    body.page-connect footer {
+      background: rgba(20,24,40,0.6);
+      border-top-color: rgba(255,255,255,0.08);
+      color: rgba(232,224,213,0.5);
+    }
+    body.page-connect footer a:hover { color: #A8D8B0; }
   </style>
 </head>
 <body class="page-connect">
@@ -123,346 +154,172 @@
     </div>
   </footer>
 
-  <canvas id="willow-canvas"></canvas>
+  <canvas id="aurora-canvas"></canvas>
 
   <script>
   (function() {
-    const canvas = document.getElementById('willow-canvas');
+    const canvas = document.getElementById('aurora-canvas');
     const ctx = canvas.getContext('2d');
-    const W = 460, TX = 270;
-    let H = window.innerHeight;
+    let W, H, t = 0;
 
-    // Mouse position for cursor sway
-    let mouseX = W * 0.5, mouseY = H * 0.5;
-    document.addEventListener('mousemove', e => {
-      // translate to canvas coords (canvas is fixed right:0)
-      const rect = canvas.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY;
-    });
+    // Aurora bands — each has position, color, speed, amplitude
+    const bands = [
+      { y: 0.28, col1: [80,200,140],  col2: [60,160,200],  speed: 0.00028, amp: 0.06, width: 0.22, alpha: 0.38 },
+      { y: 0.38, col1: [140,80,200],  col2: [80,200,160],  speed: 0.00022, amp: 0.08, width: 0.18, alpha: 0.28 },
+      { y: 0.20, col1: [60,180,220],  col2: [120,80,200],  speed: 0.00035, amp: 0.05, width: 0.14, alpha: 0.22 },
+      { y: 0.48, col1: [100,220,160], col2: [80,120,220],  speed: 0.00018, amp: 0.07, width: 0.20, alpha: 0.18 },
+      { y: 0.15, col1: [180,100,220], col2: [60,200,180],  speed: 0.00040, amp: 0.04, width: 0.12, alpha: 0.15 },
+    ];
 
-    // Pre-computed strand data — stable, never re-randomised mid-animation
-    let strands = [];
-    function initStrands() {
-      strands = [];
-      // 120 strands spreading wide — matches new crown at H-880
-      for (let i = 0; i < 120; i++) {
-        const norm   = (i / 119) * 2 - 1; // -1 to 1
-        // Spread wider — real willows drape over a huge area
-        const spread = 340;
-        const sx     = TX + norm * spread;
-        if (sx < -20 || sx > W + 30) continue;
-        // Crown arch — centre highest, edges lower, matching branch endpoints
-        const crownY = 0 + (1 - norm * norm) * 60; // strands hang from near top of canvas
-        // Strands hang nearly to ground — very long
-        const len    = (H - crownY) * (0.82 + (i % 7) * 0.025);
-        const j1     = ((i * 17) % 19 - 9) * 2.2;
-        const j2     = ((i * 13) % 23 - 11) * 2.6;
-        strands.push({
-          sx, sy: crownY,
-          cp1x: sx + j1, cp1y: crownY + len * 0.30,
-          cp2x: sx + j2, cp2y: crownY + len * 0.62,
-          ex:   sx + ((i * 7) % 15 - 7),
-          ey:   crownY + len,
-          lw:   0.60 + (i % 6) * 0.13,
-          baseAlpha: 0.16 + (i % 5) * 0.03,
-          col:  i % 4 === 0 ? '#8FAF8A' : i % 4 === 1 ? '#A8C4A2' : i % 4 === 2 ? '#7A9E76' : '#B8D4B0',
-          windPhase: (i / 120) * Math.PI * 2,
-          windAmp:   2.8 + (i % 6) * 1.0,
+    // Stars
+    let stars = [];
+    function initStars() {
+      stars = [];
+      for (let i = 0; i < 180; i++) {
+        stars.push({
+          x: Math.random(), y: Math.random() * 0.65,
+          r: 0.4 + Math.random() * 1.2,
+          alpha: 0.2 + Math.random() * 0.7,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.005 + Math.random() * 0.015,
         });
       }
     }
 
-    function resizeCanvas() {
-      H = Math.max(window.innerHeight, 960);
-      canvas.width        = W;
-      canvas.height       = H;
-      canvas.style.width  = W + 'px';
-      canvas.style.height = H + 'px';
-      initStrands();
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // ─── Helpers ───
-    function stroke(pts, lw, col, alpha) {
-      ctx.save();
-      ctx.strokeStyle = col; ctx.lineWidth = lw;
-      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      ctx.globalAlpha = alpha;
-      ctx.beginPath();
-      ctx.moveTo(pts[0][0], pts[0][1]);
-      for (let i = 1; i < pts.length - 1; i++) {
-        const mx = (pts[i][0] + pts[i+1][0]) / 2;
-        const my = (pts[i][1] + pts[i+1][1]) / 2;
-        ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
-      }
-      const l = pts.length - 1;
-      ctx.lineTo(pts[l][0], pts[l][1]);
-      ctx.stroke();
-      ctx.restore();
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      initStars();
     }
 
-    function branch(x0,y0, cx1,cy1, cx2,cy2, x1,y1, lw, alpha) {
-      ctx.save();
-      ctx.strokeStyle = '#6A3A14';
-      ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      ctx.globalAlpha = alpha;
-      ctx.beginPath();
-      ctx.moveTo(x0, y0);
-      ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x1, y1);
-      ctx.stroke();
-      ctx.restore();
+    function drawSky() {
+      // Deep evening sky gradient — Tromsø dark blue-indigo
+      const sky = ctx.createLinearGradient(0, 0, 0, H);
+      sky.addColorStop(0,   '#0A0E1C');
+      sky.addColorStop(0.5, '#111828');
+      sky.addColorStop(1,   '#1E1A28');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, W, H);
     }
 
-    // ─── DRAW TREE (trunk only — no crown branches) ───
-    function drawTrunk() {
-      // Root — clean straight base, no flares
-
-      // TRUNK — extends all the way to top of canvas (y=0)
-      const tp = [[TX,H],[TX-2,H-180],[TX-4,H-360],[TX-2,H-540],
-                  [TX,H-680],[TX+1,H-760],[TX+2,H-850],[TX+1,H-920],[TX,0]];
-      stroke(tp, 96,'#1C0A02',0.22);
-      stroke(tp, 82,'#3D1E08',0.45);
-      stroke(tp, 68,'#7A4418',0.38);
-      stroke(tp, 48,'#A86828',0.30);
-      stroke(tp, 22,'#C48840',0.16);
-      stroke(tp, 94,'#0E0502',0.07);
-
-      // Bark texture lines — extended to top
-      ctx.save(); ctx.lineCap='round';
-      const blines = [
-        {pts:[[TX-9,H-100],[TX-11,H-290],[TX-9,H-490],[TX-6,H-700],[TX-4,H-900],[TX-2,0]], lw:2,   col:'#1C0A02', a:0.08},
-        {pts:[[TX+6, H-90],[TX+7, H-280],[TX+6, H-475],[TX+4,H-685],[TX+2,H-880],[TX+1,0]], lw:1.4, col:'#8B5020', a:0.06},
-        {pts:[[TX+16,H-95],[TX+17,H-285],[TX+15,H-478],[TX+12,H-688],[TX+8,H-880],[TX+4,0]],lw:1.8, col:'#1C0A02', a:0.07},
-        {pts:[[TX-18,H-110],[TX-20,H-295],[TX-17,H-495],[TX-12,H-700],[TX-8,H-880]],        lw:1.2, col:'#4A2508', a:0.05},
-      ];
-      blines.forEach(b => stroke(b.pts, b.lw, b.col, b.a));
-      // Horizontal cracks
-      [[H-800,18],[H-680,20],[H-550,22],[H-420,22],[H-300,20],[H-190,17],[H-110,14]].forEach(([y,w]) => {
-        ctx.globalAlpha=0.06; ctx.strokeStyle='#1C0A02'; ctx.lineWidth=1.1;
-        ctx.beginPath(); ctx.moveTo(TX-w,y); ctx.bezierCurveTo(TX-w/3,y-1,TX+w/3,y+1,TX+w,y); ctx.stroke();
-      });
-      ctx.restore();
-    }
-
-    // ─── DRAW STRANDS with cursor sway ───
-    function drawStrands(t) {
-      // How much cursor pulls the strands — mouse in canvas coords
-      const cursorInfluence = (mouseX - W * 0.5) / W; // -0.5 to 0.5
-
-      strands.forEach(s => {
-        // Wind sway + subtle cursor push
-        const wind   = Math.sin(t * 0.7 + s.windPhase) * s.windAmp;
-        const cursor = cursorInfluence * 18;
-        const sway   = wind + cursor;
-
-        ctx.save();
-        ctx.strokeStyle = s.col;
-        ctx.lineWidth   = s.lw;
-        ctx.lineCap     = 'round';
-        ctx.globalAlpha = s.baseAlpha;
+    function drawStars() {
+      stars.forEach(s => {
+        s.phase += s.speed;
+        const twinkle = 0.5 + Math.sin(s.phase) * 0.5;
         ctx.beginPath();
-        ctx.moveTo(s.sx, s.sy);
-        ctx.bezierCurveTo(
-          s.cp1x + sway * 0.4, s.cp1y,
-          s.cp2x + sway * 0.75, s.cp2y,
-          s.ex   + sway,        s.ey
-        );
-        ctx.stroke();
-        ctx.restore();
-      });
-    }
-
-    // ─── DIRT — celestial ground ───
-    function drawDirt(t) {
-      const gy = H - 22;
-      ctx.save();
-
-      // Main glow mound
-      const grd = ctx.createRadialGradient(TX, gy, 0, TX, gy, 160);
-      grd.addColorStop(0,   'rgba(190,150,85,0.26)');
-      grd.addColorStop(0.25,'rgba(155,110,55,0.18)');
-      grd.addColorStop(0.55,'rgba(100,68,25,0.10)');
-      grd.addColorStop(1,   'rgba(0,0,0,0)');
-      ctx.fillStyle = grd;
-      ctx.beginPath();
-      ctx.ellipse(TX, gy, 165, 36, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Dirt speckle particles — deterministic positions
-      const speckCols = [
-        [220,190,120],[180,150,90],[200,170,100],[240,210,140],
-        [160,220,180],[200,180,240],[255,220,160],[140,200,160],
-      ];
-      for (let i = 0; i < 38; i++) {
-        // Deterministic but varied positions
-        const angle  = (i * 137.5 * Math.PI / 180); // golden angle
-        const radius = 8 + (i % 8) * 16 + (i % 3) * 5;
-        const dx     = Math.cos(angle) * radius * 0.9;
-        const dy     = Math.sin(angle) * radius * 0.22 + 10;
-        const r      = 0.6 + (i % 4) * 0.45;
-        const [rc, gc, bc] = speckCols[i % speckCols.length];
-        // Gentle celestial twinkle
-        const twinkle = 0.30 + Math.sin(t * 1.2 + i * 0.8) * 0.12;
-        ctx.globalAlpha = twinkle;
-        ctx.fillStyle   = `rgb(${rc},${gc},${bc})`;
-        ctx.beginPath();
-        ctx.arc(TX + dx, gy - 10 + dy, r, 0, Math.PI * 2);
+        ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha * twinkle})`;
         ctx.fill();
-
-        // Some speckles get a tiny glow halo
-        if (i % 5 === 0) {
-          const hgrd = ctx.createRadialGradient(TX+dx, gy-10+dy, 0, TX+dx, gy-10+dy, r*4);
-          hgrd.addColorStop(0, `rgba(${rc},${gc},${bc},0.25)`);
-          hgrd.addColorStop(1, 'rgba(0,0,0,0)');
-          ctx.globalAlpha = twinkle * 0.5;
-          ctx.fillStyle   = hgrd;
+        // Star glow on brighter ones
+        if (s.r > 0.9) {
+          const g = ctx.createRadialGradient(s.x*W, s.y*H, 0, s.x*W, s.y*H, s.r*5);
+          g.addColorStop(0, `rgba(200,220,255,${0.15 * twinkle})`);
+          g.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = g;
           ctx.beginPath();
-          ctx.arc(TX+dx, gy-10+dy, r*4, 0, Math.PI*2);
+          ctx.arc(s.x*W, s.y*H, s.r*5, 0, Math.PI*2);
           ctx.fill();
         }
-      }
-
-      // Ground arc glow
-      const lg = ctx.createLinearGradient(TX-160, gy, TX+160, gy);
-      lg.addColorStop(0,    'rgba(160,120,60,0)');
-      lg.addColorStop(0.2,  'rgba(200,160,80,0.28)');
-      lg.addColorStop(0.5,  'rgba(230,195,110,0.50)');
-      lg.addColorStop(0.8,  'rgba(200,160,80,0.28)');
-      lg.addColorStop(1,    'rgba(160,120,60,0)');
-      ctx.globalAlpha = 1;
-      ctx.strokeStyle = lg;
-      ctx.lineWidth   = 1.4;
-      ctx.beginPath();
-      ctx.moveTo(TX-160, gy);
-      ctx.bezierCurveTo(TX-80, gy-5, TX+80, gy-5, TX+160, gy);
-      ctx.stroke();
-      ctx.restore();
+      });
     }
 
-    // ─── LEAVES — dense on tree + slow falling ───
-    const leaves = [];
+    function drawAurora() {
+      bands.forEach((b, bi) => {
+        const cy = b.y * H;
+        const bH = b.width * H;
 
-    // Leaf colours: greens + a few yellowing ones for depth
-    const LEAF_COLS = [
-      [143,175,138],[120,158,115],[168,196,162],
-      [100,140,96], [180,210,174],[88,128,84],
-      [158,190,145],[195,215,180],[112,152,108],
-      [200,200,120],[180,190,100], // yellowing
-    ];
+        // Undulating centre line using multiple sine waves
+        const pts = [];
+        const steps = 80;
+        for (let i = 0; i <= steps; i++) {
+          const px = (i / steps) * W;
+          const wave1 = Math.sin(i * 0.08 + t * b.speed * 1000 + bi * 1.3) * b.amp * H;
+          const wave2 = Math.sin(i * 0.13 + t * b.speed * 700 + bi * 2.1) * b.amp * 0.5 * H;
+          const wave3 = Math.sin(i * 0.05 + t * b.speed * 1400) * b.amp * 0.3 * H;
+          pts.push([px, cy + wave1 + wave2 + wave3]);
+        }
 
-    function mkLeaf(preX, preY) {
-      const [r,g,b] = LEAF_COLS[Math.floor(Math.random() * LEAF_COLS.length)];
-      const alpha   = 0.60 + Math.random() * 0.32;
-      return {
-        x:      preX !== undefined ? preX : 20 + Math.random() * (W - 40),
-        y:      preY !== undefined ? preY : -10 - Math.random() * 30,
-        vy:     0.10 + Math.random() * 0.16,   // very slow fall
-        vx:     0,
-        rot:    Math.random() * Math.PI * 2,
-        rotV:   (Math.random() - 0.5) * 0.007,
-        w:      6 + Math.random() * 10,
-        h:      2.0 + Math.random() * 3.0,
-        col:    `rgba(${r},${g},${b},${alpha.toFixed(2)})`,
-        alpha:  preY !== undefined ? alpha * (0.5 + Math.random() * 0.5) : 0,
-        alphaT: alpha,
-        swing:  Math.random() * Math.PI * 2,
-        swingS: 0.003 + Math.random() * 0.005,
-        swingA: 0.18 + Math.random() * 0.42,
-        life:   preY !== undefined ? Math.floor(Math.random() * 450) : 0,
-        maxLife:600 + Math.random() * 400,
-        // cursor response
-        cursorK: 0.015 + Math.random() * 0.020,
-      };
-    }
-
-    // Dense initial population — leaves clustered heavily on strands
-    for (let i = 0; i < 240; i++) {
-      const strand = strands[Math.floor(Math.random() * strands.length)];
-      // Bias toward upper 60% of strands where leaves are denser
-      const t0  = Math.random() < 0.65 ? Math.random() * 0.6 : Math.random();
-      const px  = strand ? strand.sx + (strand.ex - strand.sx) * t0 + (Math.random()-0.5)*22 : Math.random()*W;
-      const py  = strand ? strand.sy + (strand.ey - strand.sy) * t0 : Math.random()*H;
-      leaves.push(mkLeaf(px, py));
-    }
-
-    let spawnTimer = 0;
-
-    // ─── MAIN ANIMATION LOOP ───
-    let t = 0;
-    function animate() {
-      requestAnimationFrame(animate);
-      t += 0.007;
-
-      ctx.clearRect(0, 0, W, H);
-
-      // Subtle whole-tree sway driven by time + cursor
-      const cursorLean = (mouseX - W * 0.5) / W * 0.012;
-      ctx.save();
-      ctx.translate(TX, H);
-      ctx.rotate(Math.sin(t * 0.65) * 0.007 + cursorLean);
-      ctx.translate(-TX, -H);
-      drawTrunk();
-      ctx.restore();
-
-      // Strands sway independently
-      drawStrands(t);
-
-
-      // Celestial dirt
-      drawDirt(t);
-
-      // Spawn leaves steadily
-      spawnTimer++;
-      if (spawnTimer >= 18) { leaves.push(mkLeaf()); spawnTimer = 0; }
-      // Occasionally spawn a cluster of 2-3
-      if (spawnTimer === 9) { leaves.push(mkLeaf()); }
-
-      // Update & draw leaves
-      const cursorPull = (mouseX - W * 0.5) / W;
-      for (let i = leaves.length - 1; i >= 0; i--) {
-        const l = leaves[i];
-        l.life  += 1;
-        l.swing += l.swingS;
-
-        // Cursor gently deflects leaves
-        l.vx += cursorPull * l.cursorK;
-        l.vx *= 0.94; // damping
-        l.x  += l.vx + Math.sin(l.swing) * l.swingA;
-        l.y  += l.vy;
-        l.rot += l.rotV + Math.sin(l.swing * 1.3) * 0.003;
-
-        // Fade in
-        if (l.alpha < l.alphaT) l.alpha = Math.min(l.alphaT, l.alpha + 0.012);
-        // Fade out last 25%
-        const fs = l.maxLife * 0.75;
-        if (l.life > fs) l.alpha = l.alphaT * Math.max(0, 1 - (l.life-fs)/(l.maxLife-fs));
-
-        // Remove if dead or off canvas
-        if (l.life > l.maxLife || l.y > H + 20) { leaves.splice(i, 1); continue; }
-
-        // Draw leaf
+        // Draw the curtain: top edge to bottom edge with gradient
         ctx.save();
-        ctx.translate(l.x, l.y);
-        ctx.rotate(l.rot);
-        ctx.globalAlpha = l.alpha;
-        ctx.fillStyle   = l.col;
         ctx.beginPath();
-        ctx.ellipse(0, 0, l.w, l.h, 0, 0, Math.PI * 2);
+        // Top edge (curtain top, more opaque)
+        const topPts = pts.map(([x,y]) => [x, y - bH * 0.5]);
+        const botPts = pts.map(([x,y]) => [x, y + bH * 0.5]);
+
+        ctx.moveTo(topPts[0][0], topPts[0][1]);
+        for (let i = 1; i < topPts.length; i++) ctx.lineTo(topPts[i][0], topPts[i][1]);
+        for (let i = botPts.length - 1; i >= 0; i--) ctx.lineTo(botPts[i][0], botPts[i][1]);
+        ctx.closePath();
+
+        // Colour gradient across width — aurora colour shift
+        const grad = ctx.createLinearGradient(0, 0, W, 0);
+        const [r1,g1,bl1] = b.col1;
+        const [r2,g2,bl2] = b.col2;
+        // Shimmer — time-varying mix
+        const mix = 0.5 + Math.sin(t * 0.0003 + bi) * 0.5;
+        const rm = Math.round(r1 + (r2-r1)*mix);
+        const gm = Math.round(g1 + (g2-g1)*mix);
+        const bm = Math.round(bl1 + (bl2-bl1)*mix);
+        grad.addColorStop(0,   `rgba(${r1},${g1},${bl1},0)`);
+        grad.addColorStop(0.2, `rgba(${r1},${g1},${bl1},${b.alpha})`);
+        grad.addColorStop(0.5, `rgba(${rm},${gm},${bm},${b.alpha * 1.3})`);
+        grad.addColorStop(0.8, `rgba(${r2},${g2},${bl2},${b.alpha})`);
+        grad.addColorStop(1,   `rgba(${r2},${g2},${bl2},0)`);
+        ctx.fillStyle = grad;
         ctx.fill();
-        // Midrib line
-        ctx.strokeStyle = 'rgba(50,90,45,0.25)';
-        ctx.lineWidth   = 0.5;
+
+        // Bright core line along centre
         ctx.beginPath();
-        ctx.moveTo(-l.w * 0.8, 0);
-        ctx.lineTo( l.w * 0.8, 0);
+        ctx.moveTo(pts[0][0], pts[0][1]);
+        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+        ctx.strokeStyle = `rgba(${rm},${gm},${bm},${b.alpha * 0.6})`;
+        ctx.lineWidth = 1.5;
         ctx.stroke();
         ctx.restore();
-      }
+      });
     }
 
-    animate();
+    // Faint ground glow — Tromsø snow horizon
+    function drawHorizon() {
+      const hy = H * 0.80;
+      const grad = ctx.createLinearGradient(0, hy, 0, H);
+      grad.addColorStop(0, 'rgba(30,28,50,0)');
+      grad.addColorStop(0.4, 'rgba(20,22,38,0.6)');
+      grad.addColorStop(1, 'rgba(10,12,24,0.95)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, hy, W, H - hy);
+
+      // Faint snow-covered mountain silhouette
+      ctx.save();
+      ctx.fillStyle = 'rgba(8,10,20,0.85)';
+      ctx.beginPath();
+      ctx.moveTo(0, H);
+      ctx.lineTo(0, H * 0.84);
+      ctx.bezierCurveTo(W*0.08, H*0.80, W*0.16, H*0.76, W*0.22, H*0.78);
+      ctx.bezierCurveTo(W*0.28, H*0.80, W*0.32, H*0.74, W*0.38, H*0.72);
+      ctx.bezierCurveTo(W*0.44, H*0.70, W*0.50, H*0.75, W*0.56, H*0.78);
+      ctx.bezierCurveTo(W*0.62, H*0.81, W*0.66, H*0.73, W*0.72, H*0.71);
+      ctx.bezierCurveTo(W*0.78, H*0.69, W*0.84, H*0.74, W*0.90, H*0.78);
+      ctx.bezierCurveTo(W*0.95, H*0.82, W*0.98, H*0.83, W, H*0.84);
+      ctx.lineTo(W, H);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function animate(ts) {
+      t = ts;
+      ctx.clearRect(0, 0, W, H);
+      drawSky();
+      drawStars();
+      drawAurora();
+      drawHorizon();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    requestAnimationFrame(animate);
   })();
   </script>
 
