@@ -170,25 +170,25 @@
     let W, H, t = 0;
     let mouse = { x: -1, y: -1 }, mouseGlow = 0;
 
-    // Slow galactic aurora streams — each band drifts independently
+    // Ultra-slow celestial aurora — turtle pace, just floating
     const bands = [
-      { y:0.22, c1:[60,200,140],  c2:[80,160,220],  spd:0.000055, amp:0.055, w:0.16, a:0.22, phase:0.0  },
-      { y:0.32, c1:[120,70,200],  c2:[60,200,160],  spd:0.000038, amp:0.072, w:0.14, a:0.17, phase:1.4  },
-      { y:0.16, c1:[50,170,220],  c2:[140,70,200],  spd:0.000068, amp:0.042, w:0.11, a:0.14, phase:2.8  },
-      { y:0.42, c1:[90,220,150],  c2:[60,100,220],  spd:0.000030, amp:0.065, w:0.13, a:0.12, phase:0.7  },
-      { y:0.12, c1:[200,80,200],  c2:[60,200,180],  spd:0.000080, amp:0.035, w:0.09, a:0.10, phase:3.5  },
-      { y:0.28, c1:[255,140,80],  c2:[180,60,200],  spd:0.000042, amp:0.058, w:0.10, a:0.09, phase:1.9  },
-      { y:0.08, c1:[80,220,200],  c2:[200,120,240], spd:0.000025, amp:0.030, w:0.08, a:0.08, phase:4.2  },
+      { y:0.22, c1:[60,200,140],  c2:[80,160,220],  spd:0.0000055, amp:0.025, w:0.16, a:0.28, phase:0.0  },
+      { y:0.32, c1:[120,70,200],  c2:[60,200,160],  spd:0.0000038, amp:0.030, w:0.14, a:0.22, phase:1.4  },
+      { y:0.16, c1:[50,170,220],  c2:[140,70,200],  spd:0.0000068, amp:0.018, w:0.11, a:0.18, phase:2.8  },
+      { y:0.42, c1:[90,220,150],  c2:[60,100,220],  spd:0.0000030, amp:0.028, w:0.13, a:0.15, phase:0.7  },
+      { y:0.12, c1:[200,80,200],  c2:[60,200,180],  spd:0.0000080, amp:0.015, w:0.09, a:0.13, phase:3.5  },
+      { y:0.28, c1:[255,140,80],  c2:[180,60,200],  spd:0.0000042, amp:0.022, w:0.10, a:0.11, phase:1.9  },
+      { y:0.08, c1:[80,220,200],  c2:[200,120,240], spd:0.0000025, amp:0.012, w:0.08, a:0.09, phase:4.2  },
     ];
 
     let stars = [];
     function initStars() {
       stars = [];
-      for (let i = 0; i < 220; i++) {
+      for (let i = 0; i < 300; i++) {
         stars.push({
           x: Math.random(), y: Math.random() * 0.72,
-          r: 0.3 + Math.random() * 1.4,
-          a: 0.15 + Math.random() * 0.65,
+          r: 0.3 + Math.random() * 1.6,
+          a: 0.20 + Math.random() * 0.75,
           ph: Math.random() * Math.PI * 2,
           sp: 0.003 + Math.random() * 0.012,
         });
@@ -252,7 +252,7 @@
             const dx = p[0]-mouse.x, dy = p[1]-mouse.y;
             const d = Math.hypot(dx,dy);
             if (d < 180) {
-              const push = (1-d/180) * 28 * mouseGlow;
+              const push = (1-d/180) * 8 * mouseGlow;
               p[1] += (dy/d) * push;
             }
           });
@@ -278,7 +278,7 @@
           ctx.closePath();
 
           // Horizontal colour gradient — slow shimmer
-          const mix = 0.5+Math.sin(ts*0.00004+bi*1.1)*0.5;
+          const mix = 0.5+Math.sin(ts*0.000004+bi*1.1)*0.5;
           const [r1,g1,b1]=b.c1, [r2,g2,b2]=b.c2;
           const rm=Math.round(r1+(r2-r1)*mix),gm=Math.round(g1+(g2-g1)*mix),bm=Math.round(b1+(b2-b1)*mix);
 
@@ -329,7 +329,7 @@
     function animate(ts) {
       t = ts;
       // Decay mouse glow
-      mouseGlow *= 0.97;
+      mouseGlow *= 0.992;
       ctx.clearRect(0,0,W,H);
       drawSky(); drawStars(); drawAurora(ts); drawHorizon(); drawMouseGlow();
       requestAnimationFrame(animate);
@@ -338,7 +338,7 @@
     window.addEventListener('resize', resize);
     window.addEventListener('mousemove', e => {
       mouse.x = e.clientX; mouse.y = e.clientY;
-      mouseGlow = Math.min(1, mouseGlow + 0.15); // mouse movement sparks glow
+      mouseGlow = Math.min(1, mouseGlow + 0.06);
     });
     window.addEventListener('mouseleave', () => { mouse.x=-1; mouse.y=-1; });
     resize();

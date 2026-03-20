@@ -69,7 +69,7 @@
       <a href="work.html" class="btn">Explore My Work →</a>
     </div>
 
-    <div class="hero-right" style="margin-left:-8rem; margin-top:4rem;">
+    <div class="hero-right" style="margin-left:-14rem; margin-top:4.5rem;">
       <div class="profile-frame">
         <img src="https://avatars.githubusercontent.com/u/252771412?v=4" alt="Michella Voughn Warren" class="profile-photo"/>
       </div>
@@ -181,55 +181,44 @@
     }
 
     // Track mouse velocity for momentum
-    let lastMX = -999, lastMY = -999, mvx = 0, mvy = 0;
+    let lastMX = -999, lastMY = -999, mvx = 0, mvy = 0, mvSmooth = 0;
 
     function tick(t) {
       ctx.clearRect(0, 0, W, H);
 
-      // Mouse momentum
-      mvx = (mouse.x - lastMX) * 0.4;
-      mvy = (mouse.y - lastMY) * 0.4;
+      // Smooth mouse velocity
+      const rawMvx = (mouse.x - lastMX) * 0.3;
+      const rawMvy = (mouse.y - lastMY) * 0.3;
+      mvSmooth = Math.min(Math.hypot(rawMvx, rawMvy) * 0.4, 4); // cap momentum
+      mvx = rawMvx; mvy = rawMvy;
       lastMX = mouse.x; lastMY = mouse.y;
-      const speed = Math.hypot(mvx, mvy);
 
       dots.forEach((d, i) => {
         d.phase += 0.004;
-        const drift = Math.sin(d.phase) * 0.18;
+        const drift = Math.sin(d.phase) * 0.15;
 
-        // Gravity back to origin
-        d.vx += (d.ox - d.x) * 0.00015 / d.mass;
-        d.vy += (d.oy - d.y) * 0.00015 / d.mass;
+        // Gentle gravity back to origin — slow restoration
+        d.vx += (d.ox - d.x) * 0.00012 / d.mass;
+        d.vy += (d.oy - d.y) * 0.00012 / d.mass;
 
-        // Mouse: repulsion + momentum transfer (like billiard collision)
+        // Mouse: gentle repulsion + slow momentum transfer
         const mdx = d.x - mouse.x;
         const mdy = d.y - mouse.y;
         const mdist = Math.hypot(mdx, mdy);
-        if (mdist < 160) {
+        if (mdist < 160 && mdist > 0) {
           const force = (160 - mdist) / 160;
-          // Repulsion
-          d.vx += (mdx / mdist) * force * 0.8;
-          d.vy += (mdy / mdist) * force * 0.8;
-          // Momentum transfer — fast mouse drags atoms along
-          if (speed > 2) {
-            d.vx += mvx * force * 0.18;
-            d.vy += mvy * force * 0.18;
+          // Soft repulsion — slower, more delayed
+          d.vx += (mdx / mdist) * force * 0.35;
+          d.vy += (mdy / mdist) * force * 0.35;
+          // Momentum transfer only when mouse moves fast
+          if (mvSmooth > 1.5) {
+            d.vx += mvx * force * 0.08;
+            d.vy += mvy * force * 0.08;
           }
         }
 
-        // Atom-atom elastic nudge (simplified)
-        dots.forEach((d2, j) => {
-          if (i >= j) return;
-          const ex = d.x - d2.x, ey = d.y - d2.y;
-          const ed = Math.hypot(ex, ey);
-          const minD = (d.r + d2.r) * 3.5;
-          if (ed < minD && ed > 0) {
-            const push = (minD - ed) / minD * 0.12;
-            d.vx  += (ex/ed) * push; d.vy  += (ey/ed) * push;
-            d2.vx -= (ex/ed) * push; d2.vy -= (ey/ed) * push;
-          }
-        });
-
-        d.vx *= 0.968; d.vy *= 0.968;
+        // Stronger damping — slower decay = more delay in reaction
+        d.vx *= 0.96; d.vy *= 0.96;
         d.x += d.vx + drift * 0.3;
         d.y += d.vy + drift * 0.2;
 
@@ -237,23 +226,25 @@
         d.connected.forEach(j => {
           const d2 = dots[j];
           const ld = Math.hypot(d.x-d2.x, d.y-d2.y);
-          const la = Math.max(0,(1-ld/100)*0.14);
+          const la = Math.max(0,(1-ld/100)*0.13);
           ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(d2.x,d2.y);
           ctx.strokeStyle=`rgba(${hexToRgb(d.color)},${la})`; ctx.lineWidth=0.5; ctx.stroke();
         });
 
-        // Draw — excited atoms glow brighter when moving fast
+        // Draw as crisp small particle — NO large bubble radius, just dot + faint glow
         const vel = Math.hypot(d.vx, d.vy);
-        const excite = Math.min(1, vel / 3);
-        const twinkle = 0.85 + Math.sin(d.phase * 2.3) * 0.15 + excite * 0.4;
+        const excite = Math.min(1, vel / 2.5);
+        const twinkle = 0.88 + Math.sin(d.phase * 2.3) * 0.12;
+        // Core dot — keep tight
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r * twinkle, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${hexToRgb(d.color)},${Math.min(0.95, d.alpha * twinkle)})`;
+        ctx.fillStyle = `rgba(${hexToRgb(d.color)},${Math.min(0.92, d.alpha * twinkle)})`;
         ctx.fill();
-        if (d.r > 1.5 || excite > 0.2) {
-          const glowR = d.r * (3 + excite * 5) * twinkle;
+        // Faint glow only — not a bubble, just a soft halo
+        if (d.r > 1.2 || excite > 0.3) {
+          const glowR = d.r * (2.2 + excite * 2.5);
           ctx.beginPath(); ctx.arc(d.x, d.y, glowR, 0, Math.PI*2);
-          ctx.fillStyle=`rgba(${hexToRgb(d.color)},${(d.alpha*0.12 + excite*0.15)*twinkle})`;
+          ctx.fillStyle=`rgba(${hexToRgb(d.color)},${(d.alpha*0.07 + excite*0.06)*twinkle})`;
           ctx.fill();
         }
       });
@@ -261,7 +252,7 @@
       requestAnimationFrame(tick);
     }
 
-    window.addEventListener('resize', resize);
+        window.addEventListener('resize', resize);
     window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
     window.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
 

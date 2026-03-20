@@ -370,3 +370,45 @@ body.page-research .card-grid::-webkit-scrollbar-thumb { background:var(--lavend
   body.page-research .section-content { padding-left:1.5rem; }
   body.page-research .card-grid .card { flex:0 0 85vw; min-width:85vw; }
 }
+
+/* ─── Work page — cards contrast on blue-fusion bg ──── */
+body.page-work .card {
+  background: rgba(255,255,255,0.72);
+  border-color: rgba(80,100,160,0.18);
+  box-shadow: 0 2px 16px rgba(60,80,140,0.08);
+}
+body.page-work .section-content {
+  background: transparent;
+}
+body.page-work .page-hero {
+  border-bottom-color: rgba(80,100,160,0.15);
+}
+
+/* ─── Research page — cards contrast on cream bg ─────── */
+body.page-research .card {
+  background: rgba(255,255,255,0.78);
+  border-color: rgba(184,168,204,0.28);
+  box-shadow: 0 2px 16px rgba(150,130,180,0.08);
+}
+
+/* ─── Interests page — items contrast on mocha bg ────── */
+body.page-interests .interest-item {
+  background: rgba(255,255,255,0.18);
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid rgba(196,122,90,0.18);
+  margin-bottom: 0.5rem;
+}
+body.page-interests .section-content {
+  padding-left: 2rem !important;
+}
+body.page-interests .interest-num {
+  color: rgba(184,100,70,0.55) !important;
+  font-size: 2rem;
+}
+body.page-interests .interest-item h3 {
+  color: #2A1E18;
+}
+body.page-interests .interest-item p {
+  color: rgba(42,30,24,0.72);
+}
