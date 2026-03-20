@@ -9,10 +9,10 @@
   <style>
     /* ── Interests page overrides — canyon palette ── */
     body.page-interests {
-      background: #F7F2EC;
+      background: #D4C4B0; /* desert dawn — warm mocha sand */
     }
     body.page-interests nav {
-      background: rgba(247,242,236,0.9);
+      background: rgba(212,196,176,0.92);
     }
     body.page-interests .page-hero {
       background: transparent;
@@ -42,38 +42,6 @@
     body.page-interests footer {
       background: transparent;
       border-top-color: rgba(196,122,90,0.2);
-    }
-
-    /* ── Layout: left-aligned, wider text, open-invite indented ── */
-    body.page-interests .page-hero {
-      max-width: none;
-      margin-right: 340px;
-    }
-    body.page-interests .section-content {
-      max-width: none;
-      margin-right: 340px;
-    }
-    body.page-interests .interest-list {
-      width: 100%;
-      max-width: none;
-    }
-    body.page-interests .interest-item {
-      max-width: none;
-    }
-    body.page-interests .interest-item p {
-      max-width: none;
-      text-align: left;
-    }
-    body.page-interests .interest-item h3 {
-      max-width: none;
-    }
-    /* open-invite: indent to align with item text (not the number) */
-    body.page-interests .open-invite {
-      margin-left: 5rem !important;
-      max-width: 700px;
-    }
-    body.page-interests .open-invite p {
-      text-align: left;
     }
 
     /* ── Orbital sun — fixed right side ── */
@@ -155,14 +123,26 @@
 
   <nav>
     <div class="nav-name">
-      <svg class="nav-feather" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- Sage sprig: central stem + paired oval leaves -->
-        <line x1="11" y1="20" x2="11" y2="4" stroke="#8FAF8A" stroke-width="1.3" stroke-linecap="round"/>
-        <ellipse cx="8"  cy="15" rx="3.5" ry="2" fill="#8FAF8A" opacity="0.7" transform="rotate(-30 8 15)"/>
-        <ellipse cx="14" cy="13" rx="3.5" ry="2" fill="#8FAF8A" opacity="0.7" transform="rotate(30 14 13)"/>
-        <ellipse cx="8"  cy="9"  rx="3"   ry="1.8" fill="#8FAF8A" opacity="0.55" transform="rotate(-25 8 9)"/>
-        <ellipse cx="14" cy="7"  rx="3"   ry="1.8" fill="#8FAF8A" opacity="0.55" transform="rotate(25 14 7)"/>
-        <ellipse cx="11" cy="4"  rx="2"   ry="1.4" fill="#8FAF8A" opacity="0.4"/>
+      <svg class="nav-feather" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Quill feather — translucent, elegant -->
+        <!-- Feather body: soft curved vane, left side -->
+        <path d="M11 26 C8 22, 3 18, 2 12 C1 7, 5 2, 11 1" fill="rgba(143,175,138,0.18)" stroke="none"/>
+        <!-- Feather body: right side vane -->
+        <path d="M11 26 C14 22, 19 18, 20 12 C21 7, 17 2, 11 1" fill="rgba(143,175,138,0.13)" stroke="none"/>
+        <!-- Vane ribs — left, faint -->
+        <line x1="11" y1="8"  x2="5"  y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="11" y1="11" x2="4"  y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="11" y1="14" x2="4"  y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="11" y1="17" x2="5"  y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
+        <!-- Vane ribs — right, faint -->
+        <line x1="11" y1="8"  x2="17" y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="11" y1="11" x2="18" y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="11" y1="14" x2="18" y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="11" y1="17" x2="17" y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
+        <!-- Central rachis (quill spine) — most visible element -->
+        <path d="M11 27 C11 24, 11 18, 11 1" stroke="rgba(122,158,118,0.72)" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Tip highlight -->
+        <circle cx="11" cy="1.5" r="0.8" fill="rgba(143,175,138,0.55)"/>
       </svg>
       <span class="nav-initials">
         <span class="nav-m">M</span> <span class="nav-v">V</span> <span class="nav-w">W</span>
@@ -293,8 +273,11 @@
     <div class="footer-links">
       <a href="https://github.com/Michella-stack" target="_blank">GitHub</a>
       <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank">LinkedIn</a>
-      <a href="/cdn-cgi/l/email-protection#92e5f3e0e0f7fcfffbf1faf7fefef3d2f5fff3fbfebcf1fdff">Email</a>
+      <a href="mailto:warrenmichella@gmail.com">Email</a>
     </div>
   </footer>
 
-  <!-- No cele
+  <!-- No celestial canvas on this page -->
+
+</body>
+</html>
