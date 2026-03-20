@@ -393,16 +393,16 @@ body.page-research .card {
 
 /* ─── Interests page — items contrast on mocha bg ────── */
 body.page-interests .interest-item {
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.22);
   border-radius: 8px;
   padding: 1.6rem 1.8rem;
-  border-bottom: 1px solid rgba(196,122,90,0.18);
-  margin-bottom: 0.5rem;
-  max-width: 780px;
+  border-bottom: none;
+  margin-bottom: 0.8rem;
+  max-width: 860px;
 }
 body.page-interests .section-content {
   padding-left: 4rem !important;
-  max-width: 860px !important;
+  max-width: 900px !important;
 }
 body.page-interests .interest-num {
   color: rgba(184,100,70,0.55) !important;
@@ -413,4 +413,30 @@ body.page-interests .interest-item h3 {
 }
 body.page-interests .interest-item p {
   color: rgba(42,30,24,0.72);
+}
+
+/* ─── Page hero box contrast — work, research, connect ── */
+body.page-work .page-hero {
+  background: rgba(255,255,255,0.45);
+  border-radius: 0 0 12px 12px;
+  border-bottom: none !important;
+  margin-bottom: 1rem;
+}
+body.page-research .page-hero {
+  background: rgba(255,255,255,0.50);
+  border-radius: 0 0 12px 12px;
+  border-bottom: none !important;
+  margin-bottom: 1rem;
+}
+/* Connect page hero already dark from body override — just add a subtle panel */
+body.page-connect .page-hero {
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 3rem 3rem 2rem !important;
+}
+body.page-connect .section-content {
+  padding: 1.5rem 3rem 5rem !important;
+  max-width: 700px !important;
+  margin: 0 0 0 4rem !important;
 }

@@ -170,28 +170,30 @@
     let W, H, t = 0;
     let mouse = { x: -1, y: -1 }, mouseGlow = 0;
 
-    // Static nebula clouds — fixed positions, just breathe in place
-    const nebulae = [
-      { x:0.62, y:0.18, rx:0.38, ry:0.18, c:[60,200,140],  a:0.13, phase:0.0,  speed:0.00018 },
-      { x:0.45, y:0.28, rx:0.42, ry:0.14, c:[120,70,200],  a:0.10, phase:1.8,  speed:0.00014 },
-      { x:0.72, y:0.12, rx:0.28, ry:0.12, c:[50,170,220],  a:0.09, phase:3.2,  speed:0.00022 },
-      { x:0.30, y:0.20, rx:0.30, ry:0.10, c:[200,80,200],  a:0.07, phase:0.9,  speed:0.00016 },
-      { x:0.55, y:0.35, rx:0.35, ry:0.16, c:[255,140,80],  a:0.06, phase:2.4,  speed:0.00012 },
-      { x:0.80, y:0.22, rx:0.22, ry:0.10, c:[80,220,200],  a:0.08, phase:4.1,  speed:0.00020 },
-      { x:0.20, y:0.15, rx:0.25, ry:0.09, c:[180,100,220], a:0.06, phase:1.3,  speed:0.00015 },
+    // Aurora bands — each is a horizontal ribbon spanning full width
+    // They sit at different heights and gently breathe/pulse — no lateral movement
+    const bands = [
+      // y=vertical position (0=top), c=colour, baseA=base alpha, phase=breath offset, speed=breath speed
+      { y:0.10, c:[60,200,140],   baseA:0.18, phase:0.0,  spd:0.00022, thick:0.055, twist:0.012 },
+      { y:0.18, c:[100,60,200],   baseA:0.14, phase:1.6,  spd:0.00018, thick:0.048, twist:0.009 },
+      { y:0.25, c:[50,160,220],   baseA:0.12, phase:3.1,  spd:0.00025, thick:0.040, twist:0.014 },
+      { y:0.14, c:[200,90,180],   baseA:0.10, phase:0.8,  spd:0.00020, thick:0.035, twist:0.010 },
+      { y:0.30, c:[80,220,180],   baseA:0.09, phase:2.3,  spd:0.00015, thick:0.030, twist:0.008 },
+      { y:0.08, c:[255,150,60],   baseA:0.08, phase:4.0,  spd:0.00028, thick:0.025, twist:0.016 },
+      { y:0.22, c:[160,60,220],   baseA:0.07, phase:1.2,  spd:0.00019, thick:0.028, twist:0.011 },
     ];
 
-    // Stars — fixed, just twinkle
+    // Stars
     let stars = [];
     function initStars() {
       stars = [];
-      for (let i = 0; i < 320; i++) {
+      for (let i = 0; i < 280; i++) {
         stars.push({
-          x: Math.random(), y: Math.random() * 0.75,
-          r: 0.3 + Math.random() * 1.5,
-          a: 0.18 + Math.random() * 0.72,
+          x: Math.random(), y: Math.random() * 0.72,
+          r: 0.3 + Math.random() * 1.4,
+          a: 0.18 + Math.random() * 0.70,
           ph: Math.random() * Math.PI * 2,
-          sp: 0.002 + Math.random() * 0.008, // very slow twinkle
+          sp: 0.002 + Math.random() * 0.007,
         });
       }
     }
@@ -204,44 +206,70 @@
 
     function drawSky() {
       const sky = ctx.createLinearGradient(0,0,0,H);
-      sky.addColorStop(0,   '#060A16');
-      sky.addColorStop(0.5, '#0A1020');
-      sky.addColorStop(1,   '#141020');
+      sky.addColorStop(0,   '#050810');
+      sky.addColorStop(0.5, '#080D1A');
+      sky.addColorStop(1,   '#111020');
       ctx.fillStyle = sky;
       ctx.fillRect(0,0,W,H);
     }
 
-    function drawNebulae(ts) {
-      // Each nebula breathes — just alpha pulse, zero position movement
-      nebulae.forEach((n, ni) => {
-        const pulse = Math.sin(ts * n.speed * 1000 + n.phase) * 0.35 + 0.65; // 0.30–1.0 range
-        const mouseBoost = mouse.x > 0 ? mouseGlow * 0.18 : 0;
-        const alpha = (n.a + mouseBoost) * pulse;
+    function drawBands(ts) {
+      bands.forEach((b, bi) => {
+        // Breathing pulse — alpha only, zero position change
+        const pulse = 0.60 + Math.sin(ts * b.spd * 1000 + b.phase) * 0.40;
+        const mouseBoost = mouseGlow * 0.12;
+        const alpha = (b.baseA + mouseBoost) * pulse;
+        const [r,g,bl] = b.c;
 
-        // Draw as a soft radial ellipse — 3 layers for depth
-        [
-          { scale: 1.0,  am: 0.30 },
-          { scale: 0.60, am: 0.55 },
-          { scale: 0.28, am: 1.00 },
-        ].forEach(layer => {
-          const cx = n.x * W;
-          const cy = n.y * H;
-          const rx = n.rx * W * layer.scale;
-          const ry = n.ry * H * layer.scale;
-          const [r,g,b] = n.c;
+        // Each band is a wide horizontal ellipse spanning full width
+        // Slight vertical undulation using a sine along x — makes it look like a ribbon/swirl
+        // We draw it as a filled path with top and bottom edges slightly wavy
 
-          ctx.save();
+        const cy = b.y * H;
+        const halfH = b.thick * H;
+        const steps = 100;
+
+        ctx.save();
+
+        // Draw 3 passes: wide+dim, medium, thin bright core — ember depth
+        const passes = [
+          { hMult: 2.2, aMult: 0.25 },
+          { hMult: 1.2, aMult: 0.55 },
+          { hMult: 0.45,aMult: 1.00 },
+        ];
+
+        passes.forEach(pass => {
           ctx.beginPath();
-          ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+          // Top edge — very slight sine wave (twist gives the swirl)
+          for (let i = 0; i <= steps; i++) {
+            const px = (i / steps) * W;
+            // Gentle static undulation — uses band index for variety, no time component
+            const wave = Math.sin(i * b.twist * Math.PI + bi * 1.4) * halfH * 0.3;
+            const py = cy - halfH * pass.hMult + wave;
+            i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+          }
+          // Bottom edge — mirror wave
+          for (let i = steps; i >= 0; i--) {
+            const px = (i / steps) * W;
+            const wave = Math.sin(i * b.twist * Math.PI + bi * 1.4) * halfH * 0.3;
+            const py = cy + halfH * pass.hMult + wave;
+            ctx.lineTo(px, py);
+          }
+          ctx.closePath();
 
-          const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
-          grad.addColorStop(0,   `rgba(${r},${g},${b},${alpha * layer.am})`);
-          grad.addColorStop(0.5, `rgba(${r},${g},${b},${alpha * layer.am * 0.4})`);
-          grad.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+          // Gradient: fade out at left and right edges, glow in centre
+          const grad = ctx.createLinearGradient(0, 0, W, 0);
+          grad.addColorStop(0,    `rgba(${r},${g},${bl},0)`);
+          grad.addColorStop(0.06, `rgba(${r},${g},${bl},${alpha * pass.aMult})`);
+          grad.addColorStop(0.35, `rgba(${r},${g},${bl},${alpha * pass.aMult * 1.3})`);
+          grad.addColorStop(0.65, `rgba(${r},${g},${bl},${alpha * pass.aMult * 1.1})`);
+          grad.addColorStop(0.94, `rgba(${r},${g},${bl},${alpha * pass.aMult})`);
+          grad.addColorStop(1,    `rgba(${r},${g},${bl},0)`);
           ctx.fillStyle = grad;
           ctx.fill();
-          ctx.restore();
         });
+
+        ctx.restore();
       });
     }
 
@@ -251,18 +279,15 @@
         const twk = 0.4 + Math.sin(s.ph) * 0.6;
         const sx = s.x * W, sy = s.y * H;
         const md = mouse.x > 0 ? Math.hypot(sx - mouse.x, sy - mouse.y) : 9999;
-        const mb = md < 250 ? (1 - md/250) * 0.4 * mouseGlow : 0;
+        const mb = md < 240 ? (1 - md/240) * 0.45 * mouseGlow : 0;
         const alpha = Math.min(1, s.a * twk + mb);
-
         ctx.beginPath();
         ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255,255,255,${alpha})`;
         ctx.fill();
-
-        // Glow halo on brighter stars
         if (s.r > 1.0 || mb > 0.05) {
           const gr = ctx.createRadialGradient(sx,sy,0,sx,sy,s.r*7);
-          gr.addColorStop(0, `rgba(200,220,255,${(0.10*twk+mb*0.4)})`);
+          gr.addColorStop(0, `rgba(210,230,255,${0.10*twk+mb*0.35})`);
           gr.addColorStop(1, 'rgba(0,0,0,0)');
           ctx.fillStyle = gr;
           ctx.beginPath(); ctx.arc(sx,sy,s.r*7,0,Math.PI*2); ctx.fill();
@@ -272,45 +297,40 @@
 
     function drawMountains() {
       ctx.save();
-      // Far mountains — very dark, barely visible
-      ctx.fillStyle = 'rgba(4,6,14,0.88)';
+      ctx.fillStyle = 'rgba(3,5,12,0.92)';
       ctx.beginPath();
-      ctx.moveTo(0,H);
-      ctx.lineTo(0, H*0.85);
-      ctx.bezierCurveTo(W*0.10,H*0.81,W*0.18,H*0.77,W*0.24,H*0.79);
-      ctx.bezierCurveTo(W*0.30,H*0.81,W*0.34,H*0.74,W*0.40,H*0.72);
-      ctx.bezierCurveTo(W*0.46,H*0.70,W*0.52,H*0.75,W*0.58,H*0.79);
-      ctx.bezierCurveTo(W*0.64,H*0.83,W*0.68,H*0.73,W*0.74,H*0.71);
-      ctx.bezierCurveTo(W*0.80,H*0.69,W*0.86,H*0.75,W*0.92,H*0.79);
-      ctx.lineTo(W, H*0.84); ctx.lineTo(W,H);
+      ctx.moveTo(0,H); ctx.lineTo(0,H*0.86);
+      ctx.bezierCurveTo(W*0.08,H*0.82,W*0.16,H*0.77,W*0.23,H*0.79);
+      ctx.bezierCurveTo(W*0.30,H*0.81,W*0.35,H*0.73,W*0.41,H*0.71);
+      ctx.bezierCurveTo(W*0.47,H*0.69,W*0.53,H*0.75,W*0.59,H*0.79);
+      ctx.bezierCurveTo(W*0.65,H*0.83,W*0.69,H*0.72,W*0.75,H*0.70);
+      ctx.bezierCurveTo(W*0.81,H*0.68,W*0.87,H*0.74,W*0.93,H*0.79);
+      ctx.lineTo(W,H*0.84); ctx.lineTo(W,H);
       ctx.closePath(); ctx.fill();
-
-      // Ground fade
-      const gf = ctx.createLinearGradient(0,H*0.78,0,H);
-      gf.addColorStop(0,'rgba(4,6,14,0)');
-      gf.addColorStop(0.6,'rgba(4,6,14,0.85)');
-      gf.addColorStop(1,'rgba(2,4,10,0.98)');
-      ctx.fillStyle=gf; ctx.fillRect(0,H*0.78,W,H*0.22);
+      const gf = ctx.createLinearGradient(0,H*0.77,0,H);
+      gf.addColorStop(0,'rgba(3,5,12,0)');
+      gf.addColorStop(0.55,'rgba(3,5,12,0.88)');
+      gf.addColorStop(1,'rgba(2,3,8,0.98)');
+      ctx.fillStyle=gf; ctx.fillRect(0,H*0.77,W,H*0.23);
       ctx.restore();
     }
 
-    // Very subtle cursor halo — just brightens nearby stars
     function drawMouseHalo() {
       if (mouse.x < 0 || mouseGlow < 0.01) return;
-      const g = ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,180);
-      g.addColorStop(0, `rgba(140,200,180,${0.04*mouseGlow})`);
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(mouse.x,mouse.y,180,0,Math.PI*2); ctx.fill();
+      const g = ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,160);
+      g.addColorStop(0,`rgba(120,200,170,${0.05*mouseGlow})`);
+      g.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(mouse.x,mouse.y,160,0,Math.PI*2); ctx.fill();
     }
 
     function animate(ts) {
       t = ts;
-      mouseGlow *= 0.994; // very slow decay
+      mouseGlow *= 0.993;
       ctx.clearRect(0,0,W,H);
       drawSky();
-      drawNebulae(ts);   // behind everything
-      drawStars(ts);     // stars on top of nebulae
-      drawMountains();   // foreground silhouette
+      drawBands(ts);
+      drawStars(ts);
+      drawMountains();
       drawMouseHalo();
       requestAnimationFrame(animate);
     }
@@ -318,9 +338,9 @@
     window.addEventListener('resize', resize);
     window.addEventListener('mousemove', e => {
       mouse.x = e.clientX; mouse.y = e.clientY;
-      mouseGlow = Math.min(1, mouseGlow + 0.04);
+      mouseGlow = Math.min(1, mouseGlow + 0.05);
     });
-    window.addEventListener('mouseleave', () => { mouse.x = -1; mouse.y = -1; });
+    window.addEventListener('mouseleave', () => { mouse.x=-1; mouse.y=-1; });
     resize();
     requestAnimationFrame(animate);
   })();
