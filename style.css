@@ -395,14 +395,14 @@ body.page-research .card {
 body.page-interests .interest-item {
   background: rgba(255,255,255,0.22);
   border-radius: 8px;
-  padding: 1.6rem 1.8rem;
+  padding: 1.6rem 2rem;
   border-bottom: none;
   margin-bottom: 0.8rem;
-  max-width: 860px;
 }
 body.page-interests .section-content {
   padding-left: 4rem !important;
-  max-width: 900px !important;
+  padding-right: 6rem !important;
+  max-width: 100% !important;
 }
 body.page-interests .interest-num {
   color: rgba(184,100,70,0.55) !important;
@@ -430,13 +430,18 @@ body.page-research .page-hero {
 }
 /* Connect page hero already dark from body override — just add a subtle panel */
 body.page-connect .page-hero {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.06);
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.10);
   padding: 3rem 3rem 2rem !important;
 }
 body.page-connect .section-content {
   padding: 1.5rem 3rem 5rem !important;
   max-width: 700px !important;
   margin: 0 0 0 4rem !important;
+}
+body.page-connect .open-invite {
+  background: rgba(255,255,255,0.14) !important;
+  border-left: 3px solid rgba(168,216,176,0.6) !important;
+  backdrop-filter: blur(12px);
 }
