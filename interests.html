@@ -52,10 +52,16 @@
       transform: translateY(-50%);
       width: 420px;
       height: 420px;
-      pointer-events: none;
+      pointer-events: all;
       z-index: 0;
       opacity: 0;
       animation: sunRise 2s ease-out 0.3s forwards;
+      transition: filter 0.5s ease, transform 0.5s ease;
+      cursor: default;
+    }
+    .canyon-sun:hover {
+      filter: brightness(0.72) saturate(1.8) drop-shadow(0 0 40px rgba(180,80,20,0.55));
+      transform: translateY(-50%) scale(1.04);
     }
 
     @keyframes sunRise {
@@ -161,8 +167,8 @@
   <svg class="canyon-sun" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%"   stop-color="#F5C27A" stop-opacity="0.90"/>
-        <stop offset="45%"  stop-color="#E8925A" stop-opacity="0.65"/>
+        <stop offset="0%"   stop-color="#F5A850" stop-opacity="1.00"/>
+        <stop offset="45%"  stop-color="#D96830" stop-opacity="0.80"/>
         <stop offset="100%" stop-color="#C47A5A" stop-opacity="0"/>
       </radialGradient>
       <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
@@ -175,17 +181,17 @@
     <circle cx="210" cy="210" r="195" fill="url(#haloGrad)"/>
 
     <!-- Thin concentric rings — organic, slightly imperfect -->
-    <circle cx="210" cy="210" r="155" stroke="#D4895E" stroke-width="0.6" fill="none" opacity="0.14"/>
-    <circle cx="210" cy="210" r="135" stroke="#C47A5A" stroke-width="0.5" fill="none" opacity="0.12"/>
-    <circle cx="210" cy="210" r="115" stroke="#D4895E" stroke-width="0.5" fill="none" opacity="0.12"/>
-    <circle cx="210" cy="210" r="96"  stroke="#E8925A" stroke-width="0.5" fill="none" opacity="0.15"/>
+    <circle cx="210" cy="210" r="155" stroke="#C4693E" stroke-width="0.9" fill="none" opacity="0.50"/>
+    <circle cx="210" cy="210" r="135" stroke="#B85840" stroke-width="0.8" fill="none" opacity="0.26"/>
+    <circle cx="210" cy="210" r="115" stroke="#C4693E" stroke-width="0.7" fill="none" opacity="0.24"/>
+    <circle cx="210" cy="210" r="96"  stroke="#D47840" stroke-width="0.7" fill="none" opacity="0.55"/>
 
     <!-- Minimal spokes — 8 fine lines, varying length -->
     <g class="sun-rays">
       <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="1.0" stroke-linecap="round" opacity="0.30"/>
-      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.6" stroke-linecap="round" opacity="0.18" transform="rotate(45 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.6" stroke-linecap="round" opacity="0.35" transform="rotate(45 210 210)"/>
       <line x1="210" y1="68"  x2="210" y2="50"  stroke="#E8925A" stroke-width="1.0" stroke-linecap="round" opacity="0.28" transform="rotate(90 210 210)"/>
-      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.6" stroke-linecap="round" opacity="0.18" transform="rotate(135 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.6" stroke-linecap="round" opacity="0.35" transform="rotate(135 210 210)"/>
       <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="1.0" stroke-linecap="round" opacity="0.28" transform="rotate(180 210 210)"/>
       <line x1="210" y1="68"  x2="210" y2="55"  stroke="#E8925A" stroke-width="0.6" stroke-linecap="round" opacity="0.16" transform="rotate(225 210 210)"/>
       <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="1.0" stroke-linecap="round" opacity="0.28" transform="rotate(270 210 210)"/>
@@ -195,24 +201,27 @@
     <!-- Core — soft pulsing disc -->
     <g class="sun-core">
       <circle cx="210" cy="210" r="78" fill="url(#sunGrad)"/>
-      <circle cx="210" cy="210" r="52" stroke="#F5C27A" stroke-width="0.6" fill="none" opacity="0.28"/>
+      <circle cx="210" cy="210" r="52" stroke="#F5C27A" stroke-width="0.6" fill="none" opacity="0.50"/>
     </g>
   </svg>
 
   <!-- Mountain silhouette — bottom, fully connected -->
   <svg class="canyon-mountains" viewBox="0 0 1440 180" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Layer 1 — distant haze, full width connected -->
+    <!-- Layer 1 — far haze, dusty mauve-brown -->
     <path d="M0 180 L0 125 C80 112 160 100 260 88 C360 76 440 82 540 70 C640 58 720 65 820 54 C920 43 1000 50 1100 42 C1200 34 1300 40 1380 36 L1440 34 L1440 180 Z"
-      fill="#C47A5A" opacity="0.07"/>
-    <!-- Layer 2 — mid range, full width -->
+      fill="#9E7060" opacity="0.14"/>
+    <!-- Layer 2 — distant ridge, warm umber -->
     <path d="M0 180 L0 145 C70 132 150 124 240 114 C330 104 410 112 500 102 C590 92 670 100 760 90 C850 80 930 88 1020 78 C1110 68 1190 76 1280 70 C1360 65 1410 68 1440 67 L1440 180 Z"
-      fill="#C47A5A" opacity="0.10"/>
-    <!-- Layer 3 — closer ridges, full width -->
-    <path d="M0 180 L0 162 C50 150 100 142 160 130 C200 122 230 114 265 108 C300 102 330 106 370 112 C420 120 470 128 540 132 C610 136 680 134 760 128 C840 122 910 116 970 110 C1030 104 1080 108 1140 114 C1200 120 1250 128 1310 134 C1370 140 1415 145 1440 148 L1440 180 Z"
-      fill="#B85C38" opacity="0.13"/>
-    <!-- Layer 4 — foreground, full width -->
-    <path d="M0 180 L0 170 C60 163 130 160 210 157 C290 154 370 156 460 162 C540 167 620 170 700 168 C780 166 860 162 940 159 C1020 156 1100 158 1180 163 C1260 168 1350 173 1440 175 L1440 180 Z"
-      fill="#8B4513" opacity="0.11"/>
+      fill="#B8764E" opacity="0.20"/>
+    <!-- Layer 3 — mid canyon wall, terracotta -->
+    <path d="M0 180 L0 155 C50 142 110 134 175 122 C220 114 255 108 295 104 C340 99 385 103 435 110 C490 118 545 126 620 131 C695 136 770 133 845 126 C915 119 975 113 1040 108 C1100 103 1155 107 1215 113 C1270 119 1325 127 1385 133 L1440 137 L1440 180 Z"
+      fill="#C47A5A" opacity="0.50"/>
+    <!-- Layer 4 — closer butte, deep sienna -->
+    <path d="M0 180 L0 162 C45 155 95 150 155 146 C215 142 270 148 340 154 C410 160 480 164 560 162 C640 160 720 156 800 152 C875 148 945 150 1020 155 C1090 160 1155 165 1225 168 C1295 171 1375 174 1440 175 L1440 180 Z"
+      fill="#9C4A28" opacity="0.32"/>
+    <!-- Layer 5 — foreground, darkest clay -->
+    <path d="M0 180 L0 172 C80 168 180 166 300 168 C420 170 540 174 660 173 C780 172 900 169 1020 168 C1140 167 1280 170 1440 174 L1440 180 Z"
+      fill="#7A3518" opacity="0.35"/>
   </svg>
 
   <div class="page-hero">
