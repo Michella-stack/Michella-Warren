@@ -27,10 +27,13 @@
     body.page-connect nav {
       position: relative; z-index: 10;
     }
-    /* Override page-hero to centre content */
+    /* Override page-hero — fully transparent, no box */
     body.page-connect .page-hero {
       padding: 7rem 4rem 2rem !important;
       border-bottom: none !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
       max-width: 620px;
       margin: 0 !important;
       position: relative; z-index: 2;
@@ -40,10 +43,12 @@
       max-width: 620px !important;
       margin: 0 !important;
       position: relative; z-index: 2;
+      background: transparent !important;
     }
     body.page-connect .contact-wrap {
       width: 100%;
       margin: 0;
+      background: transparent !important;
     }
     body.page-connect footer {
       position: relative; z-index: 2;
@@ -75,10 +80,9 @@
     body.page-connect .contact-icon-links a { color: rgba(232,224,213,0.65); }
     body.page-connect .contact-icon-links a:hover { color: #A8D8B0; }
     body.page-connect .open-invite {
-      background: rgba(168,216,176,0.10);
-      border-left-color: #A8D8B0;
-      backdrop-filter: blur(8px);
-      max-width: 100%;
+      background: rgba(255,255,255,0.08) !important;
+      border-left: 3px solid rgba(168,216,176,0.50) !important;
+      backdrop-filter: blur(6px);
       width: 100%;
       box-sizing: border-box;
     }
