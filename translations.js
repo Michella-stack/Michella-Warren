@@ -325,6 +325,85 @@ const TRANSLATIONS = {
     footer_copy: "© 2025 ميشيلا فوين وارن · مبني بنية وإتقان",
   },
 
+
+  nl: {
+    nav_home: "Home",
+    nav_work: "Werk",
+    nav_research: "Onderzoek",
+    nav_interests: "Interesses",
+    nav_connect: "Contact",
+    hero_tag: "Product · Data · Onderzoek",
+    hero_subtitle: "Ik beweeg me op het snijvlak van grondig onderzoek en real-world producten — data vertalen naar beslissingen, en bewijs naar impact.",
+    pill_stats: "Statistiek & Data-analyse",
+    pill_demo: "Demografie & Sociologie",
+    pill_product: "Product & Bedrijfstechnologie",
+    btn_explore: "Bekijk mijn werk →",
+    about_01_title: "Onderzoeksfundamenten",
+    about_01_text: "Research Master in Demografie & Sociologie, met een stevige basis in statistische methoden en populatiedenken.",
+    about_02_title: "Datagedreven Praktijk",
+    about_02_text: "Academische specialisatie in statistiek en data-analyse — kwantitatieve strengheid brengen naar elk product- en bedrijfsvraagstuk.",
+    about_03_title: "Product & Tech",
+    about_03_text: "Werkzaam in het domein van product en bedrijfstechnologie, de brug slaand tussen analytisch inzicht en strategische uitvoering.",
+    work_tag: "Projecten & Vaardigheden",
+    work_h1a: "Wat ik ",
+    work_h1b: "Bouw",
+    work_subtitle: "Van datapijplijnen tot productstrategie — projecten op het snijvlak van analyse en actie.",
+    proj1_label: "Hackathon · MWC 2026",
+    proj1_title: "SimShield — Nokia NaC GSMA Challenge",
+    proj1_desc: "Een betalingsbeveiligingstool gebouwd tijdens de OpenGateway Hackathon 2026 op het Mobile World Congress. SimShield gebruikt Nokia Network as Code en GSMA Open Gateway API's om gebruikers in real-time te beschermen tegen SIM-swap fraude.",
+    proj2_label: "Data-analyse",
+    proj2_title: "COVID-19 Sequelaen",
+    proj2_desc: "Een longitudinale data-analyse naar post-acute sequelaen van COVID-19 (Long COVID). Onderzoek naar symptoomvoortduur, demografische risicofactoren en patronen in zorggebruik via statistische modellering.",
+    proj3_label: "Data-analyse",
+    proj3_title: "Energiesystemen & Transitie",
+    proj3_desc: "Data-analyse gericht op energieverbruikspatronen en transitiedynamiek. Verkenning van sociaaleconomische en geografische dimensies van energietoegang en duurzaamheid.",
+    skills_title_a: "Vaardigheden & ",
+    skills_title_b: "Tech Stack",
+    cat_data: "Data & Analyse",
+    cat_product: "Product & Business",
+    cat_research: "Onderzoeksmethoden",
+    cat_tools: "Tools & Platforms",
+    research_tag: "Onderzoek & Publicaties",
+    research_h1a: "De ",
+    research_h1b: "Vragen",
+    research_h1c: " die ik Stel",
+    research_subtitle: "Academisch onderzoek geworteld in demografie, sociologie en statistische analyse — de systemen verkennen die menselijke populaties vormen.",
+    res1_label: "Kwantitatieve Analyse · UPF · 2020",
+    res1_title: "De gezondheidsconsequenties van medewerkers in de gezondheidszorg tijdens de Cov-Sars-19-uitbraken in Spanje",
+    res1_sub: "De impact van Covid-19 op de geestelijke gezondheid van zorgprofessionals tijdens een pandemie",
+    res1_desc: "Een kwantitatieve analyse op basis van primaire enquêtedata van het MINDCOVID-project (IMIM, Barcelona). Onderzocht werden angst, PTSS, paniekaanvallen en suïcidale gedachten bij 9.138 zorgprofessionals in 19 Spaanse ziekenhuizen.",
+    res2_label: "Masterthesis",
+    res2_title: "Duurzame Stedelijke Ontwikkeling: Socio-Ecologische Uitdagingen en Barrières in de Stad",
+    res2_sub: "Case Tromsø en Oslo",
+    res2_desc: "Een vergelijkende studie naar de socio-ecologische spanningen in Noorse stedelijke contexten — hoe structurele, institutionele en gemeenschapsbarrières duurzame ontwikkelingsuitkomsten vormen in twee contrasterende steden.",
+    github_view: "Bekijk op GitHub",
+    interests_tag: "Interesses & Open Discussie",
+    interests_h1a: "Wat mij ",
+    interests_h1b: "Beweegt",
+    interests_h1c: "",
+    interests_subtitle: "De ideeën, ruimtes en gesprekken waar ik steeds op terugkom — professioneel en persoonlijk.",
+    int1_title: "Data-ethiek & Verantwoorde AI",
+    int1_text: "Hoe bouwen we statistische modellen en dataproducten die mensen eerlijk bedienen? Ik ben diep geïnteresseerd in de ethiek van algoritmische besluitvorming, vooral in sociale contexten zoals zorg, huisvesting en beleid.",
+    int2_title: "Bevolkingsdynamiek & Sociale Verandering",
+    int2_text: "Demografische transities, migratie, verstedelijking — de grote, trage krachten die samenlevingen stilletjes hervormen. Mijn onderzoeksachtergrond trekt me steeds terug naar vragen over hoe bevolkingen bewegen, aanpassen en standhouden.",
+    int3_title: "Product voor Maatschappelijke Impact",
+    int3_text: "Kan goed productdenken worden toegepast op maatschappelijke uitdagingen? Ik ben gefascineerd door organisaties die bouwen op het snijvlak van technologie en publiek goed — en hoe je strengheid kunt brengen zonder menselijkheid te verliezen.",
+    int4_title: "Verhalen Vertellen met Data",
+    int4_text: "Cijfers zonder narratief zijn slechts ruis. Ik geef om het begrijpelijk maken van data — visualisatie, communicatie en de kunst om een complex dataset om te zetten in iets waar iemand daadwerkelijk mee aan de slag kan.",
+    int5_title: "Duurzame Steden & Stedelijke Toekomsten",
+    int5_text: "Mijn thesiswerk over Tromsø en Oslo wekte een blijvende interesse in hoe steden de spanning navigeren tussen groei en ecologische verantwoordelijkheid — een vraag die elk jaar urgenter aanvoelt.",
+    convo_title: "Laten we Praten",
+    convo_text: "Ik geloof dat de beste ideeën ontstaan in open, informele uitwisseling. Als iets van het bovenstaande resoneert — of als je werkt aan iets op het snijvlak van data, onderzoek en product — hoor ik graag van je.",
+    btn_connect: "Neem contact op →",
+    connect_h1a: "Neem ",
+    connect_h1b: "Contact Op",
+    connect_p1: "Of het nu een samenwerking is, een vraag, of gewoon een goed kopje koffie — ik ben altijd beschikbaar ☕",
+    connect_p2: "Ik beweeg me momenteel tussen Amsterdam en Barcelona, open voor gesprekken over productrollen, onderzoekssamenwerking, dataprojecten en alles wat technologie en sociale wetenschappen kruist.",
+    open_title: "Open voor Gesprek",
+    open_text: "Ik geniet oprecht van gesprekken over data-ethiek, demografisch onderzoek, productstrategie en de grotere vragen daaronder. Als iets wat ik heb geschreven of gebouwd een gedachte heeft gewekt — neem dan contact op. Je hebt geen formele reden nodig. Zelfs een virtuele koffie werkt prima.",
+    footer_copy: "© 2025 Michella Voughn Warren · Gebouwd met intentie",
+  },
+
   // Navajo placeholder — to be added by a fluent speaker
   nv: {
     nav_home: "Hooghan", // Home
@@ -334,8 +413,8 @@ const TRANSLATIONS = {
 };
 
 // ── Language switcher logic ──────────────────────────────
-const LANG_LABELS = { en: "EN", es: "ES", fr: "FR", ar: "عر" };
-const LANG_NAMES  = { en: "English", es: "Español", fr: "Français", ar: "العربية" };
+const LANG_LABELS = { en: "EN", es: "ES", fr: "FR", ar: "عر", nl: "NL" };
+const LANG_NAMES  = { en: "English", es: "Español", fr: "Français", ar: "العربية", nl: "Nederlands" };
 
 function getLang() {
   return localStorage.getItem('mvw_lang') || 'en';
