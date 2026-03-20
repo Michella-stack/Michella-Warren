@@ -170,27 +170,28 @@
     let W, H, t = 0;
     let mouse = { x: -1, y: -1 }, mouseGlow = 0;
 
-    // Ultra-slow celestial aurora — turtle pace, just floating
-    const bands = [
-      { y:0.22, c1:[60,200,140],  c2:[80,160,220],  spd:0.0000055, amp:0.025, w:0.16, a:0.28, phase:0.0  },
-      { y:0.32, c1:[120,70,200],  c2:[60,200,160],  spd:0.0000038, amp:0.030, w:0.14, a:0.22, phase:1.4  },
-      { y:0.16, c1:[50,170,220],  c2:[140,70,200],  spd:0.0000068, amp:0.018, w:0.11, a:0.18, phase:2.8  },
-      { y:0.42, c1:[90,220,150],  c2:[60,100,220],  spd:0.0000030, amp:0.028, w:0.13, a:0.15, phase:0.7  },
-      { y:0.12, c1:[200,80,200],  c2:[60,200,180],  spd:0.0000080, amp:0.015, w:0.09, a:0.13, phase:3.5  },
-      { y:0.28, c1:[255,140,80],  c2:[180,60,200],  spd:0.0000042, amp:0.022, w:0.10, a:0.11, phase:1.9  },
-      { y:0.08, c1:[80,220,200],  c2:[200,120,240], spd:0.0000025, amp:0.012, w:0.08, a:0.09, phase:4.2  },
+    // Static nebula clouds — fixed positions, just breathe in place
+    const nebulae = [
+      { x:0.62, y:0.18, rx:0.38, ry:0.18, c:[60,200,140],  a:0.13, phase:0.0,  speed:0.00018 },
+      { x:0.45, y:0.28, rx:0.42, ry:0.14, c:[120,70,200],  a:0.10, phase:1.8,  speed:0.00014 },
+      { x:0.72, y:0.12, rx:0.28, ry:0.12, c:[50,170,220],  a:0.09, phase:3.2,  speed:0.00022 },
+      { x:0.30, y:0.20, rx:0.30, ry:0.10, c:[200,80,200],  a:0.07, phase:0.9,  speed:0.00016 },
+      { x:0.55, y:0.35, rx:0.35, ry:0.16, c:[255,140,80],  a:0.06, phase:2.4,  speed:0.00012 },
+      { x:0.80, y:0.22, rx:0.22, ry:0.10, c:[80,220,200],  a:0.08, phase:4.1,  speed:0.00020 },
+      { x:0.20, y:0.15, rx:0.25, ry:0.09, c:[180,100,220], a:0.06, phase:1.3,  speed:0.00015 },
     ];
 
+    // Stars — fixed, just twinkle
     let stars = [];
     function initStars() {
       stars = [];
-      for (let i = 0; i < 300; i++) {
+      for (let i = 0; i < 320; i++) {
         stars.push({
-          x: Math.random(), y: Math.random() * 0.72,
-          r: 0.3 + Math.random() * 1.6,
-          a: 0.20 + Math.random() * 0.75,
+          x: Math.random(), y: Math.random() * 0.75,
+          r: 0.3 + Math.random() * 1.5,
+          a: 0.18 + Math.random() * 0.72,
           ph: Math.random() * Math.PI * 2,
-          sp: 0.003 + Math.random() * 0.012,
+          sp: 0.002 + Math.random() * 0.008, // very slow twinkle
         });
       }
     }
@@ -203,144 +204,123 @@
 
     function drawSky() {
       const sky = ctx.createLinearGradient(0,0,0,H);
-      sky.addColorStop(0,   '#080C18');
-      sky.addColorStop(0.45,'#0D1220');
-      sky.addColorStop(1,   '#181424');
-      ctx.fillStyle = sky; ctx.fillRect(0,0,W,H);
+      sky.addColorStop(0,   '#060A16');
+      sky.addColorStop(0.5, '#0A1020');
+      sky.addColorStop(1,   '#141020');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0,0,W,H);
     }
 
-    function drawStars() {
-      // Mouse glow boosts star brightness nearby
+    function drawNebulae(ts) {
+      // Each nebula breathes — just alpha pulse, zero position movement
+      nebulae.forEach((n, ni) => {
+        const pulse = Math.sin(ts * n.speed * 1000 + n.phase) * 0.35 + 0.65; // 0.30–1.0 range
+        const mouseBoost = mouse.x > 0 ? mouseGlow * 0.18 : 0;
+        const alpha = (n.a + mouseBoost) * pulse;
+
+        // Draw as a soft radial ellipse — 3 layers for depth
+        [
+          { scale: 1.0,  am: 0.30 },
+          { scale: 0.60, am: 0.55 },
+          { scale: 0.28, am: 1.00 },
+        ].forEach(layer => {
+          const cx = n.x * W;
+          const cy = n.y * H;
+          const rx = n.rx * W * layer.scale;
+          const ry = n.ry * H * layer.scale;
+          const [r,g,b] = n.c;
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+
+          const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
+          grad.addColorStop(0,   `rgba(${r},${g},${b},${alpha * layer.am})`);
+          grad.addColorStop(0.5, `rgba(${r},${g},${b},${alpha * layer.am * 0.4})`);
+          grad.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+          ctx.fillStyle = grad;
+          ctx.fill();
+          ctx.restore();
+        });
+      });
+    }
+
+    function drawStars(ts) {
       stars.forEach(s => {
         s.ph += s.sp;
-        const twk = 0.45 + Math.sin(s.ph) * 0.55;
-        const sx = s.x*W, sy = s.y*H;
-        // Proximity to mouse brightens stars
-        const md = mouse.x > 0 ? Math.hypot(sx-mouse.x, sy-mouse.y) : 9999;
-        const mb = md < 200 ? (1 - md/200) * 0.5 * mouseGlow : 0;
+        const twk = 0.4 + Math.sin(s.ph) * 0.6;
+        const sx = s.x * W, sy = s.y * H;
+        const md = mouse.x > 0 ? Math.hypot(sx - mouse.x, sy - mouse.y) : 9999;
+        const mb = md < 250 ? (1 - md/250) * 0.4 * mouseGlow : 0;
         const alpha = Math.min(1, s.a * twk + mb);
-        ctx.beginPath(); ctx.arc(sx,sy,s.r,0,Math.PI*2);
-        ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.fill();
-        if (s.r > 1.0) {
-          const g = ctx.createRadialGradient(sx,sy,0,sx,sy,s.r*6);
-          g.addColorStop(0,`rgba(200,220,255,${0.12*twk+mb*0.3})`);
-          g.addColorStop(1,'rgba(0,0,0,0)');
-          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,s.r*6,0,Math.PI*2); ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.fill();
+
+        // Glow halo on brighter stars
+        if (s.r > 1.0 || mb > 0.05) {
+          const gr = ctx.createRadialGradient(sx,sy,0,sx,sy,s.r*7);
+          gr.addColorStop(0, `rgba(200,220,255,${(0.10*twk+mb*0.4)})`);
+          gr.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = gr;
+          ctx.beginPath(); ctx.arc(sx,sy,s.r*7,0,Math.PI*2); ctx.fill();
         }
       });
     }
 
-    function drawAurora(ts) {
-      bands.forEach((b,bi) => {
-        const cy = b.y * H;
-        const bH = b.w * H;
-        const steps = 120;
-
-        // Build centreline with very slow multiple sine waves
-        const pts = [];
-        for (let i=0; i<=steps; i++) {
-          const px = (i/steps)*W;
-          const w1 = Math.sin(i*0.06 + ts*b.spd*1000 + b.phase) * b.amp * H;
-          const w2 = Math.sin(i*0.11 + ts*b.spd*600  + b.phase*1.7) * b.amp*0.45*H;
-          const w3 = Math.sin(i*0.04 + ts*b.spd*1600) * b.amp*0.25*H;
-          pts.push([px, cy+w1+w2+w3]);
-        }
-
-        // Mouse proximity — gently perturbs nearby band
-        if (mouse.x > 0) {
-          pts.forEach((p,i) => {
-            const dx = p[0]-mouse.x, dy = p[1]-mouse.y;
-            const d = Math.hypot(dx,dy);
-            if (d < 180) {
-              const push = (1-d/180) * 8 * mouseGlow;
-              p[1] += (dy/d) * push;
-            }
-          });
-        }
-
-        // Alpha boost from mouse
-        const bandAlpha = b.a + mouseGlow * 0.08;
-
-        ctx.save();
-        // Draw as layered curtain — 3 passes: wide dim → medium → thin bright core
-        [
-          { expand:1.2, alphaM:0.4 },
-          { expand:0.7, alphaM:0.7 },
-          { expand:0.25,alphaM:1.0 },
-        ].forEach(pass => {
-          const topP = pts.map(([x,y])=>[x, y-bH*pass.expand]);
-          const botP = pts.map(([x,y])=>[x, y+bH*pass.expand]);
-
-          ctx.beginPath();
-          ctx.moveTo(topP[0][0],topP[0][1]);
-          topP.forEach(([x,y])=>ctx.lineTo(x,y));
-          for (let i=botP.length-1;i>=0;i--) ctx.lineTo(botP[i][0],botP[i][1]);
-          ctx.closePath();
-
-          // Horizontal colour gradient — slow shimmer
-          const mix = 0.5+Math.sin(ts*0.000004+bi*1.1)*0.5;
-          const [r1,g1,b1]=b.c1, [r2,g2,b2]=b.c2;
-          const rm=Math.round(r1+(r2-r1)*mix),gm=Math.round(g1+(g2-g1)*mix),bm=Math.round(b1+(b2-b1)*mix);
-
-          const grad = ctx.createLinearGradient(0,0,W,0);
-          grad.addColorStop(0,  `rgba(${r1},${g1},${b1},0)`);
-          grad.addColorStop(0.15,`rgba(${r1},${g1},${b1},${bandAlpha*pass.alphaM})`);
-          grad.addColorStop(0.5, `rgba(${rm},${gm},${bm},${bandAlpha*pass.alphaM*1.4})`);
-          grad.addColorStop(0.85,`rgba(${r2},${g2},${b2},${bandAlpha*pass.alphaM})`);
-          grad.addColorStop(1,  `rgba(${r2},${g2},${b2},0)`);
-          ctx.fillStyle=grad; ctx.fill();
-        });
-        ctx.restore();
-      });
-    }
-
-    function drawHorizon() {
-      // Dark mountain silhouette
+    function drawMountains() {
       ctx.save();
-      ctx.fillStyle='rgba(5,7,15,0.92)';
+      // Far mountains — very dark, barely visible
+      ctx.fillStyle = 'rgba(4,6,14,0.88)';
       ctx.beginPath();
       ctx.moveTo(0,H);
-      ctx.lineTo(0,H*0.86);
-      ctx.bezierCurveTo(W*0.10,H*0.82,W*0.18,H*0.78,W*0.24,H*0.80);
-      ctx.bezierCurveTo(W*0.30,H*0.82,W*0.34,H*0.75,W*0.40,H*0.73);
-      ctx.bezierCurveTo(W*0.46,H*0.71,W*0.52,H*0.76,W*0.58,H*0.80);
-      ctx.bezierCurveTo(W*0.64,H*0.84,W*0.68,H*0.74,W*0.74,H*0.72);
-      ctx.bezierCurveTo(W*0.80,H*0.70,W*0.86,H*0.76,W*0.92,H*0.80);
-      ctx.bezierCurveTo(W*0.96,H*0.83,W,H*0.84,W,H*0.85);
-      ctx.lineTo(W,H); ctx.closePath(); ctx.fill();
+      ctx.lineTo(0, H*0.85);
+      ctx.bezierCurveTo(W*0.10,H*0.81,W*0.18,H*0.77,W*0.24,H*0.79);
+      ctx.bezierCurveTo(W*0.30,H*0.81,W*0.34,H*0.74,W*0.40,H*0.72);
+      ctx.bezierCurveTo(W*0.46,H*0.70,W*0.52,H*0.75,W*0.58,H*0.79);
+      ctx.bezierCurveTo(W*0.64,H*0.83,W*0.68,H*0.73,W*0.74,H*0.71);
+      ctx.bezierCurveTo(W*0.80,H*0.69,W*0.86,H*0.75,W*0.92,H*0.79);
+      ctx.lineTo(W, H*0.84); ctx.lineTo(W,H);
+      ctx.closePath(); ctx.fill();
 
       // Ground fade
       const gf = ctx.createLinearGradient(0,H*0.78,0,H);
-      gf.addColorStop(0,'rgba(5,7,15,0)'); gf.addColorStop(0.5,'rgba(5,7,15,0.7)'); gf.addColorStop(1,'rgba(3,5,12,0.97)');
+      gf.addColorStop(0,'rgba(4,6,14,0)');
+      gf.addColorStop(0.6,'rgba(4,6,14,0.85)');
+      gf.addColorStop(1,'rgba(2,4,10,0.98)');
       ctx.fillStyle=gf; ctx.fillRect(0,H*0.78,W,H*0.22);
       ctx.restore();
     }
 
-    // Mouse cursor glow on aurora canvas
-    function drawMouseGlow() {
-      if (mouse.x < 0 || mouseGlow < 0.02) return;
-      const g = ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,120);
-      g.addColorStop(0,`rgba(150,220,200,${0.08*mouseGlow})`);
-      g.addColorStop(0.5,`rgba(100,160,220,${0.04*mouseGlow})`);
-      g.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(mouse.x,mouse.y,120,0,Math.PI*2); ctx.fill();
+    // Very subtle cursor halo — just brightens nearby stars
+    function drawMouseHalo() {
+      if (mouse.x < 0 || mouseGlow < 0.01) return;
+      const g = ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,180);
+      g.addColorStop(0, `rgba(140,200,180,${0.04*mouseGlow})`);
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(mouse.x,mouse.y,180,0,Math.PI*2); ctx.fill();
     }
 
     function animate(ts) {
       t = ts;
-      // Decay mouse glow
-      mouseGlow *= 0.992;
+      mouseGlow *= 0.994; // very slow decay
       ctx.clearRect(0,0,W,H);
-      drawSky(); drawStars(); drawAurora(ts); drawHorizon(); drawMouseGlow();
+      drawSky();
+      drawNebulae(ts);   // behind everything
+      drawStars(ts);     // stars on top of nebulae
+      drawMountains();   // foreground silhouette
+      drawMouseHalo();
       requestAnimationFrame(animate);
     }
 
     window.addEventListener('resize', resize);
     window.addEventListener('mousemove', e => {
       mouse.x = e.clientX; mouse.y = e.clientY;
-      mouseGlow = Math.min(1, mouseGlow + 0.06);
+      mouseGlow = Math.min(1, mouseGlow + 0.04);
     });
-    window.addEventListener('mouseleave', () => { mouse.x=-1; mouse.y=-1; });
+    window.addEventListener('mouseleave', () => { mouse.x = -1; mouse.y = -1; });
     resize();
     requestAnimationFrame(animate);
   })();
