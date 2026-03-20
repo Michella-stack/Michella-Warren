@@ -47,7 +47,7 @@ nav {
   border-bottom: 1px solid var(--border);
 }
 .nav-name { display: flex; align-items: center; gap: 0.5rem; }
-.nav-feather { width: 20px; height: 20px; flex-shrink: 0; opacity: 0.85; }
+.nav-feather { width: 16px; height: 22px; flex-shrink: 0; opacity: 0.85; }
 .nav-initials {
   font-family: var(--font-display);
   font-size: 1.35rem; font-weight: 600; letter-spacing: 0.2em;
@@ -395,12 +395,14 @@ body.page-research .card {
 body.page-interests .interest-item {
   background: rgba(255,255,255,0.18);
   border-radius: 8px;
-  padding: 2rem 1.5rem;
+  padding: 1.6rem 1.8rem;
   border-bottom: 1px solid rgba(196,122,90,0.18);
   margin-bottom: 0.5rem;
+  max-width: 780px;
 }
 body.page-interests .section-content {
-  padding-left: 2rem !important;
+  padding-left: 4rem !important;
+  max-width: 860px !important;
 }
 body.page-interests .interest-num {
   color: rgba(184,100,70,0.55) !important;
