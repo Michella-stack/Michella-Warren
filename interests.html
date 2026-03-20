@@ -180,28 +180,68 @@
     <!-- Soft outer halo -->
     <circle cx="210" cy="210" r="195" fill="url(#haloGrad)"/>
 
-    <!-- Thin concentric rings — organic, slightly imperfect -->
-    <circle cx="210" cy="210" r="155" stroke="#C4693E" stroke-width="0.9" fill="none" opacity="0.50"/>
-    <circle cx="210" cy="210" r="135" stroke="#B85840" stroke-width="0.8" fill="none" opacity="0.26"/>
-    <circle cx="210" cy="210" r="115" stroke="#C4693E" stroke-width="0.7" fill="none" opacity="0.24"/>
-    <circle cx="210" cy="210" r="96"  stroke="#D47840" stroke-width="0.7" fill="none" opacity="0.55"/>
+    <!-- Orbital ring 1 — slow clockwise, with tick marks -->
+    <g class="orbit-ring">
+      <circle cx="210" cy="210" r="158" stroke="#C4693E" stroke-width="0.6" fill="none" opacity="0.09"/>
+      <!-- Tick marks on ring 1 -->
+      <line x1="210" y1="53"  x2="210" y2="44"  stroke="#D4895E" stroke-width="1.0" stroke-linecap="round" opacity="0.14"/>
+      <line x1="210" y1="53"  x2="210" y2="47"  stroke="#D4895E" stroke-width="0.7" stroke-linecap="round" opacity="0.10" transform="rotate(30 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="47"  stroke="#D4895E" stroke-width="0.7" stroke-linecap="round" opacity="0.10" transform="rotate(60 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="44"  stroke="#D4895E" stroke-width="1.0" stroke-linecap="round" opacity="0.14" transform="rotate(90 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="47"  stroke="#D4895E" stroke-width="0.7" stroke-linecap="round" opacity="0.10" transform="rotate(120 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="47"  stroke="#D4895E" stroke-width="0.7" stroke-linecap="round" opacity="0.10" transform="rotate(150 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="44"  stroke="#D4895E" stroke-width="1.0" stroke-linecap="round" opacity="0.14" transform="rotate(180 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="47"  stroke="#D4895E" stroke-width="0.7" stroke-linecap="round" opacity="0.10" transform="rotate(210 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="47"  stroke="#D4895E" stroke-width="0.7" stroke-linecap="round" opacity="0.10" transform="rotate(240 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="44"  stroke="#D4895E" stroke-width="1.0" stroke-linecap="round" opacity="0.14" transform="rotate(270 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="47"  stroke="#D4895E" stroke-width="0.7" stroke-linecap="round" opacity="0.10" transform="rotate(300 210 210)"/>
+      <line x1="210" y1="53"  x2="210" y2="47"  stroke="#D4895E" stroke-width="0.7" stroke-linecap="round" opacity="0.10" transform="rotate(330 210 210)"/>
+    </g>
 
-    <!-- Minimal spokes — 8 fine lines, varying length -->
+    <!-- Orbital ring 2 — counter-clockwise, dashed arc feel -->
+    <g class="orbit-ring-2">
+      <circle cx="210" cy="210" r="132" stroke="#B85840" stroke-width="0.5" fill="none" opacity="0.08" stroke-dasharray="4 12"/>
+      <!-- Small orbital flicks on ring 2 -->
+      <line x1="210" y1="79"  x2="210" y2="70"  stroke="#E8925A" stroke-width="0.8" stroke-linecap="round" opacity="0.11"/>
+      <line x1="210" y1="79"  x2="210" y2="72"  stroke="#E8925A" stroke-width="0.6" stroke-linecap="round" opacity="0.08" transform="rotate(45 210 210)"/>
+      <line x1="210" y1="79"  x2="210" y2="70"  stroke="#E8925A" stroke-width="0.8" stroke-linecap="round" opacity="0.11" transform="rotate(90 210 210)"/>
+      <line x1="210" y1="79"  x2="210" y2="72"  stroke="#E8925A" stroke-width="0.6" stroke-linecap="round" opacity="0.08" transform="rotate(135 210 210)"/>
+      <line x1="210" y1="79"  x2="210" y2="70"  stroke="#E8925A" stroke-width="0.8" stroke-linecap="round" opacity="0.11" transform="rotate(180 210 210)"/>
+      <line x1="210" y1="79"  x2="210" y2="72"  stroke="#E8925A" stroke-width="0.6" stroke-linecap="round" opacity="0.08" transform="rotate(225 210 210)"/>
+      <line x1="210" y1="79"  x2="210" y2="70"  stroke="#E8925A" stroke-width="0.8" stroke-linecap="round" opacity="0.11" transform="rotate(270 210 210)"/>
+      <line x1="210" y1="79"  x2="210" y2="72"  stroke="#E8925A" stroke-width="0.6" stroke-linecap="round" opacity="0.08" transform="rotate(315 210 210)"/>
+    </g>
+
+    <!-- Orbital ring 3 — fast inner, fine -->
+    <g class="orbit-ring-3">
+      <circle cx="210" cy="210" r="108" stroke="#C4693E" stroke-width="0.4" fill="none" opacity="0.07"/>
+      <!-- Fine inner flicks -->
+      <line x1="210" y1="103" x2="210" y2="96"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.09"/>
+      <line x1="210" y1="103" x2="210" y2="96"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.09" transform="rotate(72 210 210)"/>
+      <line x1="210" y1="103" x2="210" y2="96"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.09" transform="rotate(144 210 210)"/>
+      <line x1="210" y1="103" x2="210" y2="96"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.09" transform="rotate(216 210 210)"/>
+      <line x1="210" y1="103" x2="210" y2="96"  stroke="#F5C27A" stroke-width="0.7" stroke-linecap="round" opacity="0.09" transform="rotate(288 210 210)"/>
+    </g>
+
+    <!-- Static concentric rings close to core -->
+    <circle cx="210" cy="210" r="88" stroke="#D47840" stroke-width="0.4" fill="none" opacity="0.07"/>
+
+    <!-- Minimal spokes — rotate slowly -->
     <g class="sun-rays">
-      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="1.0" stroke-linecap="round" opacity="0.30"/>
-      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.6" stroke-linecap="round" opacity="0.35" transform="rotate(45 210 210)"/>
-      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#E8925A" stroke-width="1.0" stroke-linecap="round" opacity="0.28" transform="rotate(90 210 210)"/>
-      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.6" stroke-linecap="round" opacity="0.35" transform="rotate(135 210 210)"/>
-      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="1.0" stroke-linecap="round" opacity="0.28" transform="rotate(180 210 210)"/>
-      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#E8925A" stroke-width="0.6" stroke-linecap="round" opacity="0.16" transform="rotate(225 210 210)"/>
-      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="1.0" stroke-linecap="round" opacity="0.28" transform="rotate(270 210 210)"/>
-      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#E8925A" stroke-width="0.6" stroke-linecap="round" opacity="0.16" transform="rotate(315 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="0.9" stroke-linecap="round" opacity="0.16"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.5" stroke-linecap="round" opacity="0.09" transform="rotate(45 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#E8925A" stroke-width="0.9" stroke-linecap="round" opacity="0.12" transform="rotate(90 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#F5C27A" stroke-width="0.5" stroke-linecap="round" opacity="0.09" transform="rotate(135 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="0.9" stroke-linecap="round" opacity="0.13" transform="rotate(180 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#E8925A" stroke-width="0.5" stroke-linecap="round" opacity="0.07" transform="rotate(225 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="50"  stroke="#F5C27A" stroke-width="0.9" stroke-linecap="round" opacity="0.13" transform="rotate(270 210 210)"/>
+      <line x1="210" y1="68"  x2="210" y2="55"  stroke="#E8925A" stroke-width="0.5" stroke-linecap="round" opacity="0.07" transform="rotate(315 210 210)"/>
     </g>
 
     <!-- Core — soft pulsing disc -->
     <g class="sun-core">
       <circle cx="210" cy="210" r="78" fill="url(#sunGrad)"/>
-      <circle cx="210" cy="210" r="52" stroke="#F5C27A" stroke-width="0.6" fill="none" opacity="0.50"/>
+      <circle cx="210" cy="210" r="52" stroke="#F5C27A" stroke-width="0.4" fill="none" opacity="0.12"/>
     </g>
   </svg>
 
