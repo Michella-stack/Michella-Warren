@@ -447,3 +447,63 @@ body.page-connect .open-invite {
   backdrop-filter: blur(8px);
   max-width: 580px;
 }
+
+/* ─── Language Switcher ──────────────────────────────── */
+#lang-switcher {
+  position: fixed;
+  bottom: 1.8rem;
+  right: 1.8rem;
+  z-index: 9999;
+  font-family: var(--font-body);
+}
+#lang-toggle {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  background: rgba(42,35,32,0.88);
+  color: rgba(250,248,244,0.92);
+  border: 1px solid rgba(250,248,244,0.15);
+  border-radius: 999px;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em;
+  cursor: pointer; backdrop-filter: blur(10px);
+  transition: background 0.2s, transform 0.15s;
+}
+#lang-toggle:hover { background: rgba(42,35,32,1); transform: translateY(-1px); }
+#lang-toggle svg { opacity: 0.7; }
+body.page-connect #lang-toggle {
+  background: rgba(10,14,28,0.88);
+  border-color: rgba(255,255,255,0.15);
+  color: rgba(232,224,213,0.92);
+}
+#lang-dropdown {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  right: 0;
+  background: rgba(42,35,32,0.96);
+  border: 1px solid rgba(250,248,244,0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  min-width: 120px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+#lang-switcher.open #lang-dropdown { display: block; }
+.lang-option {
+  display: block; width: 100%;
+  padding: 0.6rem 1rem;
+  text-align: left;
+  font-size: 0.82rem; font-weight: 400;
+  color: rgba(250,248,244,0.75);
+  background: transparent; border: none;
+  cursor: pointer; transition: background 0.15s, color 0.15s;
+}
+.lang-option:hover { background: rgba(255,255,255,0.08); color: rgba(250,248,244,1); }
+.lang-option.active { color: var(--sage); font-weight: 500; }
+body.rtl .lang-option { text-align: right; }
+/* RTL global adjustments */
+body.rtl { font-family: 'Segoe UI', Tahoma, 'Arabic UI Text', var(--font-body); }
+body.rtl .hero { flex-direction: row-reverse; }
+body.rtl .nav-name { flex-direction: row-reverse; }
+body.rtl .scroll-hint { left: auto; right: 5rem; }
+body.rtl .page-hero, body.rtl .section-content { text-align: right; }
+body.rtl #lang-dropdown { right: auto; left: 0; }

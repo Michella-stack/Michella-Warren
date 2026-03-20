@@ -31,16 +31,16 @@
       </span>
     </div>
     <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="work.html">Work</a></li>
-      <li><a href="research.html">Research</a></li>
-      <li><a href="interests.html">Interests</a></li>
-      <li><a href="contact.html">Let's Connect</a></li>
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="work.html" data-i18n="nav_work">Work</a></li>
+      <li><a href="research.html" data-i18n="nav_research">Research</a></li>
+      <li><a href="interests.html" data-i18n="nav_interests">Interests</a></li>
+      <li><a href="contact.html" data-i18n="nav_connect">Let's Connect</a></li>
     </ul>
   </nav>
 
   <div class="page-hero">
-    <span class="tag">Research &amp; Publications</span>
+    <span class="tag" data-i18n="research_tag">Research &amp; Publications</span>
     <h1>The <em>Questions</em> I Ask</h1>
     <p>Academic research grounded in demography, sociology, and statistical inquiry — exploring the systems that shape human populations and the people within them.</p>
   </div>
@@ -143,5 +143,6 @@
   grid.addEventListener("mouseup", () => { isDown = false; });
   grid.addEventListener("mousemove", e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - grid.offsetLeft; grid.scrollLeft = scrollLeft - (x - startX) * 1.5; });
 </script>
+<script src="translations.js"></script>
 </body>
 </html>
