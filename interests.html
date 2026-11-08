@@ -62,10 +62,15 @@
     .dot { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 1.5px solid #2A1710; background: transparent; cursor: pointer; transition: all .3s; }
     .dot.on { background: #2A1710; height: 26px; border-radius: 6px; }
     .deck-count { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: #0B0B0B; }
+    html[dir="rtl"] .int-stage { padding-right: 0; padding-left: 66px; }
+    html[dir="rtl"] .deck .card { left: auto; right: 0; box-shadow: -9px 9px 0 0 var(--c); }
+    html[dir="rtl"] .deck-ctl { right: auto; left: 0; }
+    html[dir="rtl"] .deck .card .num { right: auto; left: 12px; }
     @media (max-width: 860px) {
       .int-layout { grid-template-columns: 1fr; grid-template-areas: "hero" "stage"; min-height: 0; gap: 0; }
       .int-layout .page-hero { padding: 36px 0 4px; }
       .int-stage { padding-right: 0; padding-bottom: 8px; overflow-x: clip; }
+      html[dir="rtl"] .int-stage { padding-left: 0; }
       .deck { height: 470px; }
       .deck .card { height: 224px; margin-top: -112px; }
       .deck-ctl { position: static; transform: none; flex-direction: row; justify-content: center; margin-top: 4px; padding-bottom: 36px; }
@@ -311,7 +316,7 @@
         <article class="card" tabindex="0" role="group" aria-roledescription="slide" aria-label="6 of 6" style="--c:#2A1710">
           <svg class="num" viewBox="0 0 150 100" aria-hidden="true"><text x="146" y="92" text-anchor="end">06</text><text class="t2" x="148" y="94" text-anchor="end">06</text></svg>
           <h3 data-i18n="convo_title">Let's Have a Conversation</h3>
-          <p data-i18n="convo_text">I believe some of the best ideas happen in open, informal exchange. If any of the above resonates, or you're working on something at the intersection of data, research, and product, I'd love to hear from you.</p>
+          <p data-i18n="convo_text">I believe some of the best ideas happen in open, informal exchange. If any of the above resonates — or if you're working on something at the intersection of data, research, and product — I'd genuinely love to hear from you.</p>
           <a href="contact.html" class="sketch" style="margin-top:auto;align-self:flex-start"><svg viewBox="0 0 200 52" preserveAspectRatio="none" aria-hidden="true"><path d="M14 5 C62 1.5 140 3 187 5.5 C198 7 200 19 197.5 29 C196 41 190 47.5 178 47 C130 51 70 50 21 47.5 C8 46.5 2.5 40 3.5 27 C4.5 14 6 7.5 15 4.5"/><path d="M17 8 C70 5 130 6.5 183 8 C194 9.5 196 20 194 28 C192 38 187 44 175 44.5 C128 47 72 46.5 24 44.5 C12 43.5 7.5 38 8 28 C8.5 18 10 11 18 8"/></svg><span data-i18n="btn_connect">Let's Connect →</span></a>
         </article>
       </section>
@@ -355,7 +360,8 @@
       cards.forEach((card, i) => {
         let o = mod(i - c, n); if (o > n / 2) o -= n;           // signed distance from the front, wraps round the wheel
         const a = Math.abs(o), th = o * step * Math.PI / 180;
-        const x = R * (1 - Math.cos(th)), y = R * Math.sin(th);  // point on a circle whose front edge is the active card
+        const dir = document.documentElement.dir === 'rtl' ? -1 : 1;
+        const x = dir * R * (1 - Math.cos(th)), y = R * Math.sin(th);  // point on a circle whose front edge is the active card
         const sc = 1 - Math.min(a, 3) * 0.04;
         const grain = 0.6 + 1.6 * Math.pow(Math.min(a, 3), 1.7); // edge erosion grows with distance
         card.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) scale(' + sc.toFixed(3) + ')';
@@ -408,11 +414,13 @@
       if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') setTarget(target - 1);
     });
     addEventListener('resize', () => draw(cur));
+    new MutationObserver(() => draw(cur)).observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
     ui(); draw(0);
   })();
   </script>
   <script src="protect.js"></script>
   <script src="pills.js"></script>
   <script src="translations.js"></script>
+  <script src="i18n-extra.js"></script>
 </body>
 </html>

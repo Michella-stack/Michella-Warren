@@ -417,6 +417,8 @@ const LANG_LABELS = { en: "EN", es: "ES", fr: "FR", ar: "عر", nl: "NL" };
 const LANG_NAMES  = { en: "English", es: "Español", fr: "Français", ar: "العربية", nl: "Nederlands" };
 
 function getLang() {
+  const q = new URLSearchParams(location.search).get('lang');
+  if (q && TRANSLATIONS[q]) { try { localStorage.setItem('mvw_lang', q); } catch (e) {} return q; }
   return localStorage.getItem('mvw_lang') || 'en';
 }
 

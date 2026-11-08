@@ -43,10 +43,10 @@ nav {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
-nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 100px; }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em; font-weight: 500; }
 /* Drop your own logo into the slot: <img class="logo-img" src="logo.svg" alt="MVW logo"> */
-.logo-img { height: 84px; width: auto; display: block; }
+.logo-img { height: 54px; width: auto; display: block; }
 .logo-slot { width: 28px; height: 28px; border: 1px dashed var(--muted); border-radius: 6px; }
 nav ul { display: flex; gap: 28px; list-style: none; }
 nav ul a { font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); transition: color .2s; padding: 4px 0; border-bottom: 1px solid transparent; }
@@ -69,11 +69,11 @@ h3 { font-family: var(--font-sans); font-size: 1.15rem; font-weight: 500; line-h
 .hero { padding: 110px 0 72px; display: grid; grid-template-columns: minmax(0, 640px); justify-content: start; position: relative; }
 .hero h1 { margin: 18px 0 0; }
 .hero-name { margin: 14px 0 0; line-height: 0; }
-.hero-signature { display: block; width: min(300px, 100%); height: auto; margin-left: -10px; }
+.hero-signature { display: block; width: min(300px, 100%); height: auto; margin-inline-start: -10px; }
 .hero-actions { display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap; }
 .profile-wrap { position: absolute; visibility: hidden; width: 240px; height: 240px; }
 .profile-wrap.fixed { position: fixed; z-index: 2; }
-.profile-dust { position: fixed; pointer-events: none; z-index: 3; display: none; }
+.profile-dust { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 3; display: none; }
 .profile-wrap.placed { visibility: visible; }
 /* organic layers behind the photo */
 .profile-blob, .profile-blob::before {
@@ -126,8 +126,8 @@ h3 { font-family: var(--font-sans); font-size: 1.15rem; font-weight: 500; line-h
 
 /* ─── Metrics strip ──────────────────────────────────── */
 .metrics { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 24px 0 0; background: var(--surface); }
-.metric { padding: 28px 24px; border-right: 1px solid var(--line); }
-.metric:last-child { border-right: 0; }
+.metric { padding: 28px 24px; border-inline-end: 1px solid var(--line); }
+.metric:last-child { border-inline-end: 0; }
 .metric .num { font-family: var(--font-display); font-size: 2.8rem; line-height: 1; }
 .metric .lbl { font-size: 12px; letter-spacing: .04em; color: var(--muted); margin-top: 8px; }
 
@@ -217,11 +217,11 @@ body.rtl #lang-dropdown { right: auto; left: 0; }
 /* ─── Responsive ─────────────────────────────────────── */
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; padding-top: 64px; }
-  .profile-wrap { position: relative; visibility: visible; width: 150px; height: 150px; margin: 56px 0 24px 58px; }
-  nav .wrap { height: 72px; }
-  .logo-img { height: 56px; }
+  .profile-wrap { position: relative; visibility: visible; width: 150px; height: 150px; margin: 56px 0 24px; margin-inline-start: 58px; }
+  nav .wrap { height: 60px; }
+  .logo-img { height: 46px; }
   .metrics { grid-template-columns: repeat(2, 1fr); }
-  .metric:nth-child(2) { border-right: 0; }
+  .metric:nth-child(2) { border-inline-end: 0; }
   .metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .pillars, .skills, .services, .contact-links { grid-template-columns: 1fr; }
   .row { grid-template-columns: 1fr; gap: 10px; }
@@ -250,9 +250,9 @@ body.rtl #lang-dropdown { right: auto; left: 0; }
 @media (prefers-reduced-motion: reduce) { .sparks { display: none; } .glow { transition: none; } }
 
 /* ─── Home: smaller corner signature (this page only) ── */
-body.page-home nav .wrap { height: 76px; }
-body.page-home .logo-img { height: 52px; }
-@media (max-width: 860px) { body.page-home nav .wrap { height: 64px; } body.page-home .logo-img { height: 42px; } }
+body.page-home nav .wrap { height: 58px; }
+body.page-home .logo-img { height: 42px; }
+@media (max-width: 860px) { body.page-home nav .wrap { height: 54px; } body.page-home .logo-img { height: 36px; } }
 @media (max-width: 520px) { body.page-home .logo-img { height: 34px; } }
 
 /* ─── Skills accordion (home) ───────────────────────── */
@@ -273,7 +273,7 @@ body.page-home .logo-img { height: 52px; }
 .g-icon::before, .g-icon::after { content: ""; position: absolute; left: 3px; right: 3px; top: 10px; height: 1.5px; background: var(--ink); border-radius: 2px; transition: transform .35s ease, opacity .25s; }
 .g-icon::after { transform: rotate(90deg); }
 details[open] .g-icon::after { transform: rotate(0); opacity: 0; }
-.acc .panel { padding: 0 0 26px calc(min(280px, 25%) + 24px); }
+.acc .panel { padding: 0 0 26px; padding-inline-start: calc(min(280px, 25%) + 24px); }
 details[open] .panel { animation: accIn .4s cubic-bezier(.2,.7,.2,1); }
 @keyframes accIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 @media (max-width: 860px) {
@@ -296,7 +296,7 @@ details[open] .panel { animation: accIn .4s cubic-bezier(.2,.7,.2,1); }
 .proj summary:hover h3 { text-decoration: underline; text-underline-offset: 5px; }
 .proj .meta { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
 .proj .links { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-.proj .panel { padding: 0 52px 30px calc(170px + 24px); }
+.proj .panel { padding: 0 0 30px; padding-inline-start: calc(170px + 24px); padding-inline-end: 52px; }
 .proj .panel p { font-size: 13px; max-width: none; text-align: justify; hyphens: auto; -webkit-hyphens: auto; margin-top: 0; }
 .proj .panel p + p { margin-top: 10px; }
 .proj .panel .small { font-size: 12px; margin-top: 12px; }
@@ -355,3 +355,10 @@ body.rtl #lang-switcher { left: auto; }
   nav ul a { font-size: 10.5px; letter-spacing: .04em; }
   .logo-img { height: 40px; } body.page-home .logo-img { height: 36px; }
 }
+
+/* ─── Arabic / RTL ───────────────────────────────────── */
+body.rtl, body.rtl * { letter-spacing: 0 !important; }
+body.rtl { line-height: 1.9; }
+body.rtl .eyebrow, body.rtl nav ul a, body.rtl .btn, body.rtl a.pill, body.rtl .g-name, body.rtl .proj .meta { text-transform: none; }
+html[dir="rtl"] .hero-actions { justify-content: flex-start; }
+html[dir="rtl"] .chips { justify-content: flex-start; }
