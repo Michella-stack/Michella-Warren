@@ -57,6 +57,9 @@
     a.tile:hover .arrow { transform: translate(3px, -3px); }
     a.tile:focus-visible { outline: 2px solid var(--edge); outline-offset: 5px; }
     .tile.span3 { grid-column: span 3; min-height: 0; }
+    html[dir="rtl"] .tile { box-shadow: -9px 9px 0 0 var(--c); }
+    html[dir="rtl"] a.tile:hover { box-shadow: -12px 12px 0 0 var(--c); }
+    html[dir="rtl"] .tile .big { right: auto; left: 10px; }
     .tile.span3 p { max-width: 78%; }
     @media (max-width: 860px) { .tiles { grid-template-columns: 1fr; padding-right: 10px; } .tile.span3 { grid-column: auto; } .tile.span3 p { max-width: none; } }
 
@@ -379,5 +382,6 @@
   <script src="protect.js"></script>
   <script src="pills.js"></script>
   <script src="translations.js"></script>
+  <script src="i18n-extra.js"></script>
 </body>
 </html>
