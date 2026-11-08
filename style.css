@@ -43,10 +43,10 @@ nav {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
-nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 100px; }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em; font-weight: 500; }
 /* Drop your own logo into the slot: <img class="logo-img" src="logo.svg" alt="MVW logo"> */
-.logo-img { height: 84px; width: auto; display: block; }
+.logo-img { height: 54px; width: auto; display: block; }
 .logo-slot { width: 28px; height: 28px; border: 1px dashed var(--muted); border-radius: 6px; }
 nav ul { display: flex; gap: 28px; list-style: none; }
 nav ul a { font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); transition: color .2s; padding: 4px 0; border-bottom: 1px solid transparent; }
@@ -218,8 +218,8 @@ body.rtl #lang-dropdown { right: auto; left: 0; }
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; padding-top: 64px; }
   .profile-wrap { position: relative; visibility: visible; width: 150px; height: 150px; margin: 56px 0 24px; margin-inline-start: 58px; }
-  nav .wrap { height: 72px; }
-  .logo-img { height: 56px; }
+  nav .wrap { height: 60px; }
+  .logo-img { height: 46px; }
   .metrics { grid-template-columns: repeat(2, 1fr); }
   .metric:nth-child(2) { border-inline-end: 0; }
   .metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
@@ -250,9 +250,9 @@ body.rtl #lang-dropdown { right: auto; left: 0; }
 @media (prefers-reduced-motion: reduce) { .sparks { display: none; } .glow { transition: none; } }
 
 /* ─── Home: smaller corner signature (this page only) ── */
-body.page-home nav .wrap { height: 76px; }
-body.page-home .logo-img { height: 52px; }
-@media (max-width: 860px) { body.page-home nav .wrap { height: 64px; } body.page-home .logo-img { height: 42px; } }
+body.page-home nav .wrap { height: 58px; }
+body.page-home .logo-img { height: 42px; }
+@media (max-width: 860px) { body.page-home nav .wrap { height: 54px; } body.page-home .logo-img { height: 36px; } }
 @media (max-width: 520px) { body.page-home .logo-img { height: 34px; } }
 
 /* ─── Skills accordion (home) ───────────────────────── */

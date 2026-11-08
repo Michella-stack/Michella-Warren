@@ -47,7 +47,9 @@
 
     .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px 24px; padding: 4px 10px 32px 0; }
     .tile { display: flex; flex-direction: column; gap: 3px; padding: 15px 18px 14px; min-height: 96px; text-decoration: none; transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s cubic-bezier(.2,.7,.2,1); }
-    .tile .big { font-size: 4.2rem; right: 10px; bottom: -12px; }
+    .tile .num { position: absolute; right: 12px; bottom: 6px; width: 104px; height: 60px; overflow: visible; pointer-events: none; }
+    .tile .num text { font-family: var(--font-display); font-size: 70px; fill: none; stroke: var(--c); stroke-width: 1.4; stroke-linejoin: round; filter: url(#rough); opacity: .8; }
+    .tile .num .t2 { stroke-width: .9; opacity: .4; }
     .tile h3 { font-family: var(--font-sans); font-weight: 500; font-size: 1rem; line-height: 1.25; position: relative; }
     .tile p { margin: 0; font-size: 12px; line-height: 1.6; color: #0B0B0B; position: relative; }
     .tile .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; color: var(--edge); position: relative; }
@@ -59,7 +61,7 @@
     .tile.span3 { grid-column: span 3; min-height: 0; }
     html[dir="rtl"] .tile { box-shadow: -9px 9px 0 0 var(--c); }
     html[dir="rtl"] a.tile:hover { box-shadow: -12px 12px 0 0 var(--c); }
-    html[dir="rtl"] .tile .big { right: auto; left: 10px; }
+    html[dir="rtl"] .tile .num { right: auto; left: 12px; }
     .tile.span3 p { max-width: 78%; }
     @media (max-width: 860px) { .tiles { grid-template-columns: 1fr; padding-right: 10px; } .tile.span3 { grid-column: auto; } .tile.span3 p { max-width: none; } }
 
@@ -91,6 +93,7 @@
     </div>
   </nav>
 
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4.5" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
   <main class="wrap">
     <header class="page-hero">
       <span class="eyebrow">Open to roles &amp; consulting</span>
@@ -100,25 +103,25 @@
     </header>
     <section class="tiles">
       <a class="tile link" href="mailto:warrenmichella@gmail.com" style="--c:#3FA58C">
-        <span class="clip"><span class="big" aria-hidden="true">@</span></span>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">@</text><text class="t2" x="118" y="66" text-anchor="end">@</text></svg>
         <div class="top"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></span><span class="arrow" aria-hidden="true">↗</span></div>
         <h3>Email</h3>
         <p>warrenmichella@gmail.com</p>
       </a>
       <a class="tile link" href="https://www.linkedin.com/in/michellavwarren/" target="_blank" rel="noopener" style="--c:#5B86D6">
-        <span class="clip"><span class="big" aria-hidden="true">in</span></span>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">in</text><text class="t2" x="118" y="66" text-anchor="end">in</text></svg>
         <div class="top"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></span><span class="arrow" aria-hidden="true">↗</span></div>
         <h3>LinkedIn</h3>
         <p>michellavwarren</p>
       </a>
       <a class="tile link" href="https://github.com/Michella-stack" target="_blank" rel="noopener" style="--c:#8B7BE0">
-        <span class="clip"><span class="big" aria-hidden="true">{}</span></span>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">{}</text><text class="t2" x="118" y="66" text-anchor="end">{}</text></svg>
         <div class="top"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></span><span class="arrow" aria-hidden="true">↗</span></div>
         <h3>GitHub</h3>
         <p>Michella-stack</p>
       </a>
       <article class="tile span3" style="--c:#4F8FA8">
-        <span class="clip"><span class="big" aria-hidden="true">01</span></span>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">01</text><text class="t2" x="118" y="66" text-anchor="end">01</text></svg>
         <h3 data-i18n="open_title">Open to Discussion</h3>
         <p data-i18n="open_text">I genuinely enjoy conversations about data ethics, demographic research, product strategy, and the bigger questions underneath all of it. If something I've written or built sparked a thought — reach out. You don't need a formal reason. Even just a coffee chat works perfectly.</p>
       </article>
@@ -127,17 +130,17 @@
       <div class="section-head"><h2>Consulting, <em>what I can help with</em></h2></div>
       <div class="tiles">
       <article class="tile " style="--c:#4FB0A8">
-        <span class="clip"><span class="big" aria-hidden="true">02</span></span>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">02</text><text class="t2" x="118" y="66" text-anchor="end">02</text></svg>
         <h3>Data analysis & research</h3>
         <p>Survey design, statistical modelling, demographic and epidemiological analysis.</p>
       </article>
       <article class="tile " style="--c:#A67BD1">
-        <span class="clip"><span class="big" aria-hidden="true">03</span></span>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">03</text><text class="t2" x="118" y="66" text-anchor="end">03</text></svg>
         <h3>Product & strategy</h3>
         <p>Discovery, roadmapping and turning analytical insight into product decisions.</p>
       </article>
       <article class="tile " style="--c:#5B9BD6">
-        <span class="clip"><span class="big" aria-hidden="true">04</span></span>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">04</text><text class="t2" x="118" y="66" text-anchor="end">04</text></svg>
         <h3>Circular systems & energy data</h3>
         <p>Circular-economy and zero-waste analysis, energy-system work and clear, interactive data stories.</p>
       </article>
