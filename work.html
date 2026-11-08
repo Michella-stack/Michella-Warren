@@ -4,308 +4,64 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Work — Michella Voughn Warren</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <meta name="description" content="Hackathons, projects and skills."/>
+  <meta name="robots" content="noimageindex"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-  <style>
-    .skill-icon-item img, .skill-icon-item svg { width:36px !important; height:36px !important; }
-    body.page-work { background: #D8DDE8; }
-    body.page-work nav { background: rgba(210,216,228,0.92); }
-    body.page-work .card { background: rgba(255,255,255,0.60); }
-    body.page-work .about-strip { background: rgba(255,255,255,0.35); }
-    body.page-work .skill-pills span { border-color: rgba(80,100,160,0.30); background: rgba(200,210,235,0.40); color: #3A4060; }
-    body.page-work .skill-category h4 { color: #5A6898; }
-  </style>
 </head>
-<body class="page-work">
-
+<body class="">
   <nav>
-    <div class="nav-name">
-      <svg class="nav-feather" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M11 26 C8 22, 3 18, 2 12 C1 7, 5 2, 11 1" fill="rgba(143,175,138,0.18)" stroke="none"/>
-        <path d="M11 26 C14 22, 19 18, 20 12 C21 7, 17 2, 11 1" fill="rgba(143,175,138,0.13)" stroke="none"/>
-        <line x1="11" y1="8"  x2="5"  y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="11" x2="4"  y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="14" x2="4"  y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="17" x2="5"  y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="8"  x2="17" y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="11" x2="18" y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="14" x2="18" y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="17" x2="17" y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
-        <path d="M11 27 C11 24, 11 18, 11 1" stroke="rgba(122,158,118,0.72)" stroke-width="1.1" stroke-linecap="round"/>
-        <circle cx="11" cy="1.5" r="0.8" fill="rgba(143,175,138,0.55)"/>
-      </svg>
-      <span class="nav-initials">
-        <span class="nav-m">M</span> <span class="nav-v">V</span> <span class="nav-w">W</span>
-      </span>
+    <div class="wrap">
+      <a href="index.html" class="logo" aria-label="Home">
+        <img class="logo-img" src="assets/logo.svg" alt="Michella Warren"/>
+      </a>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="work.html" data-i18n="nav_work" class="active">Work</a></li>
+        <li><a href="research.html" data-i18n="nav_research">Research</a></li>
+        <li><a href="interests.html" data-i18n="nav_interests">Interests</a></li>
+        <li><a href="contact.html" data-i18n="nav_connect">Let's Connect</a></li>
+      </ul>
     </div>
-    <ul>
-      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-      <li><a href="work.html" data-i18n="nav_work">Work</a></li>
-      <li><a href="research.html" data-i18n="nav_research">Research</a></li>
-      <li><a href="interests.html" data-i18n="nav_interests">Interests</a></li>
-      <li><a href="contact.html" data-i18n="nav_connect">Let's Connect</a></li>
-    </ul>
   </nav>
 
-  <div class="page-hero">
-    <span class="tag" data-i18n="work_tag">Projects &amp; Skills</span>
-    <h1><span data-i18n="work_h1a">What I </span><em data-i18n="work_h1b">Build</em></h1>
-    <p data-i18n="work_subtitle">From data pipelines to product strategy — projects that sit at the edge of analysis and action.</p>
-  </div>
-
-  <div class="section-content">
-    <div class="card-grid">
-
-      <!-- ── SimShield ── -->
-      <div class="card">
-        <span class="card-label" data-i18n="proj1_label">Hackathon · MWC 2026</span>
-        <h3 data-i18n="proj1_title">SimShield — Nokia NaC GSMA Challenge</h3>
-        <p data-i18n="proj1_desc">A payment safety tool built at the 2026 OpenGateway Hackathon at Mobile World Congress. SimShield leverages Nokia Network as Code and GSMA Open Gateway APIs to protect users from SIM-swap fraud and payment interception in real time.</p>
-        <div class="card-footer">
-          <span class="tag-chip">TypeScript</span>
-          <span class="tag-chip">AI</span>
-          <span class="tag-chip">Network as Code</span>
-          <span class="tag-chip">GSMA API</span>
-          <a href="https://github.com/Michella-stack/SimShield" target="_blank" class="tag-chip tag-link">View on GitHub ↗</a>
-        </div>
-      </div>
-
-      <!-- ── COVID-19 Sequelae ── -->
-      <div class="card">
-        <span class="card-label">Data Analysis</span>
-        <h3 data-i18n="proj2_title">COVID-19 Sequelae</h3>
-        <p data-i18n="proj2_desc">A longitudinal data analysis examining post-acute sequelae of COVID-19 (Long COVID). Investigating symptom persistence, demographic risk factors, and healthcare utilisation patterns using statistical modelling. Details to be updated.</p>
-        <div class="card-footer">
-          <span class="tag-chip">STATA</span>
-          <span class="tag-chip">Epidemiology</span>
-          <span class="tag-chip">Longitudinal Analysis</span>
-        </div>
-      </div>
-
-     <!-- ── Energy Systems ── -->
-<div class="card">
-  <span class="card-label">Data Analysis</span>
-  <h3>Energy Systems &amp; Transition</h3>
-  <p data-i18n="proj3_desc">Data analysis focused on energy consumption patterns and transition dynamics — including grid stability, renewable displacement, and the socioeconomic dimensions of the Iberian energy system using spatial and statistical methods.</p>
-  <div class="card-footer">
-    <span class="tag-chip">QGIS</span>
-    <span class="tag-chip">Power BI</span>
-    <span class="tag-chip">Python</span>
-    <span class="tag-chip">Interactive</span>
-    <a href="https://iberian-grid.vercel.app/" target="_blank" class="tag-chip tag-link">View Project ↗</a>
-  </div>
-</div>
-
-      <!-- ── Sheltering the Overlooked — NEW ── -->
-      <div class="card">
-        <span class="card-label">Certificate Programme Output</span>
-        <h3>Sheltering the Overlooked</h3>
-        <p><em style="font-family:'Cormorant Garamond',serif;font-size:1rem;">EUTOPIA EUCI — Universitat Pompeu Fabra · 2025</em></p>
-        <p style="margin-top:0.6rem;">Reflective portfolio examining intercultural crisis response, power dynamics, and dignity in humanitarian emergency sheltering during COVID-19 — volunteering with Creu Roja Catalunya, Barcelona 2020. Produced as part of the EUTOPIA Certificate of Internationalisation programme.</p>
-        <div class="card-footer">
-          <span class="tag-chip">Interculturality</span>
-          <span class="tag-chip">Crisis Response</span>
-          <span class="tag-chip">Mixed Methods</span>
-          <span class="tag-chip">Red Cross</span>
-         <a href="https://michella-stack.github.io/Michella-Warren/docs/EUCI_MVW.pdf" target="_blank"
-   style="display:inline-flex;align-items:center;gap:0.35rem;margin-left:auto;font-size:0.78rem;font-family:'DM Sans',sans-serif;color:var(--ink-soft);text-decoration:none;border:1px solid rgba(90,80,75,0.2);border-radius:20px;padding:0.25rem 0.75rem;transition:all 0.2s;"
-   onmouseover="this.style.borderColor='var(--terracotta)';this.style.color='var(--terracotta)'"
-   onmouseout="this.style.borderColor='rgba(90,80,75,0.2)';this.style.color='var(--ink-soft)'">
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-  View Portfolio
-</a>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="skills-section">
-      <h2>Skills &amp; <em style="font-style:italic; font-family:'Cormorant Garamond', serif; color: var(--lavender);">Tech Stack</em></h2>
-
-      <div class="skill-category">
-        <h4>Data &amp; Analysis</h4>
-        <div class="skill-pills-icons">
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/r/r-original.svg" alt="R"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg" alt="Pandas"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" alt="SQL"/>
-          </div>
-          <div class="skill-icon-item">
-            <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-              <rect width="36" height="36" rx="4" fill="#1a6496"/>
-              <rect x="6" y="24" width="4" height="7" fill="white" opacity="0.9"/>
-              <rect x="12" y="18" width="4" height="13" fill="white" opacity="0.9"/>
-              <rect x="18" y="12" width="4" height="19" fill="white" opacity="0.9"/>
-              <rect x="24" y="7" width="4" height="24" fill="white" opacity="0.9"/>
-            </svg>
-          </div>
-          <div class="skill-icon-item">
-            <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-              <rect width="36" height="36" rx="4" fill="#f2c811"/>
-              <rect x="8"  y="20" width="5" height="10" rx="1" fill="#333"/>
-              <rect x="15" y="14" width="5" height="16" rx="1" fill="#333" opacity="0.85"/>
-              <rect x="22" y="8"  width="5" height="22" rx="1" fill="#333" opacity="0.7"/>
-            </svg>
-          </div>
-          <div class="skill-icon-item">
-            <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="18" cy="18" r="16" fill="#589632"/>
-              <circle cx="18" cy="18" r="10" fill="#93b023"/>
-              <circle cx="18" cy="18" r="5" fill="#fff" opacity="0.9"/>
-              <path d="M18 4 L18 8 M18 28 L18 32 M4 18 L8 18 M28 18 L32 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="skill-icon-item">
-            <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-              <rect width="36" height="36" rx="5" fill="#E97627"/>
-              <rect x="16.5" y="5" width="3" height="26" rx="1.5" fill="white"/>
-              <rect x="5" y="16.5" width="26" height="3" rx="1.5" fill="white"/>
-              <rect x="21" y="10" width="2.5" height="16" rx="1.2" fill="white" opacity="0.5"/>
-              <rect x="10" y="21" width="16" height="2.5" rx="1.2" fill="white" opacity="0.5"/>
-            </svg>
-          </div>
-        </div>
-        <div class="skill-pills" style="margin-top:0.8rem;">
-          <span>Graph &amp; Data Modelling</span>
-          <span>Statistical Analysis</span>
-          <span>Data Visualisation</span>
-          <span>Regression Analysis</span>
-          <span>Survey Design</span>
-        </div>
-      </div>
-
-      <div class="skill-category">
-        <h4>Product &amp; Business</h4>
-        <div class="skill-pills-icons">
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jira/jira-original.svg" alt="Jira"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/confluence/confluence-original.svg" alt="Confluence"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"/>
-          </div>
-          <div class="skill-icon-item">
-            <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-              <rect width="36" height="36" rx="4" fill="#0e6c37"/>
-              <rect x="7" y="9"  width="22" height="3" rx="1.5" fill="white" opacity="0.9"/>
-              <rect x="7" y="16" width="22" height="3" rx="1.5" fill="white" opacity="0.9"/>
-              <rect x="7" y="23" width="14" height="3" rx="1.5" fill="white" opacity="0.9"/>
-            </svg>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://cdn.simpleicons.org/asana/F06A6A" alt="Asana"/>
-          </div>
-          <div class="skill-icon-item">
-            <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-              <rect width="36" height="36" rx="4" fill="#e8272a"/>
-              <text x="18" y="24" font-family="serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Ts</text>
-            </svg>
-          </div>
-        </div>
-        <div class="skill-pills" style="margin-top:0.8rem;">
-          <span>Product Strategy</span>
-          <span>Agile / Scrum</span>
-          <span>Stakeholder Management</span>
-          <span>Roadmapping</span>
-          <span>User Research</span>
-        </div>
-      </div>
-
-      <div class="skill-category">
-        <h4>Research Methods</h4>
-        <div class="skill-pills">
-          <span>Demographic Analysis</span>
-          <span>Ethnographic Methods</span>
-          <span>Interview Design &amp; Analysis</span>
-          <span>Qualitative Data Operationalisation</span>
-          <span>Survey Design</span>
-          <span>Mixed Methods</span>
-          <span>Academic Writing</span>
-          <span>Systematic Literature Review</span>
-        </div>
-      </div>
-
-      <div class="skill-category">
-        <h4>Tools &amp; Platforms</h4>
-        <div class="skill-pills-icons">
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/googlecloud/googlecloud-original.svg" alt="Google Cloud"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="GitHub"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vercel/vercel-original.svg" alt="Vercel"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/latex/latex-original.svg" alt="LaTeX"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/figma/figma-original.svg" alt="Figma"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/notion/notion-original.svg" alt="Notion"/>
-          </div>
-          <div class="skill-icon-item">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/windows11/windows11-original.svg" alt="Microsoft 365"/>
-          </div>
-          <div class="skill-icon-item">
-            <!-- Cursor.com logomark -->
-            <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-              <rect width="36" height="36" rx="6" fill="#000000"/>
-              <rect x="8"    y="8"    width="7"   height="2.5" rx="1" fill="white"/>
-              <rect x="8"    y="8"    width="2.5" height="7"   rx="1" fill="white"/>
-              <rect x="21"   y="8"    width="7"   height="2.5" rx="1" fill="white"/>
-              <rect x="25.5" y="8"    width="2.5" height="7"   rx="1" fill="white"/>
-              <rect x="8"    y="25.5" width="7"   height="2.5" rx="1" fill="white"/>
-              <rect x="8"    y="21"   width="2.5" height="7"   rx="1" fill="white"/>
-              <rect x="21"   y="25.5" width="7"   height="2.5" rx="1" fill="white"/>
-              <rect x="25.5" y="21"   width="2.5" height="7"   rx="1" fill="white"/>
-              <circle cx="18" cy="18" r="1.6" fill="white" opacity="0.65"/>
-            </svg>
-          </div>
-          <div class="skill-icon-item">
-            <!-- Claude AI — Anthropic asterisk logomark -->
-            <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-              <rect width="36" height="36" rx="7" fill="#D97757"/>
-              <g transform="translate(18,18)" stroke="white" stroke-linecap="round">
-                <line x1="0"     y1="-10"   x2="0"     y2="-3.5"  stroke-width="2.8"/>
-                <line x1="0"     y1="10"    x2="0"     y2="3.5"   stroke-width="2.8"/>
-                <line x1="-10"   y1="0"     x2="-3.5"  y2="0"     stroke-width="2.8"/>
-                <line x1="10"    y1="0"     x2="3.5"   y2="0"     stroke-width="2.8"/>
-                <line x1="-7.07" y1="-7.07" x2="-2.47" y2="-2.47" stroke-width="2.8"/>
-                <line x1="7.07"  y1="7.07"  x2="2.47"  y2="2.47"  stroke-width="2.8"/>
-                <line x1="7.07"  y1="-7.07" x2="2.47"  y2="-2.47" stroke-width="2.8"/>
-                <line x1="-7.07" y1="7.07"  x2="-2.47" y2="2.47"  stroke-width="2.8"/>
-              </g>
-            </svg>
-          </div>
-        </div>
-        <div class="skill-pills" style="margin-top:0.8rem;">
-          <span>Audiate</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <main class="wrap">
+    <header class="page-hero">
+      <span class="eyebrow" data-i18n="work_tag">Projects</span>
+      <h1><span data-i18n="work_h1a">What I </span><em data-i18n="work_h1b">Build</em></h1>
+      <p class="lead" data-i18n="work_subtitle">From data pipelines to product strategy — projects that sit at the edge of analysis and action.</p>
+    </header>
+    <section class="projects">
+      <details class="proj"><summary><span class="meta">Hackathon · 2026</span><h3>Stellar-Split</h3><span class="links"><a class="pill" href="https://github.com/Michella-stack/Stellar-Split" target="_blank" rel="noopener">GitHub ↗</a><a class="pill" href="https://stellar-split-sooty.vercel.app" target="_blank" rel="noopener">Live app ↗</a></span><span class="g-icon" aria-hidden="true"></span></summary><div class="panel"><p>Split shared expenses and settle in USDC on Stellar. Built for families and workers who send money across borders, with agent support via x402. Built at HackMeridian, part of the Meridian conference by the <a href="https://stellar.org" target="_blank" rel="noopener">Stellar Development Foundation</a>.</p>
+          <div class="chips"><span class="chip ">TypeScript</span><span class="chip ">Stellar</span><span class="chip ">USDC</span><span class="chip ">x402</span></div></div></details>
+      <details class="proj"><summary><span class="meta">Hackathon · 2026</span><h3>ResponsAra — AI for Wildfire</h3><span class="links"><a class="pill" href="https://github.com/rht/wildfire" target="_blank" rel="noopener">GitHub ↗</a><a class="pill" href="https://aisummitbarcelona.com/hackathon" target="_blank" rel="noopener">Hackathon ↗</a></span><span class="g-icon" aria-hidden="true"></span></summary><div class="panel"><p>A values-at-risk MVP for wildfire response: for one incident and one bounded area, it identifies priority locations, assigns follow-up tasks and updates the queue as the fire changes. Built at HackBarna 2026 for the Norrsken × Deepfire “AI for Wildfire” challenge (Track 4, Values at risk), part of the <a href="https://aisummitbarcelona.com/hackathon" target="_blank" rel="noopener">Norrsken AI Summit Barcelona hackathon</a>.</p>
+          <div class="chips"><span class="chip ">Python</span><span class="chip ">JavaScript</span><span class="chip ">AI</span><span class="chip ">Wildfire</span><span class="chip ">Risk assessment</span></div></div></details>
+      <details class="proj"><summary><span class="meta">Hackathon · 2026</span><h3>Chick — Find Your First 100 Customers</h3><span class="links"><a class="pill" href="https://github.com/Chick-N-Egg/frontend" target="_blank" rel="noopener">GitHub ↗</a></span><span class="g-icon" aria-hidden="true"></span></summary><div class="panel"><p>AI-powered go-to-market discovery for pre-launch founders. Chick takes a rough product idea, finds the real communities and channels where the target audience hangs out, scores them on Reach, Receptiveness and Warmth, drafts outreach copy, and tracks outcomes to refine future suggestions. Built at the {Tech: Europe} x Cala Hackathon, The Summer Lock-In, with OpenAI.</p>
+          <div class="chips"><span class="chip ">TypeScript</span><span class="chip ">Python</span><span class="chip ">AI</span><span class="chip ">GTM</span><span class="chip ">PostgreSQL</span></div></div></details>
+      <details class="proj"><summary><span class="meta">Hackathon · 2026</span><h3>SimShield — Nokia NaC GSMA Challenge</h3><span class="links"><a class="pill" href="https://github.com/Michella-stack/SimShield" target="_blank" rel="noopener">GitHub ↗</a></span><span class="g-icon" aria-hidden="true"></span></summary><div class="panel"><p>A payment safety tool built at the 2026 OpenGateway Hackathon at Mobile World Congress. SimShield uses Nokia Network as Code and GSMA Open Gateway APIs to protect users from SIM-swap fraud and payment interception in real time.</p>
+          <div class="chips"><span class="chip ">TypeScript</span><span class="chip ">AI</span><span class="chip ">Network as Code</span><span class="chip ">GSMA API</span></div></div></details>
+      <details class="proj"><summary><span class="meta">Personal project · 2026</span><h3>LLM Reliability Analysis</h3><span class="links"><a class="pill" href="https://github.com/Michella-stack/llm-reliability" target="_blank" rel="noopener">GitHub ↗</a></span><span class="g-icon" aria-hidden="true"></span></summary><div class="panel"><p>Empirical analysis of LLM response consistency and hallucination, using Python, Pandas and Jupyter.</p>
+          <div class="chips"><span class="chip ">Python</span><span class="chip ">Pandas</span><span class="chip ">Jupyter</span></div></div></details>
+      <details class="proj"><summary><span class="meta">Personal project · 2026</span><h3>Health app (Swift)</h3><span class="links"></span><span class="g-icon" aria-hidden="true"></span></summary><div class="panel"><p>A health app built natively in Swift. Details coming soon.</p>
+          <div class="chips"><span class="chip ">Swift</span><span class="chip ">iOS</span><span class="chip ">Health</span></div></div></details>
+      <details class="proj"><summary><span class="meta">UPF Certificate</span><h3>Sheltering the Overlooked</h3><span class="links"><a class="pill" href="docs/EUCI_MVW.pdf" target="_blank" rel="noopener">Portfolio PDF ↗</a><a class="pill" href="https://eutopia-university.eu/euci-2025-student-portfolios/" target="_blank" rel="noopener">EUCI portfolios ↗</a></span><span class="g-icon" aria-hidden="true"></span></summary><div class="panel"><p>Reflective portfolio examining intercultural crisis response, power dynamics and dignity in humanitarian emergency sheltering during COVID-19, drawn from volunteering with Creu Roja Catalunya, Barcelona, 2020. Produced for the EUTOPIA Certificate of Internationalisation (EUCI), completed through Universitat Pompeu Fabra with the University of Warwick as an EUTOPIA partner. EU-funded.</p>
+          <p class="small"><strong>Cite as:</strong> Warren, M. V. (2025). <em>Sheltering the Overlooked</em> [Reflective student portfolio]. EUTOPIA Certificate of Internationalisation (EUCI), Universitat Pompeu Fabra, Barcelona. EUTOPIA. <a href="https://eutopia-university.eu/euci-2025-student-portfolios/" target="_blank" rel="noopener">https://eutopia-university.eu/euci-2025-student-portfolios/</a></p>
+          <p class="small">Funding: EUTOPIA MORE is co-funded by the European Union under Grant Agreement No. 101089699. Views and opinions expressed are those of the author only and do not necessarily reflect those of the European Union or the European Education and Culture Executive Agency (EACEA). Neither can be held responsible for them.</p>
+          <div class="chips"><span class="chip ">Interculturality</span><span class="chip ">Crisis Response</span><span class="chip ">Mixed Methods</span><span class="chip ">EU-funded</span></div></div></details>
+    </section>
+  </main>
 
   <footer>
-    <p data-i18n="footer_copy">© 2025 Michella Voughn Warren · Built with intention</p>
-    <div class="footer-links">
-      <a href="https://github.com/Michella-stack" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank">LinkedIn</a>
-      <a href="mailto:warrenmichella@gmail.com">Email</a>
+    <div class="wrap">
+      <span data-i18n="footer_copy">© 2026 · Built with intention</span>
+      <div class="footer-links">
+        <a href="https://github.com/Michella-stack" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:warrenmichella@gmail.com">Email</a>
+      </div>
     </div>
   </footer>
-
   <canvas id="celestial-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.55;"></canvas>
   <script>
   (function() {
@@ -324,6 +80,8 @@
     resize();requestAnimationFrame(tick);
   })();
   </script>
+  <script src="protect.js"></script>
+  <script src="pills.js"></script>
   <script src="translations.js"></script>
 </body>
 </html>

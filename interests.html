@@ -4,46 +4,77 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Interests — Michella Voughn Warren</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <meta name="description" content="Ideas and topics I keep returning to."/>
+  <meta name="robots" content="noimageindex"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
   <style>
-    /* ── Interests page overrides — canyon palette ── */
-    body.page-interests {
-      background: #D4C4B0; /* desert dawn — warm mocha sand */
+
+    /* ── Interests: canyon palette ── */
+    body.page-interests { background: #D4C4B0; overflow-x: hidden; }
+    body.page-interests nav { background: rgba(212,196,176,.9); border-bottom-color: rgba(42,23,16,.12); }
+    body.page-interests .eyebrow { color: #0B0B0B; }
+    body.page-interests h1 em { color: #B4603F; }
+    body.page-interests .lead { color: #0B0B0B; }
+    body.page-interests footer { border-top-color: rgba(42,23,16,.14); }
+    body.page-interests footer .wrap { color: #0B0B0B; }
+    body.page-interests .int-layout, body.page-interests footer { position: relative; z-index: 2; }
+
+    /* A light tint of the card's own colour sits on top of a solid layer in the full colour.
+       The outline (drawn by pills.js) is a darker shade of that same colour. */
+    .tile, .deck .card {
+      --c: #888;
+      --face: #f6f1e8;
+      --face: color-mix(in srgb, var(--c) 13%, #fffdf8);
+      --edge: color-mix(in srgb, var(--c) 58%, #000);
+      position: relative; border-radius: 0; overflow: visible;
+      background: var(--face); color: #0B0B0B;
+      box-shadow: 9px 9px 0 0 var(--c);
     }
-    body.page-interests nav {
-      background: rgba(212,196,176,0.92);
+    .tile .clip, .deck .card .clip { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .tile .big, .deck .card .big { position: absolute; right: 12px; bottom: -14px; font-family: var(--font-display); line-height: 1; color: var(--c); opacity: .2; user-select: none; }
+
+    /* ── Interests: vertical Ferris wheel (positions are set by script along a circular arc) ── */
+    .int-layout { display: grid; grid-template-columns: minmax(0, 520px) minmax(240px, 1fr); grid-template-areas: "stage hero"; gap: 40px; align-items: center; min-height: calc(100vh - 120px); }
+    .int-layout .page-hero { grid-area: hero; padding: 24px 0; }
+    .int-layout .page-hero .lead { font-size: 12px; line-height: 1.85; text-align: justify; hyphens: manual; max-width: none; }
+    .int-stage { grid-area: stage; position: relative; padding-right: 66px; }
+    .deck { position: relative; height: 540px; user-select: none; touch-action: none; }
+    .deck .card {
+      --edge: #2A1710;
+      position: absolute; left: 0; top: 50%; width: calc(100% - 14px); height: 232px; margin-top: -116px;
+      display: flex; flex-direction: column; padding: 22px 24px; cursor: pointer; outline: none;
+      will-change: transform, opacity, filter;
     }
-    body.page-interests .page-hero {
-      background: transparent;
-      position: relative;
-      z-index: 2;
-    }
-    body.page-interests .page-hero .tag {
-      color: #B85C38;
-    }
-    body.page-interests .page-hero h1 em {
-      color: #C47A5A;
-    }
-    body.page-interests .section-content {
-      position: relative;
-      z-index: 2;
-    }
-    body.page-interests .interest-num {
-      color: rgba(160,85,45,0.70);
-    }
-    body.page-interests .interest-item {
-      border-bottom-color: rgba(196,122,90,0.18);
-    }
-    body.page-interests .open-invite {
-      background: rgba(196,122,90,0.10);
-      border-left-color: #C47A5A;
-    }
-    body.page-interests footer {
-      background: transparent;
-      border-top-color: rgba(196,122,90,0.2);
+    .deck .card.active { cursor: default; }
+    .deck .card:focus-visible { outline: 3px solid #2A1710; outline-offset: 5px; }
+    .deck .card h3 { font-family: var(--font-sans); font-weight: 500; font-size: 1.05rem; line-height: 1.3; position: relative; }
+    .deck .card p { margin-top: 10px; font-size: 12px; line-height: 1.7; color: #0B0B0B; position: relative; }
+    .deck .card .num { position: absolute; right: 12px; bottom: 6px; width: 140px; height: 94px; overflow: visible; pointer-events: none; }
+    .deck .card .num text { font-family: var(--font-display); font-size: 96px; fill: none; stroke: var(--c); stroke-width: 1.5; stroke-linejoin: round; filter: url(#rough); opacity: .75; }
+    .deck .card .num .t2 { stroke-width: .9; opacity: .4; }
+    .deck-ctl { position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: 14px; z-index: 30; }
+    .deck-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid #2A1710; background: transparent; color: #2A1710; font-size: 16px; cursor: pointer; transition: background .25s, color .25s; display: grid; place-items: center; padding: 0; }
+    .deck-btn:hover { background: #2A1710; color: #F6E7DC; }
+    .deck-btn:focus-visible { outline: 3px solid #B4603F; outline-offset: 3px; }
+    .dots { display: flex; flex-direction: column; gap: 9px; }
+    .dot { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 1.5px solid #2A1710; background: transparent; cursor: pointer; transition: all .3s; }
+    .dot.on { background: #2A1710; height: 26px; border-radius: 6px; }
+    .deck-count { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: #0B0B0B; }
+    @media (max-width: 860px) {
+      .int-layout { grid-template-columns: 1fr; grid-template-areas: "hero" "stage"; min-height: 0; gap: 0; }
+      .int-layout .page-hero { padding: 36px 0 4px; }
+      .int-stage { padding-right: 0; padding-bottom: 8px; overflow-x: clip; }
+      .deck { height: 470px; }
+      .deck .card { height: 224px; margin-top: -112px; }
+      .deck-ctl { position: static; transform: none; flex-direction: row; justify-content: center; margin-top: 4px; padding-bottom: 36px; }
+      .dots { flex-direction: row; }
+      .dot.on { height: 9px; width: 26px; }
     }
 
+
+    /* ── Sun + mountains: ORIGINAL CODE, unchanged ── */
     /* ── Orbital sun — fixed right side ── */
     .canyon-sun {
       position: fixed;
@@ -126,41 +157,19 @@
   </style>
 </head>
 <body class="page-interests">
-
   <nav>
-    <div class="nav-name">
-      <svg class="nav-feather" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- Quill feather — translucent, elegant -->
-        <!-- Feather body: soft curved vane, left side -->
-        <path d="M11 26 C8 22, 3 18, 2 12 C1 7, 5 2, 11 1" fill="rgba(143,175,138,0.18)" stroke="none"/>
-        <!-- Feather body: right side vane -->
-        <path d="M11 26 C14 22, 19 18, 20 12 C21 7, 17 2, 11 1" fill="rgba(143,175,138,0.13)" stroke="none"/>
-        <!-- Vane ribs — left, faint -->
-        <line x1="11" y1="8"  x2="5"  y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="11" x2="4"  y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="14" x2="4"  y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="17" x2="5"  y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
-        <!-- Vane ribs — right, faint -->
-        <line x1="11" y1="8"  x2="17" y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="11" x2="18" y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="14" x2="18" y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="17" x2="17" y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
-        <!-- Central rachis (quill spine) — most visible element -->
-        <path d="M11 27 C11 24, 11 18, 11 1" stroke="rgba(122,158,118,0.72)" stroke-width="1.1" stroke-linecap="round"/>
-        <!-- Tip highlight -->
-        <circle cx="11" cy="1.5" r="0.8" fill="rgba(143,175,138,0.55)"/>
-      </svg>
-      <span class="nav-initials">
-        <span class="nav-m">M</span> <span class="nav-v">V</span> <span class="nav-w">W</span>
-      </span>
+    <div class="wrap">
+      <a href="index.html" class="logo" aria-label="Home">
+        <img class="logo-img" src="assets/logo.svg" alt="Michella Warren"/>
+      </a>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="work.html" data-i18n="nav_work">Work</a></li>
+        <li><a href="research.html" data-i18n="nav_research">Research</a></li>
+        <li><a href="interests.html" data-i18n="nav_interests" class="active">Interests</a></li>
+        <li><a href="contact.html" data-i18n="nav_connect">Let's Connect</a></li>
+      </ul>
     </div>
-    <ul>
-      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-      <li><a href="work.html" data-i18n="nav_work">Work</a></li>
-      <li><a href="research.html" data-i18n="nav_research">Research</a></li>
-      <li><a href="interests.html" data-i18n="nav_interests">Interests</a></li>
-      <li><a href="contact.html" data-i18n="nav_connect">Let's Connect</a></li>
-    </ul>
   </nav>
 
   <!-- Minimal organic sun — right side -->
@@ -264,69 +273,146 @@
       fill="#7A3518" opacity="0.35"/>
   </svg>
 
-  <div class="page-hero">
-    <span class="tag">Interests & Open Discussion</span>
-    <h1>What <em>Moves</em> Me</h1>
-    <p data-i18n="interests_subtitle">The ideas, spaces, and conversations I find myself returning to — professionally and personally.</p>
-  </div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="sand0" x="-14%" y="-14%" width="128%" height="128%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="sand1" x="-14%" y="-14%" width="128%" height="128%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="sand2" x="-14%" y="-14%" width="128%" height="128%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="sand3" x="-14%" y="-14%" width="128%" height="128%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="sand4" x="-14%" y="-14%" width="128%" height="128%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="8" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="sand5" x="-14%" y="-14%" width="128%" height="128%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="rough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4.5" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
 
-  <div class="section-content">
-    <div class="interest-list">
-      <div class="interest-item">
-        <span class="interest-num">01</span>
-        <div>
-          <h3>Data Ethics & Responsible AI</h3>
+  <main class="wrap int-layout">
+    <header class="page-hero">
+      <span class="eyebrow">Interests &amp; Open Discussion</span>
+      <h1>What <em>Moves</em> Me</h1>
+      <p class="lead" data-i18n="interests_subtitle">The ideas, spaces, and conversations I find myself returning to — professionally and personally.</p>
+    </header>
+    <div class="int-stage">
+      <section class="deck" role="region" aria-roledescription="carousel" aria-label="Interests">
+        <article class="card" tabindex="0" role="group" aria-roledescription="slide" aria-label="1 of 6" style="--c:#B4603F">
+          <svg class="num" viewBox="0 0 150 100" aria-hidden="true"><text x="146" y="92" text-anchor="end">01</text><text class="t2" x="148" y="94" text-anchor="end">01</text></svg>
+          <h3 data-i18n="int1_title">Data Ethics & Responsible AI</h3>
           <p data-i18n="int1_text">How do we build statistical models and data products that serve people fairly? I'm deeply interested in the ethics of algorithmic decision-making, especially in social contexts like healthcare, housing, and policy.</p>
-        </div>
-      </div>
-      <div class="interest-item">
-        <span class="interest-num">02</span>
-        <div>
-          <h3>Population Dynamics & Social Change</h3>
+        </article>
+        <article class="card" tabindex="0" role="group" aria-roledescription="slide" aria-label="2 of 6" style="--c:#7A3A1E">
+          <svg class="num" viewBox="0 0 150 100" aria-hidden="true"><text x="146" y="92" text-anchor="end">02</text><text class="t2" x="148" y="94" text-anchor="end">02</text></svg>
+          <h3 data-i18n="int2_title">Population Dynamics & Social Change</h3>
           <p data-i18n="int2_text">Demographic transitions, migration, urbanisation — the big slow forces that quietly reshape societies. My research background keeps pulling me back to questions about how populations move, adapt, and endure.</p>
-        </div>
-      </div>
-      <div class="interest-item">
-        <span class="interest-num">03</span>
-        <div>
+        </article>
+        <article class="card" tabindex="0" role="group" aria-roledescription="slide" aria-label="3 of 6" style="--c:#C9B08A">
+          <svg class="num" viewBox="0 0 150 100" aria-hidden="true"><text x="146" y="92" text-anchor="end">03</text><text class="t2" x="148" y="94" text-anchor="end">03</text></svg>
           <h3 data-i18n="int3_title">Product for Social Impact</h3>
           <p data-i18n="int3_text">Can great product thinking be applied to social challenges? I'm fascinated by organisations building at the intersection of tech and public good — and how to bring rigour without losing humanity.</p>
-        </div>
-      </div>
-      <div class="interest-item">
-        <span class="interest-num">04</span>
-        <div>
+        </article>
+        <article class="card" tabindex="0" role="group" aria-roledescription="slide" aria-label="4 of 6" style="--c:#8F6B4E">
+          <svg class="num" viewBox="0 0 150 100" aria-hidden="true"><text x="146" y="92" text-anchor="end">04</text><text class="t2" x="148" y="94" text-anchor="end">04</text></svg>
           <h3 data-i18n="int4_title">Storytelling with Data</h3>
           <p data-i18n="int4_text">Numbers without narrative are just noise. I care about making data legible — visualisation, communication, and the craft of turning a complex dataset into something someone can actually act on.</p>
-        </div>
-      </div>
-      <div class="interest-item">
-        <span class="interest-num">05</span>
-        <div>
-          <h3>Sustainable Cities & Urban Futures</h3>
+        </article>
+        <article class="card" tabindex="0" role="group" aria-roledescription="slide" aria-label="5 of 6" style="--c:#8CA882">
+          <svg class="num" viewBox="0 0 150 100" aria-hidden="true"><text x="146" y="92" text-anchor="end">05</text><text class="t2" x="148" y="94" text-anchor="end">05</text></svg>
+          <h3 data-i18n="int5_title">Sustainable Cities & Urban Futures</h3>
           <p data-i18n="int5_text">My thesis work on Tromsø and Oslo sparked a lasting interest in how cities navigate the tension between growth and ecological responsibility — a question that feels more urgent every year.</p>
-        </div>
+        </article>
+        <article class="card" tabindex="0" role="group" aria-roledescription="slide" aria-label="6 of 6" style="--c:#2A1710">
+          <svg class="num" viewBox="0 0 150 100" aria-hidden="true"><text x="146" y="92" text-anchor="end">06</text><text class="t2" x="148" y="94" text-anchor="end">06</text></svg>
+          <h3 data-i18n="convo_title">Let's Have a Conversation</h3>
+          <p data-i18n="convo_text">I believe some of the best ideas happen in open, informal exchange. If any of the above resonates, or you're working on something at the intersection of data, research, and product, I'd love to hear from you.</p>
+          <a href="contact.html" class="sketch" style="margin-top:auto;align-self:flex-start"><svg viewBox="0 0 200 52" preserveAspectRatio="none" aria-hidden="true"><path d="M14 5 C62 1.5 140 3 187 5.5 C198 7 200 19 197.5 29 C196 41 190 47.5 178 47 C130 51 70 50 21 47.5 C8 46.5 2.5 40 3.5 27 C4.5 14 6 7.5 15 4.5"/><path d="M17 8 C70 5 130 6.5 183 8 C194 9.5 196 20 194 28 C192 38 187 44 175 44.5 C128 47 72 46.5 24 44.5 C12 43.5 7.5 38 8 28 C8.5 18 10 11 18 8"/></svg><span data-i18n="btn_connect">Let's Connect →</span></a>
+        </article>
+      </section>
+      <div class="deck-ctl">
+        <button class="deck-btn deck-prev" aria-label="Previous interest">↑</button>
+        <div class="dots"><button class="dot" aria-label="Go to interest 1"></button><button class="dot" aria-label="Go to interest 2"></button><button class="dot" aria-label="Go to interest 3"></button><button class="dot" aria-label="Go to interest 4"></button><button class="dot" aria-label="Go to interest 5"></button><button class="dot" aria-label="Go to interest 6"></button></div>
+        <span class="deck-count" aria-live="polite">01/06</span>
+        <button class="deck-btn deck-next" aria-label="Next interest">↓</button>
       </div>
     </div>
-
-    <div class="interest-item" style="display:block; padding:1.6rem 2rem;">
-      <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:600; margin-bottom:0.6rem;" data-i18n="convo_title">Let's Have a Conversation</h3>
-      <p style="font-size:0.9rem; color:var(--ink-soft); font-weight:300; margin-bottom:1.2rem;" data-i18n="convo_text">I believe some of the best ideas happen in open, informal exchange. If any of the above resonates — or if you're working on something at the intersection of data, research, and product — I'd genuinely love to hear from you.</p>
-      <a href="contact.html" class="btn" style="opacity:1; animation:none; display:inline-block;" data-i18n="btn_connect">Let's Connect →</a>
-    </div>
-  </div>
+  </main>
 
   <footer>
-    <p data-i18n="footer_copy">© 2025 Michella Voughn Warren · Built with intention</p>
-    <div class="footer-links">
-      <a href="https://github.com/Michella-stack" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank">LinkedIn</a>
-      <a href="mailto:warrenmichella@gmail.com">Email</a>
+    <div class="wrap">
+      <span data-i18n="footer_copy">© 2026 · Built with intention</span>
+      <div class="footer-links">
+        <a href="https://github.com/Michella-stack" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:warrenmichella@gmail.com">Email</a>
+      </div>
     </div>
   </footer>
 
-  <!-- No celestial canvas on this page -->
+  <script>
+  /* Vertical Ferris wheel: cards ride a circular arc up and down, stay upright, and erode into sand as they leave. */
+  (function () {
+    const deck = document.querySelector('.deck');
+    const cards = [...deck.querySelectorAll('.card')];
+    const fe = cards.map((_, i) => document.querySelector('#sand' + i + ' feDisplacementMap'));
+    const dots = [...document.querySelectorAll('.dot')];
+    const count = document.querySelector('.deck-count');
+    const n = cards.length;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mod = (a, m) => ((a % m) + m) % m;
+    let cur = 0, target = 0, from = 0, t0 = 0, raf = null;
 
-<script src="translations.js"></script>
+    const geom = () => innerWidth <= 860 ? { R: 430, step: 13, fade: 1.75 } : { R: 500, step: 13.5, fade: 2.3 };
+
+    function draw(c) {
+      const { R, step, fade } = geom();
+      cards.forEach((card, i) => {
+        let o = mod(i - c, n); if (o > n / 2) o -= n;           // signed distance from the front, wraps round the wheel
+        const a = Math.abs(o), th = o * step * Math.PI / 180;
+        const x = R * (1 - Math.cos(th)), y = R * Math.sin(th);  // point on a circle whose front edge is the active card
+        const sc = 1 - Math.min(a, 3) * 0.04;
+        const grain = 0.6 + 1.6 * Math.pow(Math.min(a, 3), 1.7); // edge erosion grows with distance
+        card.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) scale(' + sc.toFixed(3) + ')';
+        card.style.opacity = Math.max(0, Math.min(1, fade - a)).toFixed(3);   // phones: only the nearest neighbours show
+        card.style.zIndex = 20 - Math.round(a * 3);
+        card.style.filter = 'url(#sand' + i + ') brightness(' + (1 - Math.min(a, 2.5) * 0.06).toFixed(3) + ')';
+        card.style.pointerEvents = a > 1.7 ? 'none' : 'auto';
+        if (fe[i]) fe[i].setAttribute('scale', grain.toFixed(1));
+      });
+    }
+    function ui() {
+      const act = mod(target, n);
+      cards.forEach((c, i) => { c.classList.toggle('active', i === act); c.setAttribute('aria-current', i === act ? 'true' : 'false'); });
+      dots.forEach((d, i) => { d.classList.toggle('on', i === act); d.setAttribute('aria-current', i === act ? 'true' : 'false'); });
+      count.textContent = String(act + 1).padStart(2, '0') + '/' + String(n).padStart(2, '0');
+    }
+    const ease = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    function step(now) {
+      const k = Math.min(1, (now - t0) / 900);
+      cur = from + (target - from) * ease(k);
+      draw(cur);
+      raf = k < 1 ? requestAnimationFrame(step) : null;
+    }
+    function setTarget(t) {
+      target = t; from = cur; t0 = performance.now(); ui();
+      if (reduce) { cur = target; draw(cur); return; }
+      if (!raf) raf = requestAnimationFrame(step);
+    }
+    function goTo(i) {                                           // take the short way round
+      let d = i - mod(target, n); if (d > n / 2) d -= n; if (d < -n / 2) d += n;
+      if (d) setTarget(target + d);
+    }
+
+    let sy = null, moved = false;
+    deck.addEventListener('pointerdown', e => { sy = e.clientY; moved = false; });
+    deck.addEventListener('pointerup', e => {
+      if (sy === null) return;
+      const dy = e.clientY - sy; sy = null;
+      if (Math.abs(dy) > 45) { moved = true; setTarget(target + (dy < 0 ? 1 : -1)); }
+    });
+    cards.forEach((c, i) => {
+      c.addEventListener('click', e => { if (!moved && i !== mod(target, n) && !e.target.closest('a')) goTo(i); });
+      c.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && i !== mod(target, n)) { e.preventDefault(); goTo(i); } });
+    });
+    dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+    document.querySelector('.deck-prev').addEventListener('click', () => setTarget(target - 1));
+    document.querySelector('.deck-next').addEventListener('click', () => setTarget(target + 1));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') setTarget(target + 1);
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') setTarget(target - 1);
+    });
+    addEventListener('resize', () => draw(cur));
+    ui(); draw(0);
+  })();
+  </script>
+  <script src="protect.js"></script>
+  <script src="pills.js"></script>
+  <script src="translations.js"></script>
 </body>
 </html>
