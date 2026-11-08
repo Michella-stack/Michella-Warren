@@ -1,112 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Michella Voughn Warren</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <title>Michella Voughn Warren — Product, Research & Data</title>
+  <meta name="description" content="Portfolio of Michella Voughn Warren: product, research, data and circular systems."/>
+  <meta name="robots" content="noimageindex"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
-
+<body class="page-home">
   <nav>
-    <div class="nav-name">
-      <svg class="nav-feather" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- Quill feather — translucent, elegant -->
-        <!-- Feather body: soft curved vane, left side -->
-        <path d="M11 26 C8 22, 3 18, 2 12 C1 7, 5 2, 11 1" fill="rgba(143,175,138,0.18)" stroke="none"/>
-        <!-- Feather body: right side vane -->
-        <path d="M11 26 C14 22, 19 18, 20 12 C21 7, 17 2, 11 1" fill="rgba(143,175,138,0.13)" stroke="none"/>
-        <!-- Vane ribs — left, faint -->
-        <line x1="11" y1="8"  x2="5"  y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="11" x2="4"  y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="14" x2="4"  y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="17" x2="5"  y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
-        <!-- Vane ribs — right, faint -->
-        <line x1="11" y1="8"  x2="17" y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="11" x2="18" y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="14" x2="18" y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="17" x2="17" y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
-        <!-- Central rachis (quill spine) — most visible element -->
-        <path d="M11 27 C11 24, 11 18, 11 1" stroke="rgba(122,158,118,0.72)" stroke-width="1.1" stroke-linecap="round"/>
-        <!-- Tip highlight -->
-        <circle cx="11" cy="1.5" r="0.8" fill="rgba(143,175,138,0.55)"/>
-      </svg>
-      <span class="nav-initials">
-        <span class="nav-m">M</span> <span class="nav-v">V</span> <span class="nav-w">W</span>
-      </span>
+    <div class="wrap">
+      <a href="index.html" class="logo" aria-label="Home">
+        <img class="logo-img" src="assets/logo.svg" alt="Michella Warren"/>
+      </a>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home" class="active">Home</a></li>
+        <li><a href="work.html" data-i18n="nav_work">Work</a></li>
+        <li><a href="research.html" data-i18n="nav_research">Research</a></li>
+        <li><a href="interests.html" data-i18n="nav_interests">Interests</a></li>
+        <li><a href="contact.html" data-i18n="nav_connect">Let's Connect</a></li>
+      </ul>
     </div>
-    <ul>
-      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-      <li><a href="work.html" data-i18n="nav_work">Work</a></li>
-      <li><a href="research.html" data-i18n="nav_research">Research</a></li>
-      <li><a href="interests.html" data-i18n="nav_interests">Interests</a></li>
-      <li><a href="contact.html" data-i18n="nav_connect">Let's Connect</a></li>
-    </ul>
   </nav>
 
-  <main class="hero">
-    <div class="hero-left">
-      <div class="hero-tag" data-i18n="hero_tag">Product · Data · Research</div>
-
-      <div class="hero-name-block">
-        <span class="name-michella">Michella</span>
-        <span class="name-voughn">Voughn</span>
-        <span class="name-warren">Warren</span>
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <span class="eyebrow" data-i18n="hero_tag">Product · Research · Data · Circular Systems</span>
+        <h1 class="hero-name"><img class="hero-signature" src="assets/signature-animated.svg" alt="Michella Warren" width="300"/></h1>
+        <p class="lead" data-i18n="hero_subtitle">I sit at the intersection of rigorous research and real-world products — translating data into decisions, and evidence into impact.</p>
+        <div class="hero-actions">
+          <a href="work.html" class="btn" data-i18n="btn_explore">Explore My Work →</a>
+          <a href="contact.html" class="btn ghost">Work with me</a>
+        </div>
       </div>
-
-      <p class="hero-subtitle" data-i18n="hero_subtitle">
-        I sit at the intersection of rigorous research and real-world products —
-        translating data into decisions, and evidence into impact.
-      </p>
-
-      <div class="hero-pills">
-        <span>Statistics & Data Analysis</span>
-        <span>Demography & Sociology</span>
-        <span>Product & Business Tech</span>
+      <div class="profile-wrap">
+        <span class="profile-blob" aria-hidden="true"></span>
+        <div class="profile-frame">
+          <img src="assets/profile.jpg" alt="Michella Warren" class="profile-photo"/>
+        </div>
       </div>
+    </section>
 
-      <a href="work.html" class="btn" data-i18n="btn_explore" data-i18n="btn_explore">Explore My Work →</a>
+    <div class="metrics">
+      <div class="metric"><div class="num">9,138</div><div class="lbl">healthcare workers analysed (MINDCOVID)</div></div>
+      <div class="metric"><div class="num">19</div><div class="lbl">Spanish hospitals in the study</div></div>
+      <div class="metric"><div class="num">2</div><div class="lbl">cities compared in my thesis</div></div>
+      <div class="metric"><div class="num">4 + 3</div><div class="lbl">hackathons + personal projects</div></div>
     </div>
 
-    <div class="hero-right">
-      <div class="profile-frame">
-        <img src="https://avatars.githubusercontent.com/u/252771412?v=4" alt="Michella Voughn Warren" class="profile-photo"/>
+    <section class="block">
+      <div class="pillars">
+        <div class="pillar"><span class="n">01</span><h3 data-i18n="about_01_title">Research Foundations</h3>
+          <p>Research Masters in Demography &amp; Sociology, with a deep grounding in statistical methods and population-level thinking.</p></div>
+        <div class="pillar"><span class="n">02</span><h3 data-i18n="about_02_title">Data-Driven Practice</h3>
+          <p data-i18n="about_02_text">Academic focus in statistics and data analysis — bringing quantitative rigour to every product and business challenge.</p></div>
+        <div class="pillar"><span class="n">03</span><h3 data-i18n="about_03_title">Product &amp; Circular Systems</h3>
+          <p>Working in product and business tech, bridging analytical insight and strategic execution, with circular systems and zero waste as a through-line.</p></div>
       </div>
-    </div>
+    </section>
 
-    <div class="scroll-hint">scroll</div>
+    <section class="block skills-home">
+      <div class="section-head"><h2>Skills &amp; <em>Tech Stack</em></h2><span class="eyebrow">Tap a row to expand</span></div>
+      <div class="acc">
+        <details name="skills" open>
+          <summary><span class="g-name">Data & Analysis</span><span class="g-preview">Python, R, STATA, SQL…</span><span class="g-count">11</span><span class="g-icon" aria-hidden="true"></span></summary>
+          <div class="panel"><div class="chips"><span class="chip ">Python</span><span class="chip ">R</span><span class="chip ">STATA</span><span class="chip ">SQL</span><span class="chip ">Pandas</span><span class="chip ">Jupyter</span><span class="chip ">Statistical Analysis</span><span class="chip ">Regression Analysis</span><span class="chip ">Data Visualisation</span><span class="chip ">Power BI</span><span class="chip ">Graph & Data Modelling</span></div></div>
+        </details>
+        <details name="skills">
+          <summary><span class="g-name">Product & Business</span><span class="g-preview">Product Strategy, Roadmapping, Agile / Scrum, Stakeholder Management…</span><span class="g-count">09</span><span class="g-icon" aria-hidden="true"></span></summary>
+          <div class="panel"><div class="chips"><span class="chip ">Product Strategy</span><span class="chip ">Roadmapping</span><span class="chip ">Agile / Scrum</span><span class="chip ">Stakeholder Management</span><span class="chip ">User Research</span><span class="chip ">Jira</span><span class="chip ">Confluence</span><span class="chip ">Asana</span><span class="chip ">Figma</span></div></div>
+        </details>
+        <details name="skills">
+          <summary><span class="g-name">Research Methods</span><span class="g-preview">Demographic Analysis, Ethnographic Methods, Interview Design & Analysis, Survey Design…</span><span class="g-count">07</span><span class="g-icon" aria-hidden="true"></span></summary>
+          <div class="panel"><div class="chips"><span class="chip ">Demographic Analysis</span><span class="chip ">Ethnographic Methods</span><span class="chip ">Interview Design & Analysis</span><span class="chip ">Survey Design</span><span class="chip ">Mixed Methods</span><span class="chip ">Systematic Literature Review</span><span class="chip ">Academic Writing</span></div></div>
+        </details>
+        <details name="skills">
+          <summary><span class="g-name">Circular Solutions & Zero Waste Management</span><span class="g-preview">Circular Economy, Zero Waste Management, Urban Sustainability, Energy Systems Analysis…</span><span class="g-count">05</span><span class="g-icon" aria-hidden="true"></span></summary>
+          <div class="panel"><div class="chips"><span class="chip ">Circular Economy</span><span class="chip ">Zero Waste Management</span><span class="chip ">Urban Sustainability</span><span class="chip ">Energy Systems Analysis</span><span class="chip ">Spatial Analysis (QGIS)</span></div></div>
+        </details>
+        <details name="skills">
+          <summary><span class="g-name">Dev & Tools</span><span class="g-preview">TypeScript, Rust, Java, C++…</span><span class="g-count">09</span><span class="g-icon" aria-hidden="true"></span></summary>
+          <div class="panel"><div class="chips"><span class="chip ">TypeScript</span><span class="chip ">Rust</span><span class="chip ">Java</span><span class="chip ">C++</span><span class="chip ">GitHub</span><span class="chip ">Vercel</span><span class="chip ">Google Cloud</span><span class="chip ">Notion</span><span class="chip ">Microsoft 365</span></div></div>
+        </details>
+      </div>
+    </section>
   </main>
 
-  <section class="about-strip">
-    <div class="about-grid">
-      <div class="about-block">
-        <span class="about-num">01</span>
-        <h3 data-i18n="about_01_title">Research Foundations</h3>
-        <p>Research Masters in Demography & Sociology, with a deep grounding in statistical methods and population-level thinking.</p>
-      </div>
-      <div class="about-block">
-        <span class="about-num">02</span>
-        <h3 data-i18n="about_02_title">Data-Driven Practice</h3>
-        <p data-i18n="about_02_text">Academic focus in statistics and data analysis — bringing quantitative rigour to every product and business challenge.</p>
-      </div>
-      <div class="about-block">
-        <span class="about-num">03</span>
-        <h3>Product & Tech</h3>
-        <p data-i18n="about_03_text">Working in the product and business tech realm, bridging the gap between analytical insight and strategic execution.</p>
-      </div>
-    </div>
-  </section>
-
   <footer>
-    <p data-i18n="footer_copy">© 2025 Michella Voughn Warren · Built with intention</p>
-    <div class="footer-links">
-      <a href="https://github.com/Michella-stack" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank">LinkedIn</a>
-      <a href="mailto:warrenmichella@gmail.com">Email</a>
+    <div class="wrap">
+      <span data-i18n="footer_copy">© 2026 · Built with intention</span>
+      <div class="footer-links">
+        <a href="https://github.com/Michella-stack" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:warrenmichella@gmail.com">Email</a>
+      </div>
     </div>
   </footer>
-  <!-- Celestial dot cluster — physics-based, unique per tab -->
   <canvas id="celestial-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.55;"></canvas>
   <script>
   (function() {
@@ -260,7 +253,91 @@
     requestAnimationFrame(tick);
   })();
   </script>
+  <script src="protect.js"></script>
+  <script>
+  /* Profile photo: sits at the right, level with the signature, and as you scroll it breaks into particles. */
+  (function () {
+    const hero = document.querySelector('.hero'), wrap = document.querySelector('.profile-wrap'),
+          frame = wrap && wrap.querySelector('.profile-frame'), blob = wrap && wrap.querySelector('.profile-blob'),
+          img = wrap && wrap.querySelector('img'), sig = document.querySelector('.hero-signature'),
+          strip = document.querySelector('.metrics') || hero;
+    if (!hero || !wrap || !sig) return;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobile = () => innerWidth <= 860;
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), smooth = v => v * v * (3 - 2 * v);
+    let D = 240, PAD = 150, dust = null, ctx = null, dots = [], ready = false;
 
-<script src="translations.js"></script>
+    function place() {
+      if (mobile()) {
+        wrap.classList.remove('placed', 'fixed'); wrap.style.cssText = ''; frame.style.cssText = ''; blob.style.cssText = '';
+        if (dust) dust.style.display = 'none'; return;
+      }
+      D = wrap.offsetWidth;
+      const m = strip.getBoundingClientRect(), s = sig.getBoundingClientRect(), h = hero.getBoundingClientRect();
+      const x = m.right - D, y = s.top + s.height / 2 - D / 2;          // viewport coords now
+      if (reduce) {                                                       // static, scrolls with the page
+        wrap.style.position = 'absolute'; wrap.style.left = (x - h.left) + 'px'; wrap.style.top = (y - h.top) + 'px';
+      } else {                                                            // pinned at its scroll-0 spot while it dissolves
+        wrap.classList.add('fixed'); wrap.style.left = x + 'px'; wrap.style.top = (y + scrollY) + 'px';
+        if (dust) { dust.style.left = (x - PAD) + 'px'; dust.style.top = (y + scrollY - PAD) + 'px'; }
+      }
+      wrap.classList.add('placed'); update();
+    }
+
+    function buildDust() {
+      if (reduce || !img) return;
+      try {
+        const N = 46, off = document.createElement('canvas'); off.width = off.height = N;
+        const o = off.getContext('2d'); o.drawImage(img, 0, 0, N, N);
+        const px = o.getImageData(0, 0, N, N).data;
+        dust = document.createElement('canvas'); dust.className = 'profile-dust'; dust.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(dust); ctx = dust.getContext('2d');
+        dust.width = dust.height = D + PAD * 2;
+        const cell = D / N, c0 = N / 2;
+        for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+          const dx = i + .5 - c0, dy = j + .5 - c0, r = Math.hypot(dx, dy);
+          if (r > c0) continue;
+          const k = (j * N + i) * 4, ang = Math.atan2(dy, dx) + (Math.random() - .5) * 1.3;
+          dots.push({ x: PAD + (i + .5) * cell, y: PAD + (j + .5) * cell, rgb: [px[k], px[k + 1], px[k + 2]],
+            size: cell * (.55 + Math.random() * .3), ang, dist: 50 + Math.random() * 190, rise: 20 + Math.random() * 70,
+            delay: clamp(Math.random() * .55 + (r / c0) * .2, 0, .8) });
+        }
+        ready = true; place();
+      } catch (e) { ready = false; }                                       // e.g. opened from file:// -> just fade
+    }
+
+    function update() {
+      if (mobile() || reduce) return;
+      const p = clamp(scrollY / Math.max(320, innerHeight * .6), 0, 1);
+      const cross = smooth(clamp(p * 5, 0, 1));                           // photo -> dots cross-fade
+      const op = ready ? 1 - cross : 1 - smooth(p);
+      frame.style.opacity = op; blob.style.opacity = op;
+      frame.style.transform = 'scale(' + (1 - .3 * cross) + ')';
+      if (!dust) return;
+      dust.style.display = p > 0 && p < 1 ? 'block' : 'none';
+      if (dust.style.display === 'none') return;
+      ctx.clearRect(0, 0, dust.width, dust.height);
+      const cx = PAD + D / 2, cy = PAD + D / 2, shrink = 1 - .45 * smooth(p);
+      for (const d of dots) {
+        const t = clamp((p - d.delay * .55) / .45, 0, 1), e = t * t;
+        const bx = cx + (d.x - cx) * shrink, by = cy + (d.y - cy) * shrink;
+        const x = bx + Math.cos(d.ang) * d.dist * e, y = by + Math.sin(d.ang) * d.dist * e - d.rise * e;
+        const mix = e * .65, r = d.rgb[0] * (1 - mix) + 143 * mix, g = d.rgb[1] * (1 - mix) + 175 * mix, b = d.rgb[2] * (1 - mix) + 138 * mix;
+        ctx.fillStyle = 'rgba(' + (r | 0) + ',' + (g | 0) + ',' + (b | 0) + ',' + (cross * (1 - t)).toFixed(3) + ')';
+        ctx.beginPath(); ctx.arc(x, y, Math.max(.4, d.size * (1 - .7 * e)), 0, 6.2832); ctx.fill();
+      }
+    }
+
+    let raf = null;
+    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = null; update(); }); }, { passive: true });
+    addEventListener('resize', place); addEventListener('load', place); sig.addEventListener('load', place);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+    if ('ResizeObserver' in window) new ResizeObserver(place).observe(hero);
+    place();
+    if (img.complete) buildDust(); else img.addEventListener('load', buildDust);
+  })();
+  </script>
+  <script src="pills.js"></script>
+  <script src="translations.js"></script>
 </body>
 </html>

@@ -4,56 +4,64 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Let's Connect — Michella Voughn Warren</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <meta name="description" content="Contact and consulting enquiries."/>
+  <meta name="robots" content="noimageindex"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
   <style>
-    .contact-icon-links {
-      display: flex; gap: 1.6rem; align-items: center;
-      margin-top: 1.6rem; margin-bottom: 0;
-    }
-    .contact-icon-links a {
-      display: flex; align-items: center; gap: 0.45rem;
-      color: var(--ink-soft); font-size: 0.82rem; font-weight: 400;
-      letter-spacing: 0.03em; text-decoration: none; transition: color 0.2s;
-    }
-    .contact-icon-links a:hover { color: var(--terracotta); }
-    .contact-icon-links svg { width: 19px; height: 19px; flex-shrink: 0; }
 
-    /* Full-page layout — content centred in left 60% of screen */
-    body.page-connect {
-      position: relative;
-      overflow-x: hidden;
-    }
-    body.page-connect nav {
-      position: relative; z-index: 10;
-    }
-    /* Override page-hero — fully transparent, no box */
-    body.page-connect .page-hero {
-      padding: 7rem 4rem 2rem !important;
-      border-bottom: none !important;
-      border-radius: 0 !important;
-      background: transparent !important;
-      box-shadow: none !important;
-      max-width: 620px;
-      margin: 0 !important;
-      position: relative; z-index: 2;
-    }
-    body.page-connect .section-content {
-      padding: 2rem 4rem 5rem !important;
-      max-width: 620px !important;
-      margin: 0 !important;
-      position: relative; z-index: 2;
-      background: transparent !important;
-    }
-    body.page-connect .contact-wrap {
-      width: 100%;
-      margin: 0;
-      background: transparent !important;
-    }
-    body.page-connect footer {
-      position: relative; z-index: 2;
-    }
+    /* ── Connect: dark evening sky ── */
+    body.page-connect { background: #1E2438; color: #E8E0D5; }
+    body.page-connect nav { background: rgba(18,22,38,.82); border-bottom-color: rgba(255,255,255,.08); }
+    body.page-connect .logo { color: rgba(232,224,213,.9); }
+    body.page-connect nav ul a { color: rgba(232,224,213,.7); }
+    body.page-connect nav #lang-toggle { color: rgba(232,224,213,.85); }
+    body.page-connect nav ul a:hover, body.page-connect nav ul a.active { color: #A8D8B0; border-bottom-color: #A8D8B0; }
+    body.page-connect .eyebrow { color: rgba(168,216,176,.85); }
+    body.page-connect h1 { color: #E8E0D5; }
+    body.page-connect h1 em { color: #A8D8B0; }
+    body.page-connect .lead { color: rgba(232,224,213,.8); }
+    body.page-connect h2 { color: #E8E0D5; }
+    body.page-connect h2 em { color: #A8D8B0; }
+    body.page-connect footer { border-top-color: rgba(255,255,255,.08); }
+    body.page-connect footer .wrap { color: rgba(232,224,213,.6); }
+    body.page-connect footer a:hover { color: #A8D8B0; }
+    body.page-connect .page-hero, body.page-connect .tiles, body.page-connect .block, body.page-connect footer { position: relative; z-index: 2; }
+    body.page-connect .block { padding: 20px 0 0; }
+    body.page-connect .block .section-head { margin-bottom: 24px; }
 
+    /* A light tint of the card's own colour sits on top of a solid layer in the full colour.
+       The outline (drawn by pills.js) is a darker shade of that same colour. */
+    .tile, .deck .card {
+      --c: #888;
+      --face: #f6f1e8;
+      --face: color-mix(in srgb, var(--c) 13%, #fffdf8);
+      --edge: color-mix(in srgb, var(--c) 58%, #000);
+      position: relative; border-radius: 0; overflow: visible;
+      background: var(--face); color: #0B0B0B;
+      box-shadow: 9px 9px 0 0 var(--c);
+    }
+    .tile .clip, .deck .card .clip { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .tile .big, .deck .card .big { position: absolute; right: 12px; bottom: -14px; font-family: var(--font-display); line-height: 1; color: var(--c); opacity: .2; user-select: none; }
+
+    .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px 24px; padding: 4px 10px 32px 0; }
+    .tile { display: flex; flex-direction: column; gap: 3px; padding: 15px 18px 14px; min-height: 96px; text-decoration: none; transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s cubic-bezier(.2,.7,.2,1); }
+    .tile .big { font-size: 4.2rem; right: 10px; bottom: -12px; }
+    .tile h3 { font-family: var(--font-sans); font-weight: 500; font-size: 1rem; line-height: 1.25; position: relative; }
+    .tile p { margin: 0; font-size: 12px; line-height: 1.6; color: #0B0B0B; position: relative; }
+    .tile .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; color: var(--edge); position: relative; }
+    .tile .ico svg { display: block; }
+    .tile .arrow { font-size: 15px; transition: transform .3s; }
+    a.tile:hover { transform: translate(-3px, -3px); box-shadow: 12px 12px 0 0 var(--c); }
+    a.tile:hover .arrow { transform: translate(3px, -3px); }
+    a.tile:focus-visible { outline: 2px solid var(--edge); outline-offset: 5px; }
+    .tile.span3 { grid-column: span 3; min-height: 0; }
+    .tile.span3 p { max-width: 78%; }
+    @media (max-width: 860px) { .tiles { grid-template-columns: 1fr; padding-right: 10px; } .tile.span3 { grid-column: auto; } .tile.span3 p { max-width: none; } }
+
+
+    /* ── Aurora canvas: ORIGINAL CODE, unchanged ── */
     /* Aurora canvas — full background */
     #aurora-canvas {
       position: fixed;
@@ -62,112 +70,88 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Dark evening sky background for connect page */
-    body.page-connect {
-      background: #1E2438 !important;
-      color: #E8E0D5 !important;
-    }
-    body.page-connect nav {
-      background: rgba(18,22,38,0.82) !important;
-      border-bottom-color: rgba(255,255,255,0.08) !important;
-    }
-    body.page-connect nav ul li a { color: rgba(232,224,213,0.7); }
-    body.page-connect nav ul li a:hover { color: #A8D8B0; }
-    body.page-connect .nav-initials { color: rgba(232,224,213,0.9); }
-    body.page-connect .page-hero h1 { color: #E8E0D5; }
-    body.page-connect .page-hero h1 em { color: #A8D8B0 !important; }
-    body.page-connect .page-hero p { color: rgba(232,224,213,0.72); }
-    body.page-connect .contact-icon-links a { color: rgba(232,224,213,0.65); }
-    body.page-connect .contact-icon-links a:hover { color: #A8D8B0; }
-    body.page-connect .open-invite {
-      background: rgba(255,255,255,0.08) !important;
-      border-left: 3px solid rgba(168,216,176,0.50) !important;
-      backdrop-filter: blur(6px);
-      width: 100%;
-      box-sizing: border-box;
-    }
-    body.page-connect .open-invite h3 { color: #E8E0D5; }
-    body.page-connect .open-invite p { color: rgba(232,224,213,0.70); }
-    body.page-connect footer {
-      background: rgba(20,24,40,0.6);
-      border-top-color: rgba(255,255,255,0.08);
-      color: rgba(232,224,213,0.5);
-    }
-    body.page-connect footer a:hover { color: #A8D8B0; }
   </style>
 </head>
 <body class="page-connect">
-
   <nav>
-    <div class="nav-name">
-      <svg class="nav-feather" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- Quill feather — translucent, elegant -->
-        <path d="M11 26 C8 22, 3 18, 2 12 C1 7, 5 2, 11 1" fill="rgba(143,175,138,0.18)" stroke="none"/>
-        <path d="M11 26 C14 22, 19 18, 20 12 C21 7, 17 2, 11 1" fill="rgba(143,175,138,0.13)" stroke="none"/>
-        <line x1="11" y1="8"  x2="5"  y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="11" x2="4"  y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="14" x2="4"  y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="17" x2="5"  y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="8"  x2="17" y2="11" stroke="rgba(122,158,118,0.28)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="11" x2="18" y2="14" stroke="rgba(122,158,118,0.24)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="14" x2="18" y2="17" stroke="rgba(122,158,118,0.20)" stroke-width="0.6" stroke-linecap="round"/>
-        <line x1="11" y1="17" x2="17" y2="19" stroke="rgba(122,158,118,0.16)" stroke-width="0.6" stroke-linecap="round"/>
-        <path d="M11 27 C11 24, 11 18, 11 1" stroke="rgba(122,158,118,0.72)" stroke-width="1.1" stroke-linecap="round"/>
-        <circle cx="11" cy="1.5" r="0.8" fill="rgba(143,175,138,0.55)"/>
-      </svg>
-      <span class="nav-initials">
-        <span class="nav-m">M</span> <span class="nav-v">V</span> <span class="nav-w">W</span>
-      </span>
+    <div class="wrap">
+      <a href="index.html" class="logo" aria-label="Home">
+        <img class="logo-img" src="assets/logo-sage.svg" alt="Michella Warren"/>
+      </a>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="work.html" data-i18n="nav_work">Work</a></li>
+        <li><a href="research.html" data-i18n="nav_research">Research</a></li>
+        <li><a href="interests.html" data-i18n="nav_interests">Interests</a></li>
+        <li><a href="contact.html" data-i18n="nav_connect" class="active">Let's Connect</a></li>
+      </ul>
     </div>
-    <ul>
-      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-      <li><a href="work.html" data-i18n="nav_work">Work</a></li>
-      <li><a href="research.html" data-i18n="nav_research">Research</a></li>
-      <li><a href="interests.html" data-i18n="nav_interests">Interests</a></li>
-      <li><a href="contact.html" data-i18n="nav_connect">Let's Connect</a></li>
-    </ul>
   </nav>
 
-  <div class="page-hero">
-    <h1><span data-i18n="connect_h1a">Let's </span><em data-i18n="connect_h1b">Connect</em></h1>
-    <p data-i18n="connect_p1">
-      Whether it's a collaboration, a question, or just a good coffee chat — I'm always open ☕<br/><br/>
-      <span data-i18n="connect_p2">I'm currently in between Amsterdam &amp; Barcelona, open to conversations about product roles, research collaborations, data projects, and anything at the crossover of tech and social science. Find me here.</span>, open to conversations about product roles, research collaborations, data projects, and anything at the crossover of tech and social science. Find me here.
-    </p>
-    <div class="contact-icon-links">
-      <a href="https://github.com/Michella-stack" target="_blank">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-        GitHub
+  <main class="wrap">
+    <header class="page-hero">
+      <span class="eyebrow">Open to roles &amp; consulting</span>
+      <h1><span data-i18n="connect_h1a">Let's </span><em data-i18n="connect_h1b">Connect</em></h1>
+      <p class="lead" data-i18n="connect_p1">Whether it's a collaboration, a question, or just a good coffee chat — I'm always open ☕</p>
+      <p class="lead" style="margin-top:.8rem" data-i18n="connect_p2">I'm currently in between Amsterdam &amp; Barcelona, open to conversations about product roles, research collaborations, data projects, and anything at the crossover of tech and social science. Find me here.</p>
+    </header>
+    <section class="tiles">
+      <a class="tile link" href="mailto:warrenmichella@gmail.com" style="--c:#3FA58C">
+        <span class="clip"><span class="big" aria-hidden="true">@</span></span>
+        <div class="top"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></span><span class="arrow" aria-hidden="true">↗</span></div>
+        <h3>Email</h3>
+        <p>warrenmichella@gmail.com</p>
       </a>
-      <a href="mailto:warrenmichella@gmail.com">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-        Email
+      <a class="tile link" href="https://www.linkedin.com/in/michellavwarren/" target="_blank" rel="noopener" style="--c:#5B86D6">
+        <span class="clip"><span class="big" aria-hidden="true">in</span></span>
+        <div class="top"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></span><span class="arrow" aria-hidden="true">↗</span></div>
+        <h3>LinkedIn</h3>
+        <p>michellavwarren</p>
       </a>
-      <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
+      <a class="tile link" href="https://github.com/Michella-stack" target="_blank" rel="noopener" style="--c:#8B7BE0">
+        <span class="clip"><span class="big" aria-hidden="true">{}</span></span>
+        <div class="top"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></span><span class="arrow" aria-hidden="true">↗</span></div>
+        <h3>GitHub</h3>
+        <p>Michella-stack</p>
       </a>
-    </div>
-  </div>
-
-  <div class="section-content">
-    <div class="contact-wrap">
-      <div class="open-invite">
+      <article class="tile span3" style="--c:#4F8FA8">
+        <span class="clip"><span class="big" aria-hidden="true">01</span></span>
         <h3 data-i18n="open_title">Open to Discussion</h3>
         <p data-i18n="open_text">I genuinely enjoy conversations about data ethics, demographic research, product strategy, and the bigger questions underneath all of it. If something I've written or built sparked a thought — reach out. You don't need a formal reason. Even just a coffee chat works perfectly.</p>
+      </article>
+    </section>
+    <section class="block">
+      <div class="section-head"><h2>Consulting, <em>what I can help with</em></h2></div>
+      <div class="tiles">
+      <article class="tile " style="--c:#4FB0A8">
+        <span class="clip"><span class="big" aria-hidden="true">02</span></span>
+        <h3>Data analysis & research</h3>
+        <p>Survey design, statistical modelling, demographic and epidemiological analysis.</p>
+      </article>
+      <article class="tile " style="--c:#A67BD1">
+        <span class="clip"><span class="big" aria-hidden="true">03</span></span>
+        <h3>Product & strategy</h3>
+        <p>Discovery, roadmapping and turning analytical insight into product decisions.</p>
+      </article>
+      <article class="tile " style="--c:#5B9BD6">
+        <span class="clip"><span class="big" aria-hidden="true">04</span></span>
+        <h3>Circular systems & energy data</h3>
+        <p>Circular-economy and zero-waste analysis, energy-system work and clear, interactive data stories.</p>
+      </article>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <footer>
-    <p>© 2025 Michella Voughn Warren · Built with intention</p>
-    <div class="footer-links">
-      <a href="https://github.com/Michella-stack" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank">LinkedIn</a>
-      <a href="mailto:warrenmichella@gmail.com">Email</a>
+    <div class="wrap">
+      <span data-i18n="footer_copy">© 2026 · Built with intention</span>
+      <div class="footer-links">
+        <a href="https://github.com/Michella-stack" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/michellavwarren/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:warrenmichella@gmail.com">Email</a>
+      </div>
     </div>
   </footer>
-
   <canvas id="aurora-canvas"></canvas>
 
   <script>
@@ -392,7 +376,8 @@
     requestAnimationFrame(animate);
   })();
   </script>
-
-<script src="translations.js"></script>
+  <script src="protect.js"></script>
+  <script src="pills.js"></script>
+  <script src="translations.js"></script>
 </body>
 </html>

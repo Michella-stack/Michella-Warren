@@ -8,7 +8,7 @@ const TRANSLATIONS = {
     nav_connect: "Let's Connect",
 
     // Home
-    hero_tag: "Product · Data · Research",
+    hero_tag: "Product · Research · Data · Circular Systems",
     hero_subtitle: "I sit at the intersection of rigorous research and real-world products — translating data into decisions, and evidence into impact.",
     pill_stats: "Statistics & Data Analysis",
     pill_demo: "Demography & Sociology",
@@ -18,11 +18,11 @@ const TRANSLATIONS = {
     about_01_text: "Research Masters in Demography & Sociology, with a deep grounding in statistical methods and population-level thinking.",
     about_02_title: "Data-Driven Practice",
     about_02_text: "Academic focus in statistics and data analysis — bringing quantitative rigour to every product and business challenge.",
-    about_03_title: "Product & Tech",
+    about_03_title: "Product & Circular Systems",
     about_03_text: "Working in the product and business tech realm, bridging the gap between analytical insight and strategic execution.",
 
     // Work
-    work_tag: "Projects & Skills",
+    work_tag: "Projects",
     work_h1a: "What I ",
     work_h1b: "Build",
     work_subtitle: "From data pipelines to product strategy — projects that sit at the edge of analysis and action.",
@@ -87,7 +87,7 @@ const TRANSLATIONS = {
     open_text: "I genuinely enjoy conversations about data ethics, demographic research, product strategy, and the bigger questions underneath all of it. If something I've written or built sparked a thought — reach out. You don't need a formal reason. Even just a coffee chat works perfectly.",
 
     // Footer
-    footer_copy: "© 2025 Michella Voughn Warren · Built with intention",
+    footer_copy: "© 2026 · Built with intention",
   },
 
   es: {
@@ -96,7 +96,7 @@ const TRANSLATIONS = {
     nav_research: "Investigación",
     nav_interests: "Intereses",
     nav_connect: "Conectemos",
-    hero_tag: "Producto · Datos · Investigación",
+    hero_tag: "Producto · Investigación · Datos · Sistemas Circulares",
     hero_subtitle: "Estoy en la intersección entre la investigación rigurosa y los productos del mundo real — traduciendo datos en decisiones y evidencia en impacto.",
     pill_stats: "Estadística y Análisis de Datos",
     pill_demo: "Demografía y Sociología",
@@ -106,9 +106,9 @@ const TRANSLATIONS = {
     about_01_text: "Máster de Investigación en Demografía y Sociología, con sólida formación en métodos estadísticos y pensamiento a nivel poblacional.",
     about_02_title: "Práctica Basada en Datos",
     about_02_text: "Especialización académica en estadística y análisis de datos — aportando rigor cuantitativo a cada reto empresarial y de producto.",
-    about_03_title: "Producto y Tecnología",
+    about_03_title: "Producto y Sistemas Circulares",
     about_03_text: "Trabajo en el ámbito del producto y la tecnología empresarial, conectando el análisis con la ejecución estratégica.",
-    work_tag: "Proyectos y Habilidades",
+    work_tag: "Proyectos",
     work_h1a: "Lo que ",
     work_h1b: "Construyo",
     work_subtitle: "Desde pipelines de datos hasta estrategia de producto — proyectos en el límite entre el análisis y la acción.",
@@ -165,7 +165,7 @@ const TRANSLATIONS = {
     connect_p2: "Actualmente me muevo entre Ámsterdam y Barcelona, abierta a conversaciones sobre roles de producto, colaboraciones de investigación, proyectos de datos y todo lo que cruce tecnología y ciencias sociales.",
     open_title: "Abierta a Conversar",
     open_text: "Disfruto genuinamente de las conversaciones sobre ética de datos, investigación demográfica, estrategia de producto y las grandes preguntas que hay detrás de todo ello. No necesitas una razón formal. Un café virtual funciona perfectamente.",
-    footer_copy: "© 2025 Michella Voughn Warren · Construido con intención",
+    footer_copy: "© 2026 · Construido con intención",
   },
 
   fr: {
@@ -174,7 +174,7 @@ const TRANSLATIONS = {
     nav_research: "Recherche",
     nav_interests: "Intérêts",
     nav_connect: "Me contacter",
-    hero_tag: "Produit · Données · Recherche",
+    hero_tag: "Produit · Recherche · Données · Systèmes Circulaires",
     hero_subtitle: "Je me situe à l'intersection de la recherche rigoureuse et des produits du monde réel — traduisant les données en décisions et les preuves en impact.",
     pill_stats: "Statistiques & Analyse de données",
     pill_demo: "Démographie & Sociologie",
@@ -184,9 +184,9 @@ const TRANSLATIONS = {
     about_01_text: "Master de Recherche en Démographie et Sociologie, avec une solide formation en méthodes statistiques et en analyse des populations.",
     about_02_title: "Pratique Basée sur les Données",
     about_02_text: "Spécialisation académique en statistiques et analyse de données — apportant une rigueur quantitative à chaque défi produit et commercial.",
-    about_03_title: "Produit & Technologie",
+    about_03_title: "Produit & Systèmes circulaires",
     about_03_text: "Travail dans le domaine du produit et de la technologie d'entreprise, reliant l'analyse à l'exécution stratégique.",
-    work_tag: "Projets & Compétences",
+    work_tag: "Projets",
     work_h1a: "Ce que je ",
     work_h1b: "Construis",
     work_subtitle: "Des pipelines de données à la stratégie produit — des projets à la frontière entre l'analyse et l'action.",
@@ -243,7 +243,7 @@ const TRANSLATIONS = {
     connect_p2: "Je me déplace actuellement entre Amsterdam et Barcelone, ouverte aux conversations sur les rôles produit, les collaborations de recherche, les projets de données et tout ce qui croise technologie et sciences sociales.",
     open_title: "Ouverte à la Discussion",
     open_text: "J'apprécie sincèrement les conversations sur l'éthique des données, la recherche démographique, la stratégie produit et les grandes questions qui sous-tendent tout cela. Vous n'avez pas besoin d'une raison formelle. Un simple café virtuel suffit.",
-    footer_copy: "© 2025 Michella Voughn Warren · Construit avec intention",
+    footer_copy: "© 2026 · Construit avec intention",
   },
 
   ar: {
@@ -253,7 +253,7 @@ const TRANSLATIONS = {
     nav_research: "البحث",
     nav_interests: "الاهتمامات",
     nav_connect: "تواصلي معي",
-    hero_tag: "المنتج · البيانات · البحث",
+    hero_tag: "المنتج · البحث · البيانات · الأنظمة الدائرية",
     hero_subtitle: "أعمل عند تقاطع البحث الدقيق والمنتجات الواقعية — أُحوِّل البيانات إلى قرارات، والأدلة إلى تأثير.",
     pill_stats: "الإحصاء وتحليل البيانات",
     pill_demo: "الديموغرافيا وعلم الاجتماع",
@@ -263,9 +263,9 @@ const TRANSLATIONS = {
     about_01_text: "ماجستير بحثي في الديموغرافيا وعلم الاجتماع، مع تأسيس عميق في الأساليب الإحصائية والتفكير على مستوى السكان.",
     about_02_title: "الممارسة القائمة على البيانات",
     about_02_text: "تخصص أكاديمي في الإحصاء وتحليل البيانات — إحضار الصرامة الكمية لكل تحدٍّ في المنتج والأعمال.",
-    about_03_title: "المنتج والتقنية",
+    about_03_title: "المنتج والأنظمة الدائرية",
     about_03_text: "العمل في مجال المنتج وتقنيات الأعمال، وسد الفجوة بين التحليل الإحصائي والتنفيذ الاستراتيجي.",
-    work_tag: "المشاريع والمهارات",
+    work_tag: "المشاريع",
     work_h1a: "ما ",
     work_h1b: "أبنيه",
     work_subtitle: "من خطوط أنابيب البيانات إلى استراتيجية المنتج — مشاريع على حافة التحليل والعمل.",
@@ -322,7 +322,7 @@ const TRANSLATIONS = {
     connect_p2: "أتنقل حالياً بين أمستردام وبرشلونة، ومنفتحة على المحادثات حول أدوار المنتج والتعاون البحثي ومشاريع البيانات وكل ما يتقاطع مع التقنية والعلوم الاجتماعية.",
     open_title: "منفتحة على النقاش",
     open_text: "أستمتع حقاً بالمحادثات حول أخلاقيات البيانات والبحث الديموغرافي واستراتيجية المنتج والأسئلة الكبرى الكامنة تحت كل ذلك. لا تحتاج إلى سبب رسمي. حتى مجرد قهوة افتراضية يعمل بشكل مثالي.",
-    footer_copy: "© 2025 ميشيلا فوين وارن · مبني بنية وإتقان",
+    footer_copy: "© 2026 · مبني بنية وإتقان",
   },
 
 
@@ -332,7 +332,7 @@ const TRANSLATIONS = {
     nav_research: "Onderzoek",
     nav_interests: "Interesses",
     nav_connect: "Contact",
-    hero_tag: "Product · Data · Onderzoek",
+    hero_tag: "Product · Onderzoek · Data · Circulaire Systemen",
     hero_subtitle: "Ik beweeg me op het snijvlak van grondig onderzoek en real-world producten — data vertalen naar beslissingen, en bewijs naar impact.",
     pill_stats: "Statistiek & Data-analyse",
     pill_demo: "Demografie & Sociologie",
@@ -342,9 +342,9 @@ const TRANSLATIONS = {
     about_01_text: "Research Master in Demografie & Sociologie, met een stevige basis in statistische methoden en populatiedenken.",
     about_02_title: "Datagedreven Praktijk",
     about_02_text: "Academische specialisatie in statistiek en data-analyse — kwantitatieve strengheid brengen naar elk product- en bedrijfsvraagstuk.",
-    about_03_title: "Product & Tech",
+    about_03_title: "Product & Circulaire systemen",
     about_03_text: "Werkzaam in het domein van product en bedrijfstechnologie, de brug slaand tussen analytisch inzicht en strategische uitvoering.",
-    work_tag: "Projecten & Vaardigheden",
+    work_tag: "Projecten",
     work_h1a: "Wat ik ",
     work_h1b: "Bouw",
     work_subtitle: "Van datapijplijnen tot productstrategie — projecten op het snijvlak van analyse en actie.",
@@ -401,7 +401,7 @@ const TRANSLATIONS = {
     connect_p2: "Ik beweeg me momenteel tussen Amsterdam en Barcelona, open voor gesprekken over productrollen, onderzoekssamenwerking, dataprojecten en alles wat technologie en sociale wetenschappen kruist.",
     open_title: "Open voor Gesprek",
     open_text: "Ik geniet oprecht van gesprekken over data-ethiek, demografisch onderzoek, productstrategie en de grotere vragen daaronder. Als iets wat ik heb geschreven of gebouwd een gedachte heeft gewekt — neem dan contact op. Je hebt geen formele reden nodig. Zelfs een virtuele koffie werkt prima.",
-    footer_copy: "© 2025 Michella Voughn Warren · Gebouwd met intentie",
+    footer_copy: "© 2026 · Gebouwd met intentie",
   },
 
   // Navajo placeholder — to be added by a fluent speaker
@@ -473,7 +473,7 @@ function buildSwitcher() {
       ).join('')}
     </div>
   `;
-  document.body.appendChild(switcher);
+  (document.querySelector('nav .wrap') || document.body).appendChild(switcher);
 
   document.getElementById('lang-toggle').addEventListener('click', e => {
     e.stopPropagation();
