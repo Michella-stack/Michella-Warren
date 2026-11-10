@@ -26,6 +26,7 @@
     </div>
   </nav>
 
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
   <main class="wrap">
     <section class="hero">
       <div>
@@ -46,10 +47,10 @@
     </section>
 
     <div class="metrics">
-      <div class="metric"><div class="num">9,138</div><div class="lbl">healthcare workers analysed (MINDCOVID)</div></div>
-      <div class="metric"><div class="num">19</div><div class="lbl">Spanish hospitals in the study</div></div>
-      <div class="metric"><div class="num">2</div><div class="lbl">cities compared in my thesis</div></div>
-      <div class="metric"><div class="num">4 + 3</div><div class="lbl">hackathons + personal projects</div></div>
+      <div class="metric"><svg class="num hand" role="img" aria-label="4" viewBox="0 0 60 56"><text x="2" y="46">4</text><text class="t2" x="3.5" y="47.5">4</text></svg><div class="lbl">hackathon builds in 2026</div></div>
+      <div class="metric"><svg class="num hand" role="img" aria-label="2" viewBox="0 0 60 56"><text x="2" y="46">2</text><text class="t2" x="3.5" y="47.5">2</text></svg><div class="lbl">personal projects, incl. a native iOS health app</div></div>
+      <div class="metric"><svg class="num hand" role="img" aria-label="9,138" viewBox="0 0 150 56"><text x="2" y="46">9,138</text><text class="t2" x="3.5" y="47.5">9,138</text></svg><div class="lbl">healthcare workers analysed in my master's thesis (MINDCOVID, Spain)</div></div>
+      <div class="metric"><svg class="num hand" role="img" aria-label="2" viewBox="0 0 60 56"><text x="2" y="46">2</text><text class="t2" x="3.5" y="47.5">2</text></svg><div class="lbl">Norwegian cities compared: Tromsø &amp; Oslo</div></div>
     </div>
 
     <section class="block">
@@ -276,7 +277,7 @@
       const rtl = document.documentElement.dir === 'rtl';
       const m = strip.getBoundingClientRect(), s = sig.getBoundingClientRect(), h = hero.getBoundingClientRect();
       const x = rtl ? m.left : m.right - D, y = s.top + s.height / 2 - D / 2;
-      fx = x; fy = y + scrollY;
+      fx = x; fy = y + sy();
       if (reduce) { wrap.style.position = 'absolute'; wrap.style.left = (x - h.left) + 'px'; wrap.style.top = (y - h.top) + 'px'; }
       else { wrap.classList.add('fixed'); wrap.style.left = x + 'px'; wrap.style.top = fy + 'px'; }
       if (dust) { dust.width = innerWidth; dust.height = innerHeight; }
@@ -329,9 +330,10 @@
       ink.src = 'assets/logo.svg';
     }
 
+    const sy = () => Math.max(0, window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
     function update() {
-      if (mobile() || reduce) return;
-      const p = clamp(scrollY / Math.max(320, innerHeight * .6), 0, 1);
+      if (mobile() || reduce) { if (dust) dust.style.display = 'none'; return; }
+      const p = clamp(sy() / Math.max(320, innerHeight * .6), 0, 1);
       const cross = smooth(clamp(p * 5, 0, 1));
       const op = photoReady ? 1 - cross : 1 - smooth(p);
       frame.style.opacity = op; blob.style.opacity = op;
@@ -340,7 +342,7 @@
       if (!dust) return;
       if (!(p > 0 && p < 1)) { dust.style.display = 'none'; return; }
       dust.style.display = 'block'; ctx.clearRect(0, 0, dust.width, dust.height);
-      const shrink = 1 - .45 * smooth(p), cx = fx + D / 2, cy = fy + D / 2 - scrollY * 0;   // photo is pinned
+      const shrink = 1 - .45 * smooth(p), cx = fx + D / 2, cy = fy + D / 2;   // photo is pinned
       const paint = (x0, y0, d, rgb, scale, cxm, cym, shr) => {
         const t = clamp((p - d.delay * .55) / .45, 0, 1), e = t * t;
         const bx = cxm + (x0 - cxm) * shr, by = cym + (y0 - cym) * shr;
@@ -357,9 +359,17 @@
     }
 
     let raf = null, rt = null;
-    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = null; update(); }); }, { passive: true });
+    let settle = null;
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(() => { raf = null; update(); });
+      clearTimeout(settle); settle = setTimeout(update, 140);   // mobile webviews can miss the last scroll event: re-check once scrolling stops
+    };
+    addEventListener('scroll', onScroll, { passive: true, capture: true });
+    addEventListener('touchmove', onScroll, { passive: true }); addEventListener('touchend', onScroll, { passive: true });
+    addEventListener('scrollend', update); addEventListener('pageshow', update);
+    document.addEventListener('visibilitychange', update);
     const again = () => { place(); clearTimeout(rt); rt = setTimeout(buildSig, 250); };
-    addEventListener('resize', again); addEventListener('load', again); sig.addEventListener('load', again);
+    addEventListener('resize', again); addEventListener('orientationchange', again); addEventListener('load', again); sig.addEventListener('load', again);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(again);
     if ('ResizeObserver' in window) new ResizeObserver(place).observe(hero);
     new MutationObserver(place).observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
