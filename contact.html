@@ -47,9 +47,11 @@
 
     .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px 24px; padding: 4px 10px 32px 0; }
     .tile { display: flex; flex-direction: column; gap: 3px; padding: 15px 18px 14px; min-height: 96px; text-decoration: none; transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s cubic-bezier(.2,.7,.2,1); }
-    .tile .num { position: absolute; right: 12px; bottom: 6px; width: 104px; height: 60px; overflow: visible; pointer-events: none; }
-    .tile .num text { font-family: var(--font-display); font-size: 70px; fill: none; stroke: var(--c); stroke-width: 1.4; stroke-linejoin: round; filter: url(#rough); opacity: .8; }
+    .tile .num { position: absolute; right: 14px; bottom: 8px; width: 84px; height: 50px; overflow: visible; pointer-events: none; }
+    .tile .num text { font-family: var(--font-display); font-size: 56px; fill: none; stroke: var(--c); stroke-width: 1.4; stroke-linejoin: round; filter: url(#rough); opacity: .8; }
     .tile .num .t2 { stroke-width: .9; opacity: .4; }
+    .tile .num.bubble path { fill: none; stroke: var(--c); stroke-width: 1.4; stroke-linejoin: round; filter: url(#rough); opacity: .8; }
+    .tile .num.bubble .t2 { stroke-width: .9; opacity: .4; }
     .tile h3 { font-family: var(--font-sans); font-weight: 500; font-size: 1rem; line-height: 1.25; position: relative; }
     .tile p { margin: 0; font-size: 12px; line-height: 1.6; color: #0B0B0B; position: relative; }
     .tile .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; color: var(--edge); position: relative; }
@@ -99,7 +101,7 @@
       <span class="eyebrow">Open to roles &amp; consulting</span>
       <h1><span data-i18n="connect_h1a">Let's </span><em data-i18n="connect_h1b">Connect</em></h1>
       <p class="lead" data-i18n="connect_p1">Whether it's a collaboration, a question, or just a good coffee chat — I'm always open ☕</p>
-      <p class="lead" style="margin-top:.8rem" data-i18n="connect_p2">I'm currently in between Amsterdam &amp; Barcelona, open to conversations about product roles, research collaborations, data projects, and anything at the crossover of tech and social science. Find me here.</p>
+      <p class="lead" style="margin-top:.8rem" data-i18n="connect_p2">Based between Amsterdam &amp; Barcelona, open to conversations about product roles, research collaborations, data projects, and anything at the crossover of tech and social science. Find me here.</p>
     </header>
     <section class="tiles">
       <a class="tile link" href="mailto:warrenmichella@gmail.com" style="--c:#3FA58C">
@@ -121,26 +123,27 @@
         <p>Michella-stack</p>
       </a>
       <article class="tile span3" style="--c:#4F8FA8">
-        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">01</text><text class="t2" x="118" y="66" text-anchor="end">01</text></svg>
+        <svg class="num bubble" viewBox="0 0 120 70" aria-hidden="true"><path d="M34 12h52a8 8 0 0 1 8 8v22a8 8 0 0 1-8 8H62l-14 11V50H34a8 8 0 0 1-8-8V20a8 8 0 0 1 8-8z"/><path class="t2" d="M36 14h52a8 8 0 0 1 8 8v22a8 8 0 0 1-8 8H64l-14 11V52H36a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8z"/></svg>
+        <div class="top"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 20.5l1.4-4.9A8 8 0 1 1 21 12z"/></svg></span></div>
         <h3 data-i18n="open_title">Open to Discussion</h3>
         <p data-i18n="open_text">I genuinely enjoy conversations about data ethics, demographic research, product strategy, and the bigger questions underneath all of it. If something I've written or built sparked a thought — reach out. You don't need a formal reason. Even just a coffee chat works perfectly.</p>
       </article>
     </section>
     <section class="block">
-      <div class="section-head"><h2>Consulting, <em>what I can help with</em></h2></div>
+      <div class="section-head"><h2>Consulting, <em>how I can help</em></h2></div>
       <div class="tiles">
       <article class="tile " style="--c:#4FB0A8">
-        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">02</text><text class="t2" x="118" y="66" text-anchor="end">02</text></svg>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">1</text><text class="t2" x="118" y="66" text-anchor="end">1</text></svg>
         <h3>Data analysis & research</h3>
         <p>Survey design, statistical modelling, demographic and epidemiological analysis.</p>
       </article>
       <article class="tile " style="--c:#A67BD1">
-        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">03</text><text class="t2" x="118" y="66" text-anchor="end">03</text></svg>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">2</text><text class="t2" x="118" y="66" text-anchor="end">2</text></svg>
         <h3>Product & strategy</h3>
         <p>Discovery, roadmapping and turning analytical insight into product decisions.</p>
       </article>
       <article class="tile " style="--c:#5B9BD6">
-        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">04</text><text class="t2" x="118" y="66" text-anchor="end">04</text></svg>
+        <svg class="num" viewBox="0 0 120 70" aria-hidden="true"><text x="116" y="64" text-anchor="end">3</text><text class="t2" x="118" y="66" text-anchor="end">3</text></svg>
         <h3>Circular systems & energy data</h3>
         <p>Circular-economy and zero-waste analysis, energy-system work and clear, interactive data stories.</p>
       </article>
