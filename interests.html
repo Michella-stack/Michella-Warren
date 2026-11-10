@@ -8,6 +8,10 @@
   <meta name="robots" content="noimageindex"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png"/>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
   <link rel="stylesheet" href="style.css?v=4"/>
   <style>
 
@@ -37,8 +41,8 @@
 
     /* ── Interests: vertical Ferris wheel (positions are set by script along a circular arc) ── */
     .int-layout { display: grid; grid-template-columns: minmax(0, 520px) minmax(240px, 1fr); grid-template-areas: "stage hero"; gap: 40px; align-items: center; min-height: calc(100vh - 120px); }
-    .int-layout .page-hero { grid-area: hero; padding: 24px 0; }
-    .int-layout .page-hero .lead { font-size: 12px; line-height: 1.85; text-align: justify; hyphens: manual; max-width: none; }
+    .int-layout .page-hero { grid-area: hero; padding: 24px 0; max-width: 330px; margin-inline: 0 auto; }
+    .int-layout .page-hero .lead { font-size: 12px; line-height: 1.85; text-align: start; hyphens: manual; max-width: none; }
     .int-stage { grid-area: stage; position: relative; padding-right: 66px; }
     .deck { position: relative; height: 540px; user-select: none; touch-action: none; }
     .deck .card {
@@ -68,7 +72,7 @@
     html[dir="rtl"] .deck .card .num { right: auto; left: 12px; }
     @media (max-width: 860px) {
       .int-layout { grid-template-columns: 1fr; grid-template-areas: "hero" "stage"; min-height: 0; gap: 0; }
-      .int-layout .page-hero { padding: 36px 0 4px; }
+      .int-layout .page-hero { padding: 36px 0 4px; max-width: none; padding-inline-end: 0; }
       .int-stage { padding-right: 0; padding-bottom: 8px; overflow-x: clip; }
       html[dir="rtl"] .int-stage { padding-left: 0; }
       .deck { height: 470px; }
